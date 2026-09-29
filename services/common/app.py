@@ -10,6 +10,7 @@ from fastapi import APIRouter, FastAPI, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
+from common import chaos
 from common.config import Settings
 from common.db import create_engine
 from common.health import router as health_router
@@ -70,6 +71,8 @@ def create_service_app(
         return response
 
     app.include_router(health_router)
+    if settings.chaos_enabled:
+        app.include_router(chaos.router)
     for router in routers:
         app.include_router(router)
     return app

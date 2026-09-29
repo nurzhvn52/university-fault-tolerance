@@ -8,6 +8,7 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select, update
 
+from common.chaos import fault_point
 from common.db import SessionDep
 from payment.bank import BankClient
 from payment.models import Invoice, Payment
@@ -97,6 +98,7 @@ async def create_payment(body: PaymentIn, request: Request, session: SessionDep)
 
     # Baseline: the payment is recorded only after the bank has charged the student.
     # If the process dies here, the money is taken but there is no payment record.
+    await fault_point("payment.after_charge")
     payment = Payment(
         student_id=body.student_id,
         term=body.term,

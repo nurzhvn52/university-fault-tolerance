@@ -41,8 +41,12 @@ def configure_logging(service: str, node: str, level: str = "INFO") -> None:
     root = logging.getLogger()
     root.handlers[:] = [handler]
     root.setLevel(level.upper())
-    # Route uvicorn's own loggers through the same JSON handler.
-    for name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
+    # Route uvicorn's own loggers through the same JSON handler. The access logger is left
+    # alone, so that --no-access-log keeps it silent.
+    for name in ("uvicorn", "uvicorn.error"):
         uvicorn_logger = logging.getLogger(name)
         uvicorn_logger.handlers[:] = []
         uvicorn_logger.propagate = True
+    # httpx logs every request at INFO, far too much under load.
+    for name in ("httpx", "httpcore"):
+        logging.getLogger(name).setLevel(logging.WARNING)

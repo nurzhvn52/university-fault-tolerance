@@ -14,6 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
+from common.chaos import fault_point
 from common.db import SessionDep
 from records.gpa import GRADE_POINTS, compute_gpa
 from records.models import Grade, TranscriptDocument
@@ -100,6 +101,7 @@ async def import_grades(body: GradeBatchIn, session: SessionDep) -> dict:
                 content={"error": "duplicate_grade", "imported": imported, "at": item.model_dump()},
             )
         imported += 1
+        await fault_point("records.grade_imported")
     return {"imported": imported}
 
 

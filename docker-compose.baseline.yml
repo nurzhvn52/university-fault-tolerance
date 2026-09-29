@@ -1,32 +1,38 @@
 # Baseline: one instance of every component on one simulated node, no restart
 # policies, no health checks, no replicas. Start with:
 #   docker compose -f docker-compose.baseline.yml up -d --build
+#
+# toxiproxy sits on the student -> payment, student -> timetable and payment -> bank
+# paths; it is transparent until an experiment adds a network fault. The lab service
+# (profile "lab") runs experiments: python -m lab.orchestrate --mode baseline ...
 name: uft-baseline
 
 x-app: &app
   build:
     context: .
     dockerfile: services/Dockerfile
+    target: app
   image: uft-app:dev
   restart: "no"
 
 x-env: &env
   UFT_FT_MODE: baseline
   UFT_NODE: "a"
-  UFT_DATABASE_URL: postgresql+asyncpg://uft:${POSTGRES_PASSWORD:-uft_local_only}@postgres:5432/university
+  UFT_CHAOS_ENABLED: "true"
+  UFT_DATABASE_URL: postgresql+asyncpg://uft:${POSTGRES_PASSWORD:-uft_local_only}@pg-1:5432/university
   UFT_STUDENT_URL: http://gateway:8080
-  UFT_PAYMENT_URL: http://gateway:8080
-  UFT_TIMETABLE_URL: http://gateway:8080
-  UFT_BANK_URL: http://bank:8000
+  UFT_PAYMENT_URL: http://toxiproxy:18080
+  UFT_TIMETABLE_URL: http://toxiproxy:18081
+  UFT_BANK_URL: http://toxiproxy:18000
 
 x-after-migrate: &after-migrate
   migrate:
     condition: service_completed_successfully
 
 services:
-  postgres:
+  pg-1:
     image: postgres:16
-    hostname: postgres-1
+    hostname: pg-1
     environment:
       POSTGRES_USER: uft
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-uft_local_only}
@@ -39,15 +45,15 @@ services:
       interval: 2s
       timeout: 2s
       retries: 30
-    labels: {uft.node: "a", uft.role: db}
+    labels: {uft.node: "a", uft.role: db, uft.service: db}
 
   migrate:
     <<: *app
     command: [sh, -c, "alembic upgrade head && python -m tools.seed"]
     environment: {<<: *env, UFT_SERVICE_NAME: migrate}
-    labels: {uft.node: "a", uft.role: job}
+    labels: {uft.node: "a", uft.role: job, uft.service: migrate}
     depends_on:
-      postgres:
+      pg-1:
         condition: service_healthy
 
   bank:
@@ -57,14 +63,22 @@ services:
     environment: {<<: *env, UFT_SERVICE_NAME: bank}
     volumes:
       - bankdata:/data/bank
-    labels: {uft.node: "a", uft.role: external}
+    labels: {uft.node: ext, uft.role: external, uft.service: bank}
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.12.0
+    hostname: toxiproxy
+    command: [-host=0.0.0.0, -config=/config/toxiproxy.json]
+    volumes:
+      - ./infra/toxiproxy/toxiproxy.json:/config/toxiproxy.json:ro
+    labels: {uft.node: net, uft.role: network, uft.service: toxiproxy}
 
   student-1:
     <<: *app
     hostname: student-1
     command: uvicorn student.main:app --host 0.0.0.0 --port 8000 --no-access-log
     environment: {<<: *env, UFT_SERVICE_NAME: student}
-    labels: {uft.node: "a", uft.role: app}
+    labels: {uft.node: "a", uft.role: app, uft.service: student}
     depends_on: *after-migrate
 
   payment-1:
@@ -72,7 +86,7 @@ services:
     hostname: payment-1
     command: uvicorn payment.main:app --host 0.0.0.0 --port 8000 --no-access-log
     environment: {<<: *env, UFT_SERVICE_NAME: payment}
-    labels: {uft.node: "a", uft.role: app}
+    labels: {uft.node: "a", uft.role: app, uft.service: payment}
     depends_on: *after-migrate
 
   records-1:
@@ -82,7 +96,7 @@ services:
     environment: {<<: *env, UFT_SERVICE_NAME: records}
     volumes:
       - transcripts:/data/transcripts
-    labels: {uft.node: "a", uft.role: app}
+    labels: {uft.node: "a", uft.role: app, uft.service: records}
     depends_on: *after-migrate
 
   timetable-1:
@@ -90,7 +104,7 @@ services:
     hostname: timetable-1
     command: uvicorn timetable.main:app --host 0.0.0.0 --port 8000 --no-access-log
     environment: {<<: *env, UFT_SERVICE_NAME: timetable}
-    labels: {uft.node: "a", uft.role: app}
+    labels: {uft.node: "a", uft.role: app, uft.service: timetable}
     depends_on: *after-migrate
 
   gateway:
@@ -102,8 +116,30 @@ services:
     ports:
       - "8080:8080"
       - "8404:8404"
-    labels: {uft.node: "a", uft.role: gateway}
+    labels: {uft.node: "a", uft.role: gateway, uft.service: gateway}
     depends_on: [student-1, payment-1, records-1, timetable-1]
+
+  lab:
+    build:
+      context: .
+      dockerfile: services/Dockerfile
+      target: lab
+    image: uft-lab:dev
+    profiles: [lab]
+    user: root
+    environment:
+      <<: *env
+      UFT_SERVICE_NAME: lab
+      UFT_PROJECT: uft-baseline
+      UFT_GATEWAY_URL: http://gateway:8080
+      UFT_TOXIPROXY_URL: http://toxiproxy:8474
+      UFT_BANK_URL: http://bank:8000
+      UFT_TRANSCRIPT_DIRS: /data/transcripts
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./results:/results
+      - transcripts:/data/transcripts:ro
+    labels: {uft.node: client, uft.role: lab, uft.service: lab}
 
 volumes:
   pgdata:

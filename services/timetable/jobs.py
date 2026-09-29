@@ -6,6 +6,7 @@ import logging
 from fastapi import FastAPI
 from sqlalchemy import delete, func, select, update
 
+from common.chaos import fault_point
 from timetable.models import GenerationJob, Room, Timeslot, TimetableEntry
 from timetable.scheduler import RoomInfo, Scheduler, SectionDemand, order_sections
 
@@ -57,6 +58,7 @@ async def run_generation(app: FastAPI, job_id: int, term: str) -> None:
             placements[section.section_id] = placement
             # Baseline: progress lives only in memory, nothing is saved until the end.
             progress[job_id] = len(placements)
+            await fault_point("timetable.section_placed")
 
         async with sessionmaker() as session:
             await session.execute(delete(TimetableEntry).where(TimetableEntry.term == term))

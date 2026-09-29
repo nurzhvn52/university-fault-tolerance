@@ -1,5 +1,5 @@
 # One image for every Python service; the compose file picks the module to run.
-FROM python:3.11-slim
+FROM python:3.11-slim AS app
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -22,3 +22,10 @@ RUN useradd --uid 10001 --create-home uft \
 USER uft
 
 EXPOSE 8000
+
+# Experiment tooling: the app image plus the docker CLI and the lab package.
+FROM app AS lab
+USER root
+COPY --from=docker:29-cli /usr/local/bin/docker /usr/local/bin/docker
+COPY lab lab
+ENV PYTHONPATH=/app/services:/app

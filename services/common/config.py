@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     # Simulated physical node the container belongs to (used for node-failure experiments).
     node: str = "a"
     log_level: str = "INFO"
+    # Mounts the /_chaos admin endpoint used by the experiment tooling.
+    chaos_enabled: bool = False
     term: str = "2026-FALL"
 
     database_url: str = "postgresql+asyncpg://uft:uft_local_only@localhost:5432/university"

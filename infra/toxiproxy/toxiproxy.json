@@ -1,0 +1,5 @@
+[
+  {"name": "payment", "listen": "0.0.0.0:18080", "upstream": "gateway:8080", "enabled": true},
+  {"name": "timetable", "listen": "0.0.0.0:18081", "upstream": "gateway:8080", "enabled": true},
+  {"name": "bank", "listen": "0.0.0.0:18000", "upstream": "bank:8000", "enabled": true}
+]

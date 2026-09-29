@@ -1,0 +1,98 @@
+# Experiment scenarios. Times are seconds from the start of the run.
+#
+# rate_profile: list of [duration, requests per second]; the run lasts their sum.
+# fault_at:     start of the fault window for the metrics (default: first action).
+# actions:      timeline; "repair" models a person fixing the system and is applied to
+#               both versions at the same time, so they are compared under equal conditions.
+#
+# Manual repair after 40 s is an assumption of the lab time scale (a real on-call
+# engineer needs minutes); it is the same for both versions.
+
+[defaults]
+rate_profile = [[120, 30]]
+
+[scenario.CAL]
+title = "Capacity calibration"
+description = "Step load without failures to find where the baseline saturates."
+rate_profile = [[20, 20], [20, 40], [20, 80], [20, 160], [20, 320]]
+actions = []
+
+[scenario.CAL_RUSH]
+title = "Capacity calibration, registration rush"
+description = "Step load with the registration-heavy mix of E6 (a registration opening rush)."
+rate_profile = [[20, 100], [20, 200], [20, 250], [20, 300], [20, 400]]
+mix = { "registration.create" = 60, "sections.list" = 20, "student.get" = 10, "tuition.get" = 10 }
+actions = []
+
+[scenario.E1]
+title = "Application crash"
+description = "SIGKILL of the payment service instance payment-1 under load."
+actions = [
+    { at = 20, do = "kill", target = "payment-1" },
+    { at = 60, do = "repair" },
+]
+
+[scenario.E2]
+title = "Database failure"
+description = "SIGKILL of the primary database under load."
+actions = [
+    { at = 20, do = "kill", target = "db-primary" },
+    { at = 60, do = "repair" },
+]
+
+[scenario.E3]
+title = "Service-to-service timeout"
+description = "Calls from the student service to the payment service stop getting answers."
+actions = [
+    { at = 20, do = "toxic", proxy = "payment", toxic = "timeout", attributes = { timeout = 0 } },
+    { at = 60, do = "repair" },
+]
+
+[scenario.E4]
+title = "Node failure"
+description = "Every container of simulated node a is killed at once."
+actions = [
+    { at = 20, do = "kill_node", node = "a" },
+    { at = 60, do = "repair" },
+]
+
+[scenario.E5a]
+title = "Interrupted payment"
+description = "payment-1 crashes after the bank charged the student, before the payment is saved."
+rate_profile = [[90, 30]]
+actions = [
+    { at = 20, do = "arm_fault", target = "payment-1", point = "payment.after_charge", action = "crash" },
+    { at = 40, do = "repair" },
+]
+
+[scenario.E5b]
+title = "Interrupted grade import"
+description = "records-1 crashes in the middle of a 200-grade batch import; the batch is sent again after the repair."
+rate_profile = [[90, 30]]
+actions = [
+    { at = 20, do = "arm_fault", target = "records-1", point = "records.grade_imported", action = "crash", skip = 100 },
+    { at = 21, do = "grade_batch", size = 200 },
+    { at = 40, do = "repair" },
+    { at = 50, do = "grade_batch", size = 200 },
+]
+
+[scenario.E5c]
+title = "Interrupted timetable generation"
+description = "timetable-1 crashes half way through a generation job; the job is requested again after the repair."
+rate_profile = [[90, 30]]
+actions = [
+    { at = 20, do = "arm_fault", target = "timetable-1", point = "timetable.section_placed", action = "crash", skip = 60 },
+    { at = 21, do = "generate_timetable" },
+    { at = 40, do = "repair" },
+    { at = 50, do = "generate_timetable" },
+]
+
+[scenario.E6]
+title = "High load"
+description = """Registration rush: load with the registration-heavy mix rises from 50 to 300
+requests per second for 60 s and falls back. CAL_RUSH puts the baseline knee between 250 and
+300 requests per second; above 300 the load generator itself cannot keep its schedule."""
+rate_profile = [[20, 50], [60, 300], [40, 50]]
+fault_at = 20
+mix = { "registration.create" = 60, "sections.list" = 20, "student.get" = 10, "tuition.get" = 10 }
+actions = []

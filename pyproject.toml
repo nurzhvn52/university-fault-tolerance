@@ -6,10 +6,10 @@ target-version = "py311"
 select = ["E", "F", "I", "B", "UP", "SIM"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["common", "student", "payment", "records", "timetable", "bank_mock", "tools"]
+known-first-party = ["common", "student", "payment", "records", "timetable", "bank_mock", "tools", "lab"]
 
 [tool.pytest.ini_options]
-pythonpath = ["services"]
+pythonpath = ["services", "."]
 testpaths = ["tests"]
 markers = ["integration: needs the running docker compose stack (set UFT_BASE_URL)"]
 addopts = "-m 'not integration'"
