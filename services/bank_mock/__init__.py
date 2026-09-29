@@ -1,0 +1,1 @@
+"""Simulated external payment provider."""

@@ -1,0 +1,111 @@
+# Baseline: one instance of every component on one simulated node, no restart
+# policies, no health checks, no replicas. Start with:
+#   docker compose -f docker-compose.baseline.yml up -d --build
+name: uft-baseline
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: services/Dockerfile
+  image: uft-app:dev
+  restart: "no"
+
+x-env: &env
+  UFT_FT_MODE: baseline
+  UFT_NODE: "a"
+  UFT_DATABASE_URL: postgresql+asyncpg://uft:${POSTGRES_PASSWORD:-uft_local_only}@postgres:5432/university
+  UFT_STUDENT_URL: http://gateway:8080
+  UFT_PAYMENT_URL: http://gateway:8080
+  UFT_TIMETABLE_URL: http://gateway:8080
+  UFT_BANK_URL: http://bank:8000
+
+x-after-migrate: &after-migrate
+  migrate:
+    condition: service_completed_successfully
+
+services:
+  postgres:
+    image: postgres:16
+    hostname: postgres-1
+    environment:
+      POSTGRES_USER: uft
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-uft_local_only}
+      POSTGRES_DB: university
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # Only used to start the migration job after the database accepts connections.
+    healthcheck:
+      test: [CMD, pg_isready, -U, uft, -d, university]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    labels: {uft.node: "a", uft.role: db}
+
+  migrate:
+    <<: *app
+    command: [sh, -c, "alembic upgrade head && python -m tools.seed"]
+    environment: {<<: *env, UFT_SERVICE_NAME: migrate}
+    labels: {uft.node: "a", uft.role: job}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  bank:
+    <<: *app
+    hostname: bank
+    command: uvicorn bank_mock.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: bank}
+    volumes:
+      - bankdata:/data/bank
+    labels: {uft.node: "a", uft.role: external}
+
+  student-1:
+    <<: *app
+    hostname: student-1
+    command: uvicorn student.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: student}
+    labels: {uft.node: "a", uft.role: app}
+    depends_on: *after-migrate
+
+  payment-1:
+    <<: *app
+    hostname: payment-1
+    command: uvicorn payment.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: payment}
+    labels: {uft.node: "a", uft.role: app}
+    depends_on: *after-migrate
+
+  records-1:
+    <<: *app
+    hostname: records-1
+    command: uvicorn records.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: records}
+    volumes:
+      - transcripts:/data/transcripts
+    labels: {uft.node: "a", uft.role: app}
+    depends_on: *after-migrate
+
+  timetable-1:
+    <<: *app
+    hostname: timetable-1
+    command: uvicorn timetable.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: timetable}
+    labels: {uft.node: "a", uft.role: app}
+    depends_on: *after-migrate
+
+  gateway:
+    image: haproxy:3.2-alpine
+    hostname: gateway
+    restart: "no"
+    volumes:
+      - ./infra/haproxy/baseline.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - "8080:8080"
+      - "8404:8404"
+    labels: {uft.node: "a", uft.role: gateway}
+    depends_on: [student-1, payment-1, records-1, timetable-1]
+
+volumes:
+  pgdata:
+  bankdata:
+  transcripts:
