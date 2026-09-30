@@ -33,6 +33,31 @@ class Settings(BaseSettings):
     # Emulated cost of placing one section during timetable generation.
     timetable_step_delay_s: float = 0.1
 
+    # Fault-tolerance settings, used only when ft_mode == "ft".
+    # Timeouts of one attempt of a call to another service.
+    payment_timeout_s: float = 1.0
+    timetable_timeout_s: float = 1.0
+    bank_timeout_s: float = 2.0
+    # Database: connect timeout, per-query timeout, wait for a free pooled connection. A
+    # connection inside the Docker network takes milliseconds, so 0.5 s means "unreachable".
+    db_connect_timeout_s: float = 0.5
+    db_command_timeout_s: float = 2.0
+    db_pool_timeout_s: float = 1.0
+    # Retry with exponential backoff and full jitter.
+    retry_attempts: int = 3
+    retry_base_delay_s: float = 0.1
+    retry_max_delay_s: float = 1.0
+    # Circuit breaker: consecutive failures to open, time before a trial call.
+    breaker_failures: int = 5
+    breaker_reset_s: float = 5.0
+    # Load shedding: requests one instance handles at once before it answers 503.
+    max_in_flight: int = 48
+    # Background recovery workers.
+    worker_interval_s: float = 2.0
+    pending_grace_s: float = 5.0
+    transcript_cache_refresh_s: float = 60.0
+    timetable_checkpoint_every: int = 10
+
     @property
     def ft(self) -> bool:
         return self.ft_mode == "ft"

@@ -1,5 +1,6 @@
 """Liveness and readiness endpoints, the same in every service."""
 
+import asyncio
 import socket
 
 from fastapi import APIRouter, Request
@@ -22,10 +23,13 @@ async def live(request: Request) -> dict:
 
 @router.get("/ready")
 async def ready(request: Request):
+    """Ready to take traffic. A service that can degrade without the database (records
+    serves cached transcripts) sets ``app.state.ready_without_db``."""
     engine = request.app.state.engine
-    if engine is not None:
+    settings = request.app.state.settings
+    if engine is not None and not getattr(request.app.state, "ready_without_db", False):
         try:
-            async with engine.connect() as conn:
+            async with asyncio.timeout(1.0 if settings.ft else None), engine.connect() as conn:
                 await conn.execute(text("SELECT 1"))
         except Exception as exc:
             return JSONResponse(

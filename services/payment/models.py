@@ -3,7 +3,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import DateTime, Numeric, String, UniqueConstraint, func
+from sqlalchemy import DateTime, Index, Numeric, String, UniqueConstraint, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from common.db import schema_metadata
@@ -34,7 +34,11 @@ class Invoice(Base):
 
 
 class Payment(Base):
+    """Status: CAPTURED; in FT mode a payment is first written as PENDING (a journal entry
+    made before the bank is called) and later becomes CAPTURED or FAILED."""
+
     __tablename__ = "payments"
+    __table_args__ = (Index(None, "status", "updated_at"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
     student_id: Mapped[int] = mapped_column(index=True)
@@ -42,6 +46,8 @@ class Payment(Base):
     amount: Mapped[Decimal] = mapped_column(Money)
     status: Mapped[str] = mapped_column(String(16))
     bank_charge_id: Mapped[str | None] = mapped_column(String(64))
+    # FT: the client's Idempotency-Key; a repeated request with the same key is the same payment.
+    idempotency_key: Mapped[str | None] = mapped_column(String(128), unique=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()

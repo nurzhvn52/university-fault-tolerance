@@ -20,9 +20,15 @@ jobs:
       - run: ruff format --check .
       - run: pytest
 
-  baseline-stack:
+  stack:
     needs: lint-and-unit
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mode: [baseline, ft]
+    name: stack (${{ matrix.mode }} mode)
+    env:
+      UFT_FT_MODE: ${{ matrix.mode }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

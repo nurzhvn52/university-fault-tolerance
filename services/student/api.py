@@ -4,11 +4,13 @@ import logging
 from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
 from common.db import SessionDep
+from student import registration as ft_registration
 from student.clients import PaymentClient, TimetableClient
 from student.models import Course, Registration, Section, Student
 
@@ -111,7 +113,17 @@ async def get_section(section_id: int, session: SessionDep) -> SectionOut:
 
 
 @router.post("/registrations", response_model=RegistrationOut, status_code=201)
-async def register(body: RegistrationIn, request: Request, session: SessionDep) -> Registration:
+async def register(body: RegistrationIn, request: Request, session: SessionDep):
+    if request.app.state.settings.ft:
+        # 201 confirmed, 202 accepted while tuition could not be checked yet.
+        status, registration = await ft_registration.register(
+            request.app, session, body.student_id, body.section_id
+        )
+        return JSONResponse(
+            status_code=status,
+            content=RegistrationOut.model_validate(registration).model_dump(mode="json"),
+        )
+
     student = await session.get(Student, body.student_id)
     if student is None:
         raise HTTPException(404, "student_not_found")
@@ -163,7 +175,13 @@ async def register(body: RegistrationIn, request: Request, session: SessionDep) 
 
 
 @router.delete("/registrations/{registration_id}", status_code=204)
-async def cancel_registration(registration_id: int, session: SessionDep) -> Response:
+async def cancel_registration(
+    registration_id: int, request: Request, session: SessionDep
+) -> Response:
+    if request.app.state.settings.ft:
+        await ft_registration.cancel(session, registration_id)
+        return Response(status_code=204)
+
     registration = await session.get(Registration, registration_id)
     if registration is None:
         raise HTTPException(404, "registration_not_found")

@@ -1,6 +1,13 @@
 from collections import Counter
 
-from timetable.scheduler import RoomInfo, Scheduler, SectionDemand, order_sections
+from timetable.scheduler import (
+    RoomInfo,
+    Scheduler,
+    SectionDemand,
+    acceptance_test,
+    first_fit,
+    order_sections,
+)
 
 ROOMS = [RoomInfo(1, 30), RoomInfo(2, 60), RoomInfo(3, 120)]
 SLOTS = [10, 11, 12, 13]
@@ -51,3 +58,47 @@ def test_largest_sections_are_scheduled_first():
     ordered = order_sections([SectionDemand(1, 30), SectionDemand(2, 90), SectionDemand(3, 30)])
 
     assert [section.section_id for section in ordered] == [2, 1, 3]
+
+
+def test_first_fit_uses_the_earliest_timeslot():
+    sections = [SectionDemand(1, 20), SectionDemand(2, 20)]
+
+    assert first_fit(sections, ROOMS, SLOTS) == {1: (1, 10), 2: (2, 10)}
+
+
+def test_first_fit_gives_up_when_a_section_does_not_fit():
+    assert first_fit([SectionDemand(1, 500)], ROOMS, SLOTS) is None
+
+
+def test_acceptance_test_accepts_a_valid_balanced_timetable():
+    sections = [SectionDemand(i, 20) for i in range(1, 9)]
+    scheduler = Scheduler(ROOMS, SLOTS)
+    placements = {s.section_id: scheduler.place(s) for s in sections}
+
+    assert acceptance_test(placements, sections, ROOMS, SLOTS, balanced=True) == []
+
+
+def test_acceptance_test_finds_every_kind_of_problem():
+    sections = [SectionDemand(1, 20), SectionDemand(2, 100), SectionDemand(3, 20)]
+    placements = {1: (1, 10), 2: (1, 10)}
+
+    problems = acceptance_test(placements, sections, ROOMS, SLOTS, balanced=False)
+
+    assert problems == [
+        "1 sections without a room",
+        "a room is booked twice in one timeslot",
+        "1 sections in rooms that are too small",
+    ]
+    assert acceptance_test(None, sections, ROOMS, SLOTS, balanced=False)
+
+
+def test_unbalanced_first_fit_result_fails_the_primary_acceptance_test():
+    rooms = [RoomInfo(i, 30) for i in range(1, 11)]
+    sections = [SectionDemand(i, 20) for i in range(1, 9)]
+    placements = first_fit(sections, rooms, SLOTS)
+
+    # All 8 sections land in timeslot 10: valid, but far from balanced (limit 3).
+    assert acceptance_test(placements, sections, rooms, SLOTS, balanced=False) == []
+    assert acceptance_test(placements, sections, rooms, SLOTS, balanced=True) == [
+        "a timeslot has 8 sections (limit 3)"
+    ]

@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict
 from sqlalchemy import select
 
 from common.db import SessionDep
+from timetable import checkpointed
 from timetable.jobs import start_generation
 from timetable.models import GenerationJob, Room, Timeslot, TimetableEntry
 
@@ -81,12 +82,19 @@ async def generate(term: str, request: Request, session: SessionDep) -> Generati
             GenerationJob.term == term, GenerationJob.status == "RUNNING"
         )
     )
+    ft = request.app.state.settings.ft
     if running is not None:
+        if ft:
+            # Idempotent in FT mode: the job already running (or resumed) is the answer.
+            return await session.get(GenerationJob, running)
         raise HTTPException(409, "generation_in_progress")
     job = GenerationJob(term=term, status="RUNNING")
     session.add(job)
     await session.commit()
-    start_generation(request.app, job.id, term)
+    if ft:
+        checkpointed.start(request.app, job.id, resumed=False)
+    else:
+        start_generation(request.app, job.id, term)
     return job
 
 

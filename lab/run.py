@@ -224,7 +224,7 @@ async def main(args: argparse.Namespace) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--scenario", required=True)
-    parser.add_argument("--mode", required=True, choices=["baseline", "ft"])
+    parser.add_argument("--mode", required=True, choices=["baseline", "sw", "ft"])
     parser.add_argument("--rep", type=int, default=1)
     parser.add_argument("--out", required=True)
     asyncio.run(main(parser.parse_args()))

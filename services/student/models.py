@@ -49,5 +49,6 @@ class Registration(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     student_id: Mapped[int] = mapped_column(ForeignKey("student.students.id"), index=True)
     section_id: Mapped[int] = mapped_column(ForeignKey("student.sections.id"), index=True)
-    status: Mapped[str] = mapped_column(String(24))
+    # CONFIRMED; FT mode also uses PENDING_VERIFICATION (tuition could not be checked yet).
+    status: Mapped[str] = mapped_column(String(24), index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

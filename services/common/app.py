@@ -12,9 +12,10 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from common import chaos
 from common.config import Settings
-from common.db import create_engine
+from common.db import create_engine, is_db_unavailable
 from common.health import router as health_router
 from common.logs import configure_logging
+from common.resilience import Bulkhead, DependencyUnavailable, RateLimitedLog
 
 logger = logging.getLogger("common.app")
 
@@ -39,8 +40,9 @@ def create_service_app(
         if use_db:
             app.state.engine = create_engine(settings)
             app.state.sessionmaker = async_sessionmaker(app.state.engine, expire_on_commit=False)
-        # Baseline: calls to other services have no timeout.
-        app.state.http = httpx.AsyncClient(timeout=None)
+        # Baseline: calls to other services have no timeout. In FT mode every call also gets
+        # its own deadline from the Dependency wrapper; this is only the outer limit.
+        app.state.http = httpx.AsyncClient(timeout=5.0 if settings.ft else None)
         if on_startup is not None:
             await on_startup(app)
         logger.info("service_started", extra={"mode": settings.ft_mode})
@@ -56,16 +58,51 @@ def create_service_app(
 
     app = FastAPI(title=title, lifespan=lifespan)
     instance = socket.gethostname()
+    # FT: load shedding. An instance works on at most max_in_flight requests; the rest get an
+    # immediate 503 instead of queueing until everything times out.
+    inbound = Bulkhead("inbound", settings.max_in_flight) if settings.ft else None
+    rate_log = RateLimitedLog()
+
+    def error_response(request: Request, exc: Exception) -> JSONResponse:
+        if settings.ft and isinstance(exc, DependencyUnavailable):
+            name = str(exc)
+            if rate_log.should_log(f"dep:{name}"):
+                logger.warning("dependency_unavailable", extra={"dependency": name})
+            return JSONResponse(
+                status_code=503,
+                content={"error": "dependency_unavailable", "dependency": name},
+                headers={"Retry-After": "1"},
+            )
+        if settings.ft and is_db_unavailable(exc):
+            if rate_log.should_log("db"):
+                logger.warning("db_unavailable", extra={"error": type(exc).__name__})
+            return JSONResponse(
+                status_code=503,
+                content={"error": "database_unavailable"},
+                headers={"Retry-After": "1"},
+            )
+        logger.exception(
+            "unhandled_error", extra={"path": request.url.path, "error": type(exc).__name__}
+        )
+        return JSONResponse(status_code=500, content={"error": "internal_error"})
 
     @app.middleware("http")
     async def instance_header_and_errors(request: Request, call_next):
-        try:
-            response = await call_next(request)
-        except Exception as exc:
-            logger.exception(
-                "unhandled_error", extra={"path": request.url.path, "error": type(exc).__name__}
+        guarded = inbound is not None and not request.url.path.startswith(("/health", "/_chaos"))
+        if guarded and not inbound.try_acquire():
+            if rate_log.should_log("shed"):
+                logger.warning("load_shed", extra={"in_flight": inbound.in_use})
+            response = JSONResponse(
+                status_code=503, content={"error": "overloaded"}, headers={"Retry-After": "1"}
             )
-            response = JSONResponse(status_code=500, content={"error": "internal_error"})
+        else:
+            try:
+                response = await call_next(request)
+            except Exception as exc:
+                response = error_response(request, exc)
+            finally:
+                if guarded:
+                    inbound.release()
         # Shows which replica served the request.
         response.headers["X-Instance"] = instance
         return response

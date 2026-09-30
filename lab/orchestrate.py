@@ -9,18 +9,26 @@ Needs only the Python standard library and Docker Compose.
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-COMPOSE_FILES = {"baseline": "docker-compose.baseline.yml", "ft": "docker-compose.ft.yml"}
+# mode -> (compose file, extra environment). "sw" is the single-instance baseline stack with
+# the software mechanisms on, to separate their effect from the hardware redundancy of "ft".
+MODES = {
+    "baseline": ("docker-compose.baseline.yml", {"UFT_FT_MODE": "baseline"}),
+    "sw": ("docker-compose.baseline.yml", {"UFT_FT_MODE": "ft"}),
+    "ft": ("docker-compose.ft.yml", {}),
+}
 
 
 def compose(mode: str, *args: str, check: bool = True) -> subprocess.CompletedProcess:
-    command = ["docker", "compose", "-f", COMPOSE_FILES[mode], *args]
-    return subprocess.run(command, cwd=ROOT, check=check)
+    compose_file, env = MODES[mode]
+    command = ["docker", "compose", "-f", compose_file, *args]
+    return subprocess.run(command, cwd=ROOT, check=check, env={**os.environ, **env})
 
 
 def git_commit() -> str:
@@ -65,7 +73,7 @@ def run_once(mode: str, scenario: str, rep: int, tag: str, commit: str) -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--mode", required=True, choices=sorted(COMPOSE_FILES))
+    parser.add_argument("--mode", required=True, choices=sorted(MODES))
     parser.add_argument("--scenarios", required=True, help="comma separated, e.g. E1,E2")
     parser.add_argument("--reps", type=int, default=1)
     parser.add_argument("--tag", default="dev")

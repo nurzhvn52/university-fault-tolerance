@@ -8,8 +8,9 @@ records and timetable generation) built twice: a baseline without fault-toleranc
 and a fault-tolerant version. Both are exposed to the same injected failures and compared by
 measured reliability and availability.
 
-Status: the baseline and the experiment tooling are ready; the fault-tolerant version and
-the final experiments are in progress.
+Status: the baseline, the experiment tooling and the software fault-tolerance mechanisms are
+ready; the infrastructure redundancy (replicas, database failover, storage) and the final
+experiments are in progress.
 
 ## Services
 
@@ -73,6 +74,35 @@ purpose, the experiments measure them:
   in `RUNNING`;
 - transcript files are stored once, and their hash is never checked on read.
 
+## Software fault-tolerance mechanisms
+
+Switched on with `UFT_FT_MODE=ft` (same code, the baseline paths stay untouched):
+
+```
+UFT_FT_MODE=ft docker compose -f docker-compose.baseline.yml up -d --build
+```
+
+| Mechanism | Where | Protects against |
+|---|---|---|
+| Timeouts on every call and query | `common/resilience.py` (`Dependency`), `common/db.py` | a slow dependency blocking requests |
+| Retry with exponential backoff and full jitter, only for idempotent calls | `common/resilience.py` | transient network and service errors |
+| Circuit breaker per dependency (5 failures open it, trial call after 5 s) | `common/resilience.py` | waiting on a dependency that is down |
+| Load shedding (at most 48 requests in flight per instance, then 503) | `common/app.py` | overload turning into timeouts for everyone |
+| Bulkhead: no database connection held while other services are called | `student/registration.py` | one slow dependency exhausting the pool |
+| Idempotency keys and duplicate-request detection | `payment/journal.py` | double charges on client retries |
+| Journal (PENDING before the bank call), roll-forward recovery worker | `payment/journal.py` | a crash between the bank charge and the record |
+| Atomic, idempotent batch import (one transaction, upsert) | `records/resilient.py` | half-imported batches |
+| Checkpointing and leases of timetable jobs, resume after a crash | `timetable/checkpointed.py` | lost work and jobs stuck in RUNNING |
+| Recovery block (acceptance test, first-fit alternate) | `timetable/scheduler.py` | a failed or poor primary timetable |
+| N-version programming: GPA by three independent versions and a majority voter | `records/gpa.py` | a design fault in one implementation |
+| Graceful degradation: registrations accepted as PENDING_VERIFICATION, cached timetable, stale transcripts | `student/registration.py`, `records/resilient.py` | payment, timetable or database outages |
+| Atomic seat reservation (`enrolled < capacity` in the UPDATE) | `student/registration.py` | overbooking and lost counter updates under load |
+| Health endpoints with timeouts, readiness without the database for records | `common/health.py` | routing traffic to an instance that cannot serve |
+| Fast 503 with Retry-After for unavailable dependencies and database | `common/app.py` | hanging requests and unclear errors |
+
+Every mechanism logs its activity (`breaker_opened`, `retry_succeeded`, `payment_reconciled`,
+`fallback_used`, `job_resumed`, ...); the experiments count these events.
+
 ## Experiments
 
 The `lab` package runs controlled failure-injection experiments. The host script starts a
@@ -81,6 +111,7 @@ network, so the load, the service logs and the Docker events share one clock.
 
 ```
 python -m lab.orchestrate --mode baseline --scenarios E1,E2 --reps 5 --tag final
+python -m lab.orchestrate --mode sw --scenarios E1,E2 --reps 5 --tag final   # software mechanisms only
 python -m lab.summarize --tag final
 python -m lab.recompute --tag final     # re-evaluate stored runs after a metric change
 ```

@@ -28,3 +28,8 @@ class TimetableClient:
         )
         response.raise_for_status()
         return response.json()
+
+    async def timetable(self, term: str) -> list[dict]:
+        response = await self._http.get(f"{self._base_url}/api/timetable", params={"term": term})
+        response.raise_for_status()
+        return response.json()

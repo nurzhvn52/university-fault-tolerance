@@ -3,13 +3,16 @@
 import logging
 from datetime import datetime
 from decimal import Decimal
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Header, HTTPException, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select, update
 
 from common.chaos import fault_point
 from common.db import SessionDep
+from payment import journal
 from payment.bank import BankClient
 from payment.models import Invoice, Payment
 
@@ -83,7 +86,27 @@ async def tuition_status(student_id: int, term: str, session: SessionDep) -> Tui
 
 
 @router.post("/payments", response_model=PaymentOut, status_code=201)
-async def create_payment(body: PaymentIn, request: Request, session: SessionDep) -> Payment:
+async def create_payment(
+    body: PaymentIn,
+    request: Request,
+    session: SessionDep,
+    idempotency_key: Annotated[str | None, Header(max_length=128)] = None,
+):
+    if request.app.state.settings.ft:
+        # 201 captured now, 200 repeated request (same key), 202 accepted and still pending.
+        status, payment = await journal.create_payment(
+            request.app,
+            session,
+            student_id=body.student_id,
+            term=body.term,
+            amount=body.amount,
+            key=idempotency_key,
+        )
+        return JSONResponse(
+            status_code=status, content=PaymentOut.model_validate(payment).model_dump(mode="json")
+        )
+
+    # Baseline: the Idempotency-Key header is ignored.
     invoice = await _get_invoice(session, body.student_id, body.term)
     if body.amount > invoice.amount_due - invoice.amount_paid:
         raise HTTPException(409, "amount_exceeds_balance")

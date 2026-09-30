@@ -27,16 +27,41 @@ BUCKET_S = 1.0
 # Log events that show the system itself noticed a failure (emitted by the FT mechanisms).
 DETECTION_EVENTS = {
     "breaker_opened",
-    "dependency_timeout",
     "dependency_unavailable",
     "db_unavailable",
+    "load_shed",
     "primary_lost",
     "replica_unhealthy",
 }
 # HAProxy: "is DOWN" comes from a health check, "is going DOWN" from DNS resolution.
 DETECTION_TEXT = {" is DOWN": "haproxy_server_down", " is going DOWN": "haproxy_server_down"}
 # Log events of work that failed first and was then completed by a mechanism.
-RECOVERY_EVENTS = {"retry_succeeded", "payment_reconciled", "job_resumed", "copy_repaired"}
+RECOVERY_EVENTS = {
+    "retry_succeeded",
+    "payment_reconciled",
+    "registration_verified",
+    "job_resumed",
+    "alternate_used",
+    "copy_repaired",
+}
+# Everything the fault-tolerance mechanisms log, counted per run to show which of them
+# worked. Some are rate limited in the services (at most once per 5 s per kind).
+MECHANISM_EVENTS = (
+    DETECTION_EVENTS
+    | RECOVERY_EVENTS
+    | {
+        "breaker_half_open",
+        "breaker_closed",
+        "retry_attempt",
+        "duplicate_request",
+        "payment_deferred",
+        "fallback_used",
+        "registration_rejected",
+        "job_paused",
+        "job_taken_over",
+        "version_outvoted",
+    }
+)
 
 
 def good(a: Attempt) -> bool:
@@ -191,6 +216,11 @@ def recovered_by_system(logs: list[dict]) -> int:
     return sum(entry.get("json", {}).get("event") in RECOVERY_EVENTS for entry in logs)
 
 
+def mechanism_events(logs: list[dict]) -> dict[str, int]:
+    events = (entry.get("json", {}).get("event") for entry in logs)
+    return dict(sorted(Counter(e for e in events if e in MECHANISM_EVENTS).items()))
+
+
 def automatic_restarts(events: list[dict], actions: list[dict], t0: float) -> int:
     """Container starts that no repair action of the lab asked for."""
     manual = [
@@ -278,6 +308,7 @@ def compute(
         },
         "payments": payment_intents(attempts),
         "recovered_by_system": recovered_by_system(logs),
+        "mechanisms": mechanism_events(logs),
         "automatic_restarts": automatic_restarts(events, actions, t0),
         "detection_signals": [
             {"t_s": round(t - t0, 2), "source": source} for t, source in signals[:20]

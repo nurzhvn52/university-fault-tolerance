@@ -5,79 +5,28 @@ import json
 import logging
 import uuid
 from datetime import UTC, datetime
-from decimal import Decimal
-from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
 from common.chaos import fault_point
-from common.db import SessionDep
-from records.gpa import GRADE_POINTS, compute_gpa
+from common.db import SessionDep, is_db_unavailable
+from records import resilient
+from records.gpa import GRADE_POINTS
 from records.models import Grade, TranscriptDocument
+from records.schemas import DocumentOut, GradeBatchIn, GradeOut, TranscriptOut, build_transcript
 
 logger = logging.getLogger("records.api")
 router = APIRouter(prefix="/api", tags=["records"])
 
-Letter = Literal["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"]
 
-
-class GradeIn(BaseModel):
-    student_id: int = Field(gt=0)
-    course_code: str = Field(max_length=16)
-    term: str = Field(max_length=16)
-    letter: Letter
-    credits: int = Field(gt=0, le=30)
-
-
-class GradeOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    course_code: str
-    term: str
-    letter: str
-    points: Decimal
-    credits: int
-
-
-class GradeBatchIn(BaseModel):
-    items: list[GradeIn] = Field(min_length=1, max_length=500)
-
-
-class TranscriptOut(BaseModel):
-    student_id: int
-    gpa: Decimal
-    credits: int
-    grades: list[GradeOut]
-
-
-class DocumentOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: int
-    student_id: int
-    gpa: Decimal
-    credits: int
-    sha256: str
-    created_at: datetime
-
-
-async def _transcript(session, student_id: int) -> TranscriptOut:
-    grades = list(
-        await session.scalars(
-            select(Grade).where(Grade.student_id == student_id).order_by(Grade.term, Grade.id)
-        )
+async def _transcript(session, student_id: int, *, voting: bool = False) -> TranscriptOut:
+    grades = await session.scalars(
+        select(Grade).where(Grade.student_id == student_id).order_by(Grade.term, Grade.id)
     )
-    gpa, credits = compute_gpa((grade.points, grade.credits) for grade in grades)
-    return TranscriptOut(
-        student_id=student_id,
-        gpa=gpa,
-        credits=credits,
-        grades=[GradeOut.model_validate(grade) for grade in grades],
-    )
+    return build_transcript(student_id, grades, voting=voting)
 
 
 @router.get("/grades/{student_id}", response_model=list[GradeOut])
@@ -86,7 +35,9 @@ async def list_grades(student_id: int, session: SessionDep) -> list[GradeOut]:
 
 
 @router.post("/grades/batch", status_code=201)
-async def import_grades(body: GradeBatchIn, session: SessionDep) -> dict:
+async def import_grades(body: GradeBatchIn, request: Request, session: SessionDep) -> dict:
+    if request.app.state.settings.ft:
+        return {"imported": await resilient.import_grades(session, body.items)}
     # Baseline: every grade is committed on its own. If the import stops half way, the
     # rows written so far stay, and re-sending the batch fails on the first duplicate.
     imported = 0
@@ -106,8 +57,20 @@ async def import_grades(body: GradeBatchIn, session: SessionDep) -> dict:
 
 
 @router.get("/transcripts/{student_id}", response_model=TranscriptOut)
-async def get_transcript(student_id: int, session: SessionDep) -> TranscriptOut:
-    return await _transcript(session, student_id)
+async def get_transcript(student_id: int, request: Request, session: SessionDep):
+    app = request.app
+    if not app.state.settings.ft:
+        return await _transcript(session, student_id)
+    try:
+        transcript = await _transcript(session, student_id, voting=True)
+    except Exception as exc:
+        stale = resilient.cached(app, student_id) if is_db_unavailable(exc) else None
+        if stale is None:
+            raise
+        return JSONResponse(stale.model_dump(mode="json"), headers={"X-Data-Stale": "true"})
+    if transcript.grades:
+        resilient.store(app, transcript)
+    return transcript
 
 
 @router.post("/transcripts/{student_id}/documents", response_model=DocumentOut, status_code=201)

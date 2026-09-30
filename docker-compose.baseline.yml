@@ -1,6 +1,8 @@
 # Baseline: one instance of every component on one simulated node, no restart
 # policies, no health checks, no replicas. Start with:
 #   docker compose -f docker-compose.baseline.yml up -d --build
+# With UFT_FT_MODE=ft the same single-instance stack runs with the software
+# fault-tolerance mechanisms switched on ("sw" mode of the experiments).
 #
 # toxiproxy sits on the student -> payment, student -> timetable and payment -> bank
 # paths; it is transparent until an experiment adds a network fault. The lab service
@@ -16,7 +18,7 @@ x-app: &app
   restart: "no"
 
 x-env: &env
-  UFT_FT_MODE: baseline
+  UFT_FT_MODE: ${UFT_FT_MODE:-baseline}
   UFT_NODE: "a"
   UFT_CHAOS_ENABLED: "true"
   UFT_DATABASE_URL: postgresql+asyncpg://uft:${POSTGRES_PASSWORD:-uft_local_only}@pg-1:5432/university
