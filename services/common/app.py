@@ -2,12 +2,14 @@
 
 import logging
 import socket
+import time
 from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
 
 import httpx
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.responses import JSONResponse
+from prometheus_client import make_asgi_app
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from common import chaos
@@ -16,6 +18,7 @@ from common.db import create_engine, is_db_unavailable
 from common.health import router as health_router
 from common.logs import configure_logging
 from common.resilience import Bulkhead, DependencyUnavailable, RateLimitedLog
+from common.telemetry import IN_FLIGHT, LATENCY, REQUESTS, SHED
 
 logger = logging.getLogger("common.app")
 
@@ -86,28 +89,40 @@ def create_service_app(
         )
         return JSONResponse(status_code=500, content={"error": "internal_error"})
 
+    service = settings.service_name
+
     @app.middleware("http")
     async def instance_header_and_errors(request: Request, call_next):
-        guarded = inbound is not None and not request.url.path.startswith(("/health", "/_chaos"))
+        api = request.url.path.startswith("/api")
+        guarded = inbound is not None and api
+        started = time.perf_counter()
         if guarded and not inbound.try_acquire():
             if rate_log.should_log("shed"):
                 logger.warning("load_shed", extra={"in_flight": inbound.in_use})
+            SHED.labels(service).inc()
             response = JSONResponse(
                 status_code=503, content={"error": "overloaded"}, headers={"Retry-After": "1"}
             )
         else:
+            IN_FLIGHT.labels(service).inc()
             try:
                 response = await call_next(request)
             except Exception as exc:
                 response = error_response(request, exc)
             finally:
+                IN_FLIGHT.labels(service).dec()
                 if guarded:
                     inbound.release()
+        if api:
+            route = getattr(request.scope.get("route"), "path", "unmatched")
+            REQUESTS.labels(service, route, request.method, response.status_code).inc()
+            LATENCY.labels(service, route).observe(time.perf_counter() - started)
         # Shows which replica served the request.
         response.headers["X-Instance"] = instance
         return response
 
     app.include_router(health_router)
+    app.mount("/metrics", make_asgi_app())
     if settings.chaos_enabled:
         app.include_router(chaos.router)
     for router in routers:

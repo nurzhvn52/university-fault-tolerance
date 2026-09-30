@@ -16,6 +16,7 @@ SERVICE_OF = {
     "payment.create": "payment",
     "transcript.get": "records",
     "document.create": "records",
+    "document.get": "records",
     "timetable.slots": "timetable",
 }
 
@@ -26,8 +27,9 @@ DEFAULT_MIX = {
     "registration.create": 20,
     "tuition.get": 15,
     "payment.create": 10,
-    "transcript.get": 20,
+    "transcript.get": 15,
     "document.create": 5,
+    "document.get": 5,
     "timetable.slots": 10,
 }
 
@@ -133,6 +135,10 @@ class Workload:
     def _document_create(self) -> Request:
         student_id = self._pick(self.population.with_grades)
         return Request("document.create", "POST", f"/api/transcripts/{student_id}/documents")
+
+    def _document_get(self) -> Request:
+        student_id = self._pick(self.population.with_grades)
+        return Request("document.get", "GET", f"/api/transcripts/{student_id}/documents/latest")
 
     def _timetable_slots(self) -> Request:
         ids = self._rng.sample(self.population.sections, 3)

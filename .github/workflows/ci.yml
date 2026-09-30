@@ -45,3 +45,26 @@ jobs:
         run: docker compose -f docker-compose.baseline.yml logs --no-color
       - if: always()
         run: docker compose -f docker-compose.baseline.yml down -v
+
+  ft-stack:
+    needs: lint-and-unit
+    runs-on: ubuntu-latest
+    name: stack (replicas, Patroni failover cluster)
+    env:
+      UFT_FT_MODE: ft
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: docker compose -f docker-compose.ft.yml up -d --build
+      - run: pytest -m integration -v
+        env:
+          UFT_BASE_URL: http://localhost:8080
+      - if: failure()
+        run: docker compose -f docker-compose.ft.yml logs --no-color
+      - if: always()
+        run: docker compose -f docker-compose.ft.yml down -v

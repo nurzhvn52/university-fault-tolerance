@@ -1,0 +1,59 @@
+# Node-specific values come from the environment: PATRONI_NAME,
+# PATRONI_RESTAPI_CONNECT_ADDRESS, PATRONI_POSTGRESQL_CONNECT_ADDRESS and the passwords.
+scope: uft
+namespace: /uft/
+
+restapi:
+  listen: 0.0.0.0:8008
+
+etcd3:
+  hosts: etcd-1:2379,etcd-2:2379,etcd-3:2379
+
+bootstrap:
+  dcs:
+    # The leader key expires 20 s after the primary stops renewing it. 20 s is the minimum
+    # Patroni accepts: a shorter lease would promote a replica during short hiccups of a
+    # healthy primary (false failover, risk of two primaries). Failover therefore takes
+    # about ttl plus the leader race (~20-25 s).
+    ttl: 20
+    loop_wait: 1
+    retry_timeout: 3
+    maximum_lag_on_failover: 1048576
+    # A commit waits for the standby, so a failover loses no committed transaction (RPO 0).
+    # Not strict: with the standby down the primary keeps accepting writes (availability
+    # over consistency, see the CAP discussion in the report).
+    synchronous_mode: true
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+        wal_level: replica
+        hot_standby: "on"
+        wal_log_hints: "on"
+        max_connections: 200
+        max_wal_senders: 10
+        max_replication_slots: 10
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  post_bootstrap: /usr/local/bin/post_bootstrap.sh
+
+postgresql:
+  listen: 0.0.0.0:5432
+  data_dir: /var/lib/postgresql/data/pgdata
+  bin_dir: /usr/lib/postgresql/16/bin
+  pgpass: /tmp/pgpass
+  # Clone a new replica without waiting for a spread checkpoint on the primary.
+  basebackup:
+    - checkpoint: fast
+  authentication:
+    superuser:
+      username: postgres
+    replication:
+      username: replicator
+    rewind:
+      username: postgres
+  pg_hba:
+    - local all all trust
+    - host replication replicator 0.0.0.0/0 scram-sha-256
+    - host all all 0.0.0.0/0 scram-sha-256

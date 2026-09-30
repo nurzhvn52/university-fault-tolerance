@@ -28,7 +28,7 @@ pytestmark = [
 @pytest.fixture(scope="module")
 def api():
     with httpx.Client(base_url=BASE_URL, timeout=15) as client:
-        deadline = time.monotonic() + 120
+        deadline = time.monotonic() + 300
         while True:
             try:
                 if client.get("/api/courses").status_code == 200:

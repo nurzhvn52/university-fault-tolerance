@@ -140,7 +140,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./results:/results
-      - transcripts:/data/transcripts:ro
+      - transcripts:/data/transcripts
     labels: {uft.node: client, uft.role: lab, uft.service: lab}
 
 volumes:

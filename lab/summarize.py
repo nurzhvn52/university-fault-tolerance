@@ -20,6 +20,7 @@ METRICS = {
     "client_impact_s": ("fault", "client_impact_s"),
     "detection_s": ("fault", "detection_s"),
     "recovery_s": ("fault", "recovery_s"),
+    "recovered_share": ("fault", "recovered"),
     "downtime_s": ("fault", "downtime_s"),
     "fault_window_failed": ("fault", "requests", "failed"),
     "MTTR_s": ("reliability", "MTTR_s"),

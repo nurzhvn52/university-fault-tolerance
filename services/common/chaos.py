@@ -14,6 +14,7 @@ The experiment tooling arms a point through the admin endpoint (only mounted whe
 import asyncio
 import logging
 import os
+import time
 from dataclasses import dataclass
 from typing import Literal
 
@@ -94,3 +95,20 @@ async def clear_faults() -> None:
 @router.get("/faults")
 async def list_faults() -> dict:
     return {point: vars(fault) for point, fault in _faults.items()}
+
+
+@router.post("/crash")
+async def crash() -> None:
+    """The process dies at once (a crash, not a stop), so the restart policy applies."""
+    logger.warning("fault_injected", extra={"point": "process", "action": "crash"})
+    for handler in logging.getLogger().handlers:
+        handler.flush()
+    os._exit(137)
+
+
+@router.post("/hang")
+async def hang(seconds: float = 3600) -> None:
+    """Blocks the event loop: the process is alive but answers nothing, not even health
+    checks. Only a watchdog notices and fixes this."""
+    logger.warning("fault_injected", extra={"point": "process", "action": "hang"})
+    time.sleep(seconds)

@@ -17,6 +17,8 @@ from typing import TypeVar
 
 import httpx
 
+from common.telemetry import BREAKER_OPEN
+
 logger = logging.getLogger("common.resilience")
 
 T = TypeVar("T")
@@ -143,6 +145,7 @@ class CircuitBreaker:
         if state == self.state:
             return
         self.state = state
+        BREAKER_OPEN.labels(self.name).set(1 if state == "open" else 0)
         level = logging.WARNING if state == "open" else logging.INFO
         event = {"open": "breaker_opened", "half_open": "breaker_half_open"}.get(
             state, "breaker_closed"

@@ -43,6 +43,7 @@ RECOVERY_EVENTS = {
     "job_resumed",
     "alternate_used",
     "copy_repaired",
+    "watchdog_restart",
 }
 # Everything the fault-tolerance mechanisms log, counted per run to show which of them
 # worked. Some are rate limited in the services (at most once per 5 s per kind).
@@ -227,7 +228,8 @@ def automatic_restarts(events: list[dict], actions: list[dict], t0: float) -> in
         (record["t"], name)
         for record in actions
         if record.get("do") == "repair"
-        for name in record.get("result", {}).get("started", [])
+        for key in ("started", "restarted_hung")
+        for name in record.get("result", {}).get(key, [])
     ]
     count = 0
     for event in events:
@@ -252,6 +254,8 @@ def fault_metrics(
         "detection_s": round(detected[0] - fault_at, 2) if detected else None,
         "detection_source": detected[1] if detected else None,
         "recovery_s": round(spans[-1][1] - fault_at, 1) if spans else 0.0,
+        # False when the last outage lasted until the end of the run.
+        "recovered": not spans or spans[-1][1] < t_end - BUCKET_S / 2,
         "downtime_s": round(sum(end - start for start, end in spans), 1),
         "outages": len(spans),
         "requests": request_stats(after),

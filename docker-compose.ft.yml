@@ -1,0 +1,319 @@
+# Fault-tolerant stack: software mechanisms on (UFT_FT_MODE=ft) plus infrastructure redundancy.
+#
+# Simulated nodes (label uft.node):
+#   a, b  - one replica of every service, one PostgreSQL node managed by Patroni, one etcd member
+#   c     - the third etcd member (quorum survives the loss of a or b), watchdog, backups
+#   edge  - the HAProxy gateway (HTTP load balancing and routing to the primary database)
+#   ext   - the external bank;  net - toxiproxy (network fault injection)
+#
+#   docker compose -f docker-compose.ft.yml up -d --build
+name: uft-ft
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: services/Dockerfile
+    target: app
+  image: uft-app:dev
+  # Restart policy: a crashed process is started again by Docker.
+  restart: on-failure
+  # Liveness heartbeat for the watchdog (a hung process fails it).
+  healthcheck:
+    test: [CMD, python, -c, "import urllib.request as u; u.urlopen('http://localhost:8000/health/live', timeout=1)"]
+    interval: 2s
+    timeout: 2s
+    retries: 2
+    start_period: 10s
+
+x-env: &env
+  UFT_FT_MODE: ft
+  UFT_CHAOS_ENABLED: "true"
+  UFT_DB_POOL_SIZE: "8"
+  UFT_DATABASE_URL: postgresql+asyncpg://uft:${UFT_DB_PASSWORD:-uft_local_only}@gateway:5432/university
+  UFT_STUDENT_URL: http://gateway:8080
+  UFT_PAYMENT_URL: http://toxiproxy:18080
+  UFT_TIMETABLE_URL: http://toxiproxy:18081
+  UFT_BANK_URL: http://toxiproxy:18000
+
+x-records-env: &records-env
+  <<: *env
+  UFT_SERVICE_NAME: records
+  UFT_TRANSCRIPT_DIRS: /data/disk1,/data/disk2,/data/disk3
+
+x-disks: &disks
+  - disk1:/data/disk1
+  - disk2:/data/disk2
+  - disk3:/data/disk3
+
+x-after-migrate: &after-migrate
+  migrate:
+    condition: service_completed_successfully
+
+x-etcd: &etcd
+  image: quay.io/coreos/etcd:v3.5.21
+  restart: on-failure
+
+x-patroni: &patroni
+  build: infra/patroni
+  image: uft-patroni:dev
+  restart: on-failure
+  healthcheck:
+    test: [CMD, curl, -fs, http://localhost:8008/health]
+    interval: 2s
+    timeout: 2s
+    retries: 30
+
+x-patroni-env: &patroni-env
+  PATRONI_SUPERUSER_PASSWORD: ${PATRONI_SUPERUSER_PASSWORD:-uft_local_only}
+  PATRONI_REPLICATION_PASSWORD: ${PATRONI_REPLICATION_PASSWORD:-uft_local_only}
+  PATRONI_REWIND_PASSWORD: ${PATRONI_SUPERUSER_PASSWORD:-uft_local_only}
+  UFT_DB_PASSWORD: ${UFT_DB_PASSWORD:-uft_local_only}
+
+services:
+  etcd-1:
+    <<: *etcd
+    hostname: etcd-1
+    command: [etcd, --name=etcd-1, --data-dir=/etcd-data,
+      --listen-client-urls=http://0.0.0.0:2379, --advertise-client-urls=http://etcd-1:2379,
+      --listen-peer-urls=http://0.0.0.0:2380, --initial-advertise-peer-urls=http://etcd-1:2380,
+      "--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380",
+      --initial-cluster-state=new, --initial-cluster-token=uft]
+    labels: {uft.node: "a", uft.role: dcs, uft.service: etcd}
+
+  etcd-2:
+    <<: *etcd
+    hostname: etcd-2
+    command: [etcd, --name=etcd-2, --data-dir=/etcd-data,
+      --listen-client-urls=http://0.0.0.0:2379, --advertise-client-urls=http://etcd-2:2379,
+      --listen-peer-urls=http://0.0.0.0:2380, --initial-advertise-peer-urls=http://etcd-2:2380,
+      "--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380",
+      --initial-cluster-state=new, --initial-cluster-token=uft]
+    labels: {uft.node: "b", uft.role: dcs, uft.service: etcd}
+
+  etcd-3:
+    <<: *etcd
+    hostname: etcd-3
+    command: [etcd, --name=etcd-3, --data-dir=/etcd-data,
+      --listen-client-urls=http://0.0.0.0:2379, --advertise-client-urls=http://etcd-3:2379,
+      --listen-peer-urls=http://0.0.0.0:2380, --initial-advertise-peer-urls=http://etcd-3:2380,
+      "--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380",
+      --initial-cluster-state=new, --initial-cluster-token=uft]
+    labels: {uft.node: "c", uft.role: dcs, uft.service: etcd}
+
+  pg-1:
+    <<: *patroni
+    hostname: pg-1
+    environment:
+      <<: *patroni-env
+      PATRONI_NAME: pg-1
+      PATRONI_RESTAPI_CONNECT_ADDRESS: pg-1:8008
+      PATRONI_POSTGRESQL_CONNECT_ADDRESS: pg-1:5432
+    volumes:
+      - pgdata-1:/var/lib/postgresql/data
+    labels: {uft.node: "a", uft.role: db, uft.service: db}
+    depends_on: [etcd-1, etcd-2, etcd-3]
+
+  pg-2:
+    <<: *patroni
+    hostname: pg-2
+    environment:
+      <<: *patroni-env
+      PATRONI_NAME: pg-2
+      PATRONI_RESTAPI_CONNECT_ADDRESS: pg-2:8008
+      PATRONI_POSTGRESQL_CONNECT_ADDRESS: pg-2:5432
+    volumes:
+      - pgdata-2:/var/lib/postgresql/data
+    labels: {uft.node: "b", uft.role: db, uft.service: db}
+    # pg-1 initialises the cluster and starts as primary; pg-2 is cloned from it.
+    depends_on:
+      pg-1:
+        condition: service_healthy
+
+  gateway:
+    image: haproxy:3.2-alpine
+    hostname: gateway
+    restart: on-failure
+    volumes:
+      - ./infra/haproxy/ft.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - "8080:8080"
+      - "8404:8404"
+    labels: {uft.node: edge, uft.role: gateway, uft.service: gateway}
+
+  migrate:
+    <<: *app
+    restart: "no"
+    healthcheck:
+      disable: true
+    command: [sh, -c, "python -m tools.wait_db && alembic upgrade head && python -m tools.seed"]
+    environment: {<<: *env, UFT_SERVICE_NAME: migrate}
+    labels: {uft.node: c, uft.role: job, uft.service: migrate}
+    depends_on: [gateway, pg-1, pg-2]
+
+  bank:
+    <<: *app
+    hostname: bank
+    command: uvicorn bank_mock.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: bank}
+    volumes:
+      - bankdata:/data/bank
+    labels: {uft.node: ext, uft.role: external, uft.service: bank}
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.12.0
+    hostname: toxiproxy
+    restart: on-failure
+    command: [-host=0.0.0.0, -config=/config/toxiproxy.json]
+    volumes:
+      - ./infra/toxiproxy/toxiproxy.json:/config/toxiproxy.json:ro
+    labels: {uft.node: net, uft.role: network, uft.service: toxiproxy}
+
+  student-1:
+    <<: *app
+    hostname: student-1
+    command: uvicorn student.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: student, UFT_NODE: "a"}
+    labels: {uft.node: "a", uft.role: app, uft.service: student, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  student-2:
+    <<: *app
+    hostname: student-2
+    command: uvicorn student.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: student, UFT_NODE: "b"}
+    labels: {uft.node: "b", uft.role: app, uft.service: student, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  payment-1:
+    <<: *app
+    hostname: payment-1
+    command: uvicorn payment.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: payment, UFT_NODE: "a"}
+    labels: {uft.node: "a", uft.role: app, uft.service: payment, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  payment-2:
+    <<: *app
+    hostname: payment-2
+    command: uvicorn payment.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: payment, UFT_NODE: "b"}
+    labels: {uft.node: "b", uft.role: app, uft.service: payment, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  records-1:
+    <<: *app
+    hostname: records-1
+    command: uvicorn records.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *records-env, UFT_NODE: "a"}
+    volumes: *disks
+    labels: {uft.node: "a", uft.role: app, uft.service: records, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  records-2:
+    <<: *app
+    hostname: records-2
+    command: uvicorn records.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *records-env, UFT_NODE: "b"}
+    volumes: *disks
+    labels: {uft.node: "b", uft.role: app, uft.service: records, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  timetable-1:
+    <<: *app
+    hostname: timetable-1
+    command: uvicorn timetable.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: timetable, UFT_NODE: "a"}
+    labels: {uft.node: "a", uft.role: app, uft.service: timetable, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  timetable-2:
+    <<: *app
+    hostname: timetable-2
+    command: uvicorn timetable.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment: {<<: *env, UFT_SERVICE_NAME: timetable, UFT_NODE: "b"}
+    labels: {uft.node: "b", uft.role: app, uft.service: timetable, uft.watchdog: "true"}
+    depends_on: *after-migrate
+
+  watchdog:
+    build:
+      context: .
+      dockerfile: services/Dockerfile
+      target: lab
+    image: uft-lab:dev
+    user: root
+    restart: on-failure
+    command: [python, -m, tools.watchdog, --project, uft-ft]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels: {uft.node: c, uft.role: ops, uft.service: watchdog}
+
+  backup:
+    image: postgres:16
+    restart: on-failure
+    command: [sh, /backup/backup.sh]
+    environment:
+      PGHOST: gateway
+      PGUSER: uft
+      PGPASSWORD: ${UFT_DB_PASSWORD:-uft_local_only}
+      PGDATABASE: university
+      BACKUP_INTERVAL_S: "60"
+    volumes:
+      - ./infra/backup:/backup:ro
+      - backups:/backups
+    labels: {uft.node: c, uft.role: ops, uft.service: backup}
+    depends_on: *after-migrate
+
+  # Monitoring (profile "monitoring", used for the demonstration, off during experiments).
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    profiles: [monitoring]
+    command: [--config.file=/etc/prometheus/prometheus.yml, --storage.tsdb.retention.time=1d]
+    volumes:
+      - ./infra/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    labels: {uft.node: c, uft.role: ops, uft.service: prometheus}
+
+  grafana:
+    image: grafana/grafana:12.1.0
+    profiles: [monitoring]
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/uft.json
+    volumes:
+      - ./infra/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infra/monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    labels: {uft.node: c, uft.role: ops, uft.service: grafana}
+
+  lab:
+    image: uft-lab:dev
+    profiles: [lab]
+    user: root
+    environment:
+      <<: *env
+      UFT_SERVICE_NAME: lab
+      UFT_PROJECT: uft-ft
+      UFT_GATEWAY_URL: http://gateway:8080
+      UFT_TOXIPROXY_URL: http://toxiproxy:8474
+      UFT_BANK_URL: http://bank:8000
+      UFT_TRANSCRIPT_DIRS: /data/disk1,/data/disk2,/data/disk3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./results:/results
+      - disk1:/data/disk1
+      - disk2:/data/disk2
+      - disk3:/data/disk3
+    labels: {uft.node: client, uft.role: lab, uft.service: lab}
+
+volumes:
+  pgdata-1:
+  pgdata-2:
+  bankdata:
+  disk1:
+  disk2:
+  disk3:
+  backups:

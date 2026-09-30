@@ -17,7 +17,7 @@ COPY migrations migrations
 COPY services services
 
 RUN useradd --uid 10001 --create-home uft \
-    && mkdir -p /data/bank /data/transcripts \
+    && mkdir -p /data/bank /data/transcripts /data/disk1 /data/disk2 /data/disk3 \
     && chown -R uft /data
 USER uft
 

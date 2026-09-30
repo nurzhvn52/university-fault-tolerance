@@ -18,7 +18,7 @@ POPULATION = Population(
 def test_all_scenarios_load_and_cover_the_required_failures():
     scenarios = load()
 
-    assert {"E1", "E2", "E3", "E4", "E5a", "E5b", "E5c", "E6", "CAL"} <= set(scenarios)
+    assert {"E1", "E1b", "E2", "E3", "E4", "E5a", "E5b", "E5c", "E6", "E9", "CAL"} <= set(scenarios)
     assert scenarios["E1"].duration == 120
     assert scenarios["E1"].fault_at == 20
     assert scenarios["E6"].fault_at == 20

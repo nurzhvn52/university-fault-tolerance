@@ -23,7 +23,7 @@ pytestmark = [
 @pytest.fixture(scope="module")
 def api():
     with httpx.Client(base_url=BASE_URL, timeout=15) as client:
-        deadline = time.monotonic() + 120
+        deadline = time.monotonic() + 300
         while True:
             try:
                 if client.get("/api/courses").status_code == 200:
@@ -47,7 +47,7 @@ def test_catalogue_and_student(api):
     assert len(api.get("/api/sections", params={"term": TERM}).json()) == 120
     student = api.get("/api/students/1")
     assert student.status_code == 200
-    assert student.headers["X-Instance"] == "student-1"
+    assert student.headers["X-Instance"].startswith("student-")
     assert api.get("/api/students/999999").status_code == 404
 
 

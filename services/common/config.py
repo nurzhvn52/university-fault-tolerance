@@ -30,6 +30,8 @@ class Settings(BaseSettings):
     bank_db_path: str = "/data/bank/bank.db"
     bank_latency_ms: int = 80
     transcript_dir: str = "/data/transcripts"
+    # Comma-separated directories on separate volumes; more than one means mirrored storage.
+    transcript_dirs: str = ""
     # Emulated cost of placing one section during timetable generation.
     timetable_step_delay_s: float = 0.1
 
@@ -56,6 +58,7 @@ class Settings(BaseSettings):
     worker_interval_s: float = 2.0
     pending_grace_s: float = 5.0
     transcript_cache_refresh_s: float = 60.0
+    storage_scrub_s: float = 20.0
     timetable_checkpoint_every: int = 10
 
     @property

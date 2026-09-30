@@ -26,9 +26,17 @@ actions = []
 
 [scenario.E1]
 title = "Application crash"
-description = "SIGKILL of the payment service instance payment-1 under load."
+description = "The process of payment-1 dies (exit 137) under load; a restart policy may bring it back."
 actions = [
-    { at = 20, do = "kill", target = "payment-1" },
+    { at = 20, do = "crash", target = "payment-1" },
+    { at = 60, do = "repair" },
+]
+
+[scenario.E1b]
+title = "Application hang"
+description = "The process of payment-1 stops answering but stays alive (blocked event loop)."
+actions = [
+    { at = 20, do = "hang", target = "payment-1", seconds = 3600 },
     { at = 60, do = "repair" },
 ]
 
@@ -67,22 +75,27 @@ actions = [
 
 [scenario.E5b]
 title = "Interrupted grade import"
-description = "records-1 crashes in the middle of a 200-grade batch import; the batch is sent again after the repair."
+description = """The records instance that takes a 200-grade batch import crashes after 100 rows
+(the fault is armed on every instance, so it hits whichever gets the request); the batch is
+sent again after the repair."""
 rate_profile = [[90, 30]]
 actions = [
-    { at = 20, do = "arm_fault", target = "records-1", point = "records.grade_imported", action = "crash", skip = 100 },
+    { at = 20, do = "arm_fault", target = "service:records", point = "records.grade_imported", action = "crash", skip = 100 },
     { at = 21, do = "grade_batch", size = 200 },
     { at = 40, do = "repair" },
+    { at = 45, do = "disarm", target = "service:records" },
     { at = 50, do = "grade_batch", size = 200 },
 ]
 
 [scenario.E5c]
 title = "Interrupted timetable generation"
-description = "timetable-1 crashes half way through a generation job; the job is requested again after the repair."
+description = """The timetable instance running a generation job crashes half way through (the
+fault is armed on every instance); the job is requested again after the repair."""
 rate_profile = [[90, 30]]
 actions = [
-    { at = 20, do = "arm_fault", target = "timetable-1", point = "timetable.section_placed", action = "crash", skip = 60 },
+    { at = 20, do = "arm_fault", target = "service:timetable", point = "timetable.section_placed", action = "crash", skip = 60 },
     { at = 21, do = "generate_timetable" },
+    { at = 35, do = "disarm", target = "service:timetable" },
     { at = 40, do = "repair" },
     { at = 50, do = "generate_timetable" },
 ]
@@ -96,3 +109,15 @@ rate_profile = [[20, 50], [60, 300], [40, 50]]
 fault_at = 20
 mix = { "registration.create" = 60, "sections.list" = 20, "student.get" = 10, "tuition.get" = 10 }
 actions = []
+
+[scenario.E9]
+title = "Storage corruption and disk failure"
+description = """Silent corruption of every transcript file on disk 1 at 20 s, then disk 2 is
+wiped at 50 s. With three mirrored copies one bad disk at a time is outvoted and repaired;
+the baseline has a single copy."""
+rate_profile = [[100, 30]]
+actions = [
+    { at = 1, do = "create_documents", count = 150 },
+    { at = 20, do = "corrupt_disk", disk = 1 },
+    { at = 50, do = "wipe_disk", disk = 2 },
+]

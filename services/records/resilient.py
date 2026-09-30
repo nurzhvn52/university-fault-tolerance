@@ -91,3 +91,16 @@ async def cache_loop(app: FastAPI) -> None:
                 logger.warning("transcript_cache_failed", extra={"error": type(exc).__name__})
             delay = settings.worker_interval_s
         await asyncio.sleep(delay)
+
+
+async def scrub_loop(app: FastAPI) -> None:
+    """Checks every stored copy through the voter and repairs bad ones (RAID scrub)."""
+    settings = app.state.settings
+    while True:
+        await asyncio.sleep(settings.storage_scrub_s)
+        try:
+            checked, unreadable = await asyncio.to_thread(app.state.storage.scrub)
+            logger.info("storage_scrubbed", extra={"files": checked, "unreadable": unreadable})
+        except Exception as exc:
+            if _rate_log.should_log("scrub"):
+                logger.warning("storage_scrub_failed", extra={"error": type(exc).__name__})

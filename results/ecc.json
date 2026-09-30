@@ -1,0 +1,48 @@
+{
+  "words": 20000,
+  "seed": 1,
+  "codes": {
+    "parity (65,64)": {
+      "overhead_bits": 1,
+      "1_flips": {
+        "corrected": 0.0,
+        "detected": 1.0,
+        "silent_corruption": 0.0,
+        "ok": 0.0
+      },
+      "2_flips": {
+        "corrected": 0.0,
+        "detected": 0.0,
+        "silent_corruption": 1.0,
+        "ok": 0.0
+      },
+      "3_flips": {
+        "corrected": 0.0,
+        "detected": 1.0,
+        "silent_corruption": 0.0,
+        "ok": 0.0
+      }
+    },
+    "SEC-DED (72,64)": {
+      "overhead_bits": 8,
+      "1_flips": {
+        "corrected": 1.0,
+        "detected": 0.0,
+        "silent_corruption": 0.0,
+        "ok": 0.0
+      },
+      "2_flips": {
+        "corrected": 0.0,
+        "detected": 1.0,
+        "silent_corruption": 0.0,
+        "ok": 0.0
+      },
+      "3_flips": {
+        "corrected": 0.0003,
+        "detected": 0.0,
+        "silent_corruption": 0.9997,
+        "ok": 0.0
+      }
+    }
+  }
+}

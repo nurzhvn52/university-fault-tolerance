@@ -8,9 +8,9 @@ records and timetable generation) built twice: a baseline without fault-toleranc
 and a fault-tolerant version. Both are exposed to the same injected failures and compared by
 measured reliability and availability.
 
-Status: the baseline, the experiment tooling and the software fault-tolerance mechanisms are
-ready; the infrastructure redundancy (replicas, database failover, storage) and the final
-experiments are in progress.
+Status: the baseline, the fault-tolerant version (software mechanisms and infrastructure
+redundancy) and the experiment tooling are ready; the final experiments and the report are
+in progress.
 
 ## Services
 
@@ -103,6 +103,42 @@ UFT_FT_MODE=ft docker compose -f docker-compose.baseline.yml up -d --build
 Every mechanism logs its activity (`breaker_opened`, `retry_succeeded`, `payment_reconciled`,
 `fallback_used`, `job_resumed`, ...); the experiments count these events.
 
+## Infrastructure (hardware) fault tolerance
+
+The fault-tolerant stack runs every service twice, on two simulated nodes:
+
+```
+docker compose -f docker-compose.ft.yml up -d --build
+docker compose -f docker-compose.ft.yml --profile monitoring up -d   # plus Prometheus and Grafana
+```
+
+| Node | Containers |
+|---|---|
+| a | student-1, payment-1, records-1, timetable-1, pg-1 (Patroni, first primary), etcd-1 |
+| b | student-2, payment-2, records-2, timetable-2, pg-2 (Patroni, synchronous standby), etcd-2 |
+| c | etcd-3 (third quorum member), watchdog, backup, monitoring |
+| edge | gateway (HAProxy) |
+
+| Mechanism | How | Protects against |
+|---|---|---|
+| Active redundancy of services | two replicas per service behind HAProxy, round robin | the loss of one instance or one node |
+| Health checks and failover at the gateway | `/health/ready` every 1 s, DOWN after 2 failures, retry and redispatch of safe requests | routing to a dead or unready replica |
+| Passive (hot standby) redundancy of the database | PostgreSQL streaming replication, synchronous commit to the standby (RPO 0) | loss of the primary database |
+| Leader election and automatic failover | Patroni with a 3-member etcd cluster (Raft); HAProxy routes to the node that answers `/primary` | two primaries (split brain), manual failover |
+| Rejoin of the old primary | `pg_rewind` when the failed node comes back | a node that cannot return after a failover |
+| Restart policy | `restart: on-failure` for every service | crashed processes |
+| Watchdog | `tools/watchdog.py` restarts containers whose liveness check fails | hung processes |
+| Mirrored storage with voting (RAID-1 / TMR) | three copies of every transcript file, majority read, read repair, periodic scrub | corrupted or lost files on one disk |
+| Backups | `pg_dump` every 60 s, `infra/backup/restore_check.sh` measures restore time and backup age | loss of both database nodes, operator errors |
+| ECC (simulated) | `lab/ecc.py`: SEC-DED (72,64) as in ECC memory, compared with parity by bit-flip injection (`python -m lab.ecc_experiment`) | bit flips in memory |
+
+The gateway is the remaining single point of failure; in production it would be doubled with
+a floating IP (keepalived) or a managed load balancer.
+
+Monitoring: HAProxy statistics at http://localhost:8404/stats, Prometheus at
+http://localhost:9090, Grafana (dashboard "University system - fault tolerance") at
+http://localhost:3000.
+
 ## Experiments
 
 The `lab` package runs controlled failure-injection experiments. The host script starts a
@@ -112,6 +148,7 @@ network, so the load, the service logs and the Docker events share one clock.
 ```
 python -m lab.orchestrate --mode baseline --scenarios E1,E2 --reps 5 --tag final
 python -m lab.orchestrate --mode sw --scenarios E1,E2 --reps 5 --tag final   # software mechanisms only
+python -m lab.orchestrate --mode ft --scenarios E1,E2 --reps 5 --tag final   # software + infrastructure
 python -m lab.summarize --tag final
 python -m lab.recompute --tag final     # re-evaluate stored runs after a metric change
 ```
@@ -122,7 +159,8 @@ report and `metrics.json`. `meta.json` records the git commit of the code under 
 
 | Scenario | Failure | How it is injected |
 |---|---|---|
-| E1 | application crash | SIGKILL of `payment-1` |
+| E1 | application crash | the process of `payment-1` exits (137) |
+| E1b | application hang | the event loop of `payment-1` blocks, the process stays alive |
 | E2 | database failure | SIGKILL of the primary database |
 | E3 | service-to-service timeout | toxiproxy stops answering on student -> payment |
 | E4 | node failure | SIGKILL of every container of simulated node `a` |
@@ -130,6 +168,7 @@ report and `metrics.json`. `meta.json` records the git commit of the code under 
 | E5b | interrupted grade import | `records-1` crashes half way through a 200-grade batch |
 | E5c | interrupted timetable generation | `timetable-1` crashes half way through a job |
 | E6 | high load | registration rush: 50 -> 300 requests per second for 60 s (baseline knee: 250-300) |
+| E9 | storage corruption and disk failure | every transcript file on disk 1 corrupted, then disk 2 wiped |
 | CAL, CAL_RUSH | none | step load to find the capacity of the baseline (default and registration mix) |
 
 The load is open-loop: requests start on a fixed schedule whatever the response times, so a
