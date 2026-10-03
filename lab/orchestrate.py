@@ -11,7 +11,6 @@ import argparse
 import json
 import os
 import subprocess
-import sys
 import time
 from pathlib import Path
 
@@ -90,10 +89,16 @@ def main() -> None:
                 continue
             started = time.monotonic()
             print(f"=== {args.mode} {scenario} rep{rep} ({commit})", flush=True)
-            out = run_once(args.mode, scenario, rep, args.tag, commit)
+            try:
+                out = run_once(args.mode, scenario, rep, args.tag, commit)
+            except subprocess.CalledProcessError as exc:
+                # One broken run must not stop a long batch; rerunning the same command
+                # repeats only the runs without metrics.
+                print(f"!!! {scenario} rep{rep} failed: {exc}", flush=True)
+                continue
             metrics_file = out / "metrics.json"
             if not metrics_file.exists():
-                print(f"!!! {scenario} rep{rep} produced no metrics", file=sys.stderr, flush=True)
+                print(f"!!! {scenario} rep{rep} produced no metrics", flush=True)
                 continue
             metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
             fault = metrics["fault"] or {}

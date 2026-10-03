@@ -1,5 +1,12 @@
-"""Loads and validates the scenario definitions in scenarios.toml."""
+"""Loads and validates the scenario definitions in scenarios.toml.
 
+A scenario either lists its actions, or has a ``generator`` table that produces them from the
+seed of the run (the long run E7): an alternating renewal process in which up times and
+repair times are exponentially distributed and every failure is drawn from a weighted pool.
+The same seed gives the same failure schedule to every version of the system.
+"""
+
+import random
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path
@@ -31,7 +38,31 @@ class Scenario:
         return sizes[0] if sizes else None
 
 
-def load(path: Path = SCENARIOS_FILE) -> dict[str, Scenario]:
+def generate_failures(generator: dict, duration: float, seed: int) -> list[dict]:
+    """Up time ~ Exp(mean_up_s), then a failure from the pool, repaired after
+    ~ Exp(mean_repair_s) (bounded); the next up time starts after the repair."""
+    rng = random.Random(seed)
+    pool = generator["faults"]
+    weights = [fault.get("weight", 1) for fault in pool]
+    actions = []
+    t = generator.get("warmup_s", 30)
+    while True:
+        t += max(rng.expovariate(1 / generator["mean_up_s"]), 5)
+        repair = min(max(rng.expovariate(1 / generator["mean_repair_s"]), 5), 120)
+        if t + repair > duration - generator.get("cooldown_s", 30):
+            break
+        fault = dict(rng.choices(pool, weights)[0])
+        fault.pop("weight", None)
+        for key, value in fault.items():
+            if isinstance(value, list):
+                fault[key] = rng.choice(value)
+        actions.append({"at": round(t, 1), **fault})
+        actions.append({"at": round(t + repair, 1), "do": "repair"})
+        t += repair
+    return actions
+
+
+def load(path: Path = SCENARIOS_FILE, seed: int = 1) -> dict[str, Scenario]:
     data = tomllib.loads(path.read_text(encoding="utf-8"))
     defaults = data.get("defaults", {})
     scenarios = {}
@@ -39,7 +70,11 @@ def load(path: Path = SCENARIOS_FILE) -> dict[str, Scenario]:
         profile = [
             (float(d), float(r)) for d, r in spec.get("rate_profile", defaults["rate_profile"])
         ]
-        actions = sorted(spec.get("actions", []), key=lambda a: a["at"])
+        actions = spec.get("actions", [])
+        if "generator" in spec:
+            duration = sum(d for d, _ in profile)
+            actions = generate_failures(spec["generator"], duration, seed)
+        actions = sorted(actions, key=lambda a: a["at"])
         fault_at = spec.get("fault_at", actions[0]["at"] if actions else None)
         scenario = Scenario(
             name,

@@ -25,7 +25,7 @@ def read_jsonl_gz(path: Path) -> list[dict]:
 
 def recompute(run_dir: Path) -> dict:
     meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
-    scenario = load()[meta["scenario"]]
+    scenario = load(seed=meta["seed"])[meta["scenario"]]
     t0 = meta["t0"]
     result = metrics.compute(
         read_attempts(run_dir / "requests.csv.gz"),

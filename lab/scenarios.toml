@@ -121,3 +121,23 @@ actions = [
     { at = 20, do = "corrupt_disk", disk = 1 },
     { at = 50, do = "wipe_disk", disk = 2 },
 ]
+
+[scenario.E7]
+title = "Long run with random failures"
+description = """20 minutes of normal load while failures arrive at random: up times and repair
+times are exponential (means 45 s and 30 s), each failure is drawn from the pool below and is
+repaired (operator) before the next one. Gives the observed MTTF, MTTR, MTBF and availability."""
+rate_profile = [[1200, 30]]
+
+[scenario.E7.generator]
+warmup_s = 30
+cooldown_s = 30
+mean_up_s = 45
+mean_repair_s = 30
+faults = [
+    { weight = 3, do = "crash", target = ["payment-1", "student-1", "records-1", "timetable-1"] },
+    { weight = 2, do = "hang", target = ["payment-1", "student-1", "records-1", "timetable-1"], seconds = 3600 },
+    { weight = 2, do = "kill", target = ["db-primary"] },
+    { weight = 2, do = "toxic", proxy = ["payment", "timetable", "bank"], toxic = "timeout", attributes = { timeout = 0 } },
+    { weight = 1, do = "kill_node", node = ["a"] },
+]

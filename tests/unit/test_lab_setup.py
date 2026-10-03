@@ -84,3 +84,18 @@ def test_failed_payment_is_retried_with_the_same_key():
     assert [a.status for a in attempts] == [500, 201]
     assert [a.attempt for a in attempts] == [1, 2]
     assert len(set(seen)) == 1
+
+
+def test_long_run_failures_are_reproducible_and_repaired_one_at_a_time():
+    first = load(seed=3)["E7"]
+    again = load(seed=3)["E7"]
+    other = load(seed=4)["E7"]
+
+    assert first.actions == again.actions
+    assert first.actions != other.actions
+    kinds = [a["do"] for a in first.actions]
+    assert kinds[0] != "repair" and kinds[-1] == "repair"
+    assert all(kinds[i] != "repair" for i in range(0, len(kinds), 2))
+    assert all(kinds[i] == "repair" for i in range(1, len(kinds), 2))
+    assert all(not isinstance(v, list) for a in first.actions for v in a.values())
+    assert first.actions[-1]["at"] <= first.duration - 30

@@ -122,7 +122,7 @@ def write_json(data, path: Path) -> None:
 
 async def main(args: argparse.Namespace) -> None:
     configure_logging("lab", "client", "INFO")
-    scenario = load()[args.scenario]
+    scenario = load(seed=args.rep)[args.scenario]
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     project = os.environ["UFT_PROJECT"]

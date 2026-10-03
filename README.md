@@ -169,6 +169,7 @@ report and `metrics.json`. `meta.json` records the git commit of the code under 
 | E5c | interrupted timetable generation | `timetable-1` crashes half way through a job |
 | E6 | high load | registration rush: 50 -> 300 requests per second for 60 s (baseline knee: 250-300) |
 | E9 | storage corruption and disk failure | every transcript file on disk 1 corrupted, then disk 2 wiped |
+| E7 | long run with random failures | 20 min; up times ~ Exp(45 s), repairs ~ Exp(30 s), failures drawn from crash, hang, database, network and node failures (seeded, the same schedule for every version) |
 | CAL, CAL_RUSH | none | step load to find the capacity of the baseline (default and registration mix) |
 
 The load is open-loop: requests start on a fixed schedule whatever the response times, so a

@@ -6,6 +6,7 @@ from lab.metrics import (
     buckets,
     detection_signals,
     fault_metrics,
+    injected,
     load_steps,
     outages,
     payment_intents,
@@ -163,3 +164,19 @@ def test_answer_slower_than_the_slo_is_not_good():
 
     assert stats["ok"] == 1
     assert stats["failures"] == {"slow": 1, "0": 1}
+
+
+def test_injected_failures_last_until_the_next_repair():
+    actions = [
+        {"t": 10, "do": "crash"},
+        {"t": 25, "do": "repair"},
+        {"t": 40, "do": "toxic"},
+        {"t": 45, "do": "repair"},
+        {"t": 90, "do": "kill"},
+    ]
+
+    assert injected(actions, t_end=100) == {
+        "faults": 3,
+        "fault_time_s": 30.0,
+        "mean_fault_time_s": 10.0,
+    }

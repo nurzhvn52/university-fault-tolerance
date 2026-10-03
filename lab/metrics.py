@@ -242,6 +242,37 @@ def automatic_restarts(events: list[dict], actions: list[dict], t0: float) -> in
     return count
 
 
+FAULT_ACTIONS = {
+    "crash",
+    "hang",
+    "kill",
+    "kill_node",
+    "stop",
+    "pause",
+    "toxic",
+    "arm_fault",
+    "corrupt_disk",
+    "wipe_disk",
+}
+
+
+def injected(actions: list[dict], t_end: float) -> dict:
+    """The injected failure process: how many failures and how long each lasted until the
+    next repair action (component level, to compare with the service level outages)."""
+    ordered = sorted(actions, key=lambda record: record["t"])
+    durations = []
+    for i, record in enumerate(ordered):
+        if record.get("do") not in FAULT_ACTIONS:
+            continue
+        repair = next((r["t"] for r in ordered[i + 1 :] if r.get("do") == "repair"), t_end)
+        durations.append(max(min(repair, t_end) - record["t"], 0))
+    return {
+        "faults": len(durations),
+        "fault_time_s": round(sum(durations), 1),
+        "mean_fault_time_s": round(sum(durations) / len(durations), 1) if durations else None,
+    }
+
+
 def fault_metrics(
     attempts: list[Attempt], fault_at: float, t_end: float, signals: list[tuple[float, str]]
 ) -> dict:
@@ -299,6 +330,7 @@ def compute(
         "reliability": reliability(all_spans, t_end - t0),
         "fault": fault_metrics(attempts, fault_at, t_end, signals) if fault_at else None,
         "load_steps": load_steps(attempts, t0, profile) if len(profile) > 1 else None,
+        "injected": injected(actions, t_end),
         "per_service": {
             name: {
                 "availability": request_stats([a for a in attempts if a.service == name])[
