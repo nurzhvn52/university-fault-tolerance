@@ -1,0 +1,132 @@
+{
+  "requests": {
+    "attempts": 25000,
+    "ok": 18062,
+    "failed": 6938,
+    "availability": 0.72248,
+    "failures": {
+      "timeout": 5290,
+      "slow": 1648
+    },
+    "latency_ms": {
+      "p50": 12.7,
+      "p95": 3076.9,
+      "p99": 4658.2
+    }
+  },
+  "reliability": {
+    "T_obs_s": 100.0,
+    "N_failures": 1,
+    "D_total_s": 28.0,
+    "U_total_s": 72.0,
+    "availability": 0.72,
+    "MTTF_s": 72.0,
+    "MTTR_s": 28.0,
+    "MTBF_s": 100.0,
+    "failure_rate_per_h": 50.0
+  },
+  "fault": null,
+  "load_steps": [
+    {
+      "rate": 100.0,
+      "attempts": 2001,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 9.6,
+        "p95": 12.5,
+        "p99": 27.1
+      },
+      "failures": {}
+    },
+    {
+      "rate": 200.0,
+      "attempts": 4000,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 10.1,
+        "p95": 16.7,
+        "p99": 33.0
+      },
+      "failures": {}
+    },
+    {
+      "rate": 250.0,
+      "attempts": 5000,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 11.8,
+        "p95": 78.5,
+        "p99": 180.3
+      },
+      "failures": {}
+    },
+    {
+      "rate": 300.0,
+      "attempts": 6001,
+      "availability": 0.90002,
+      "latency_ms": {
+        "p50": 108.7,
+        "p95": 2128.3,
+        "p99": 3809.2
+      },
+      "failures": {
+        "slow": 336,
+        "timeout": 264
+      }
+    },
+    {
+      "rate": 400.0,
+      "attempts": 7998,
+      "availability": 0.20755,
+      "latency_ms": {
+        "p50": 1615.6,
+        "p95": 4712.9,
+        "p99": 4847.1
+      },
+      "failures": {
+        "timeout": 5026,
+        "slow": 1312
+      }
+    }
+  ],
+  "injected": {
+    "faults": 0,
+    "fault_time_s": 0,
+    "mean_fault_time_s": null
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.99493,
+      "downtime_s": 1.0
+    },
+    "student": {
+      "availability": 0.69136,
+      "downtime_s": 28.0
+    }
+  },
+  "payments": {
+    "intents": 0,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 35,
+    "seat_counter_drift": 36,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

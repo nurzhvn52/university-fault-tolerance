@@ -1,0 +1,26 @@
+{
+  "scenario": "E7",
+  "title": "Long run with random failures",
+  "mode": "sw",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T15:06:02.985+00:00",
+  "t0": 1791039962.9851308,
+  "load_finished_s": 1199.94,
+  "planned_requests": 36000,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      1200.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

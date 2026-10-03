@@ -1,0 +1,42 @@
+{
+  "scenario": "CAL",
+  "title": "Capacity calibration",
+  "mode": "ft",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T15:31:56.917+00:00",
+  "t0": 1791041516.9174056,
+  "load_finished_s": 100.08,
+  "planned_requests": 12400,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      20.0,
+      20.0
+    ],
+    [
+      20.0,
+      40.0
+    ],
+    [
+      20.0,
+      80.0
+    ],
+    [
+      20.0,
+      160.0
+    ],
+    [
+      20.0,
+      320.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

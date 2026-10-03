@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-03T20:50:20+05:00",
+  "command": "docker compose -f docker-compose.ft.yml exec backup sh /backup/restore_check.sh",
+  "note": "FT stack after the live demos (crash, db failover, interrupted payment); no load during the check",
+  "backup": "/backups/university-20261003T154951Z.dump",
+  "backup_age_s": 21,
+  "restore_ms": 251,
+  "tables": [
+    {
+      "table": "student.students",
+      "restored": 600,
+      "live": 600
+    },
+    {
+      "table": "student.registrations",
+      "restored": 398,
+      "live": 398
+    },
+    {
+      "table": "payment.payments",
+      "restored": 210,
+      "live": 210
+    },
+    {
+      "table": "records.grades",
+      "restored": 7336,
+      "live": 7336
+    }
+  ],
+  "matched": true
+}

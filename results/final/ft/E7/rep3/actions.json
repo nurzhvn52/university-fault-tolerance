@@ -1,0 +1,358 @@
+[
+  {
+    "t": 1791038762.8653562,
+    "at": 42.2,
+    "do": "hang",
+    "target": "timetable-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791038786.4323146,
+    "at": 65.8,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038830.633204,
+    "at": 110.0,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791038835.6224577,
+    "at": 115.0,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038849.131132,
+    "at": 128.5,
+    "do": "kill_node",
+    "node": "a",
+    "result": [
+      "uft-ft-student-1-1",
+      "uft-ft-timetable-1-1",
+      "uft-ft-payment-1-1",
+      "uft-ft-records-1-1",
+      "uft-ft-pg-1-1",
+      "uft-ft-etcd-1-1"
+    ]
+  },
+  {
+    "t": 1791038857.1250446,
+    "at": 136.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-etcd-1-1",
+        "uft-ft-payment-1-1",
+        "uft-ft-pg-1-1",
+        "uft-ft-records-1-1",
+        "uft-ft-student-1-1",
+        "uft-ft-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038892.2437336,
+    "at": 171.6,
+    "do": "hang",
+    "target": "student-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-student-1-1"
+    ]
+  },
+  {
+    "t": 1791038916.1264718,
+    "at": 195.5,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038928.0266433,
+    "at": 207.4,
+    "do": "kill_node",
+    "node": "a",
+    "result": [
+      "uft-ft-student-1-1",
+      "uft-ft-timetable-1-1",
+      "uft-ft-payment-1-1",
+      "uft-ft-records-1-1",
+      "uft-ft-pg-1-1",
+      "uft-ft-etcd-1-1"
+    ]
+  },
+  {
+    "t": 1791038933.0212874,
+    "at": 212.4,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-etcd-1-1",
+        "uft-ft-payment-1-1",
+        "uft-ft-pg-1-1",
+        "uft-ft-records-1-1",
+        "uft-ft-student-1-1",
+        "uft-ft-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038993.8460522,
+    "at": 273.2,
+    "do": "crash",
+    "target": "payment-1",
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791039027.237103,
+    "at": 306.6,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039043.3249574,
+    "at": 322.7,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791039048.3130236,
+    "at": 327.7,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039089.0463142,
+    "at": 368.4,
+    "do": "hang",
+    "target": "timetable-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791039164.8682373,
+    "at": 444.2,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039187.417308,
+    "at": 466.8,
+    "do": "hang",
+    "target": "student-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-student-1-1"
+    ]
+  },
+  {
+    "t": 1791039235.935714,
+    "at": 515.3,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039330.8007991,
+    "at": 610.2,
+    "do": "crash",
+    "target": "student-1",
+    "result": [
+      "uft-ft-student-1-1"
+    ]
+  },
+  {
+    "t": 1791039335.8029318,
+    "at": 615.2,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039349.3073277,
+    "at": 628.7,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791039382.730578,
+    "at": 662.1,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039407.3038242,
+    "at": 686.7,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791039461.141938,
+    "at": 740.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039500.624687,
+    "at": 780.0,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-2-1"
+    ]
+  },
+  {
+    "t": 1791039571.0557091,
+    "at": 850.4,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-2-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039658.2957578,
+    "at": 937.7,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791039778.368784,
+    "at": 1057.7,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791039832.3216176,
+    "at": 1111.7,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-2-1"
+    ]
+  },
+  {
+    "t": 1791039844.084095,
+    "at": 1123.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-2-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "scenario": "E1b",
+  "title": "Application hang",
+  "mode": "sw",
+  "rep": 2,
+  "seed": 2,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T09:28:14.749+00:00",
+  "t0": 1791019694.7497368,
+  "load_finished_s": 119.98,
+  "planned_requests": 3600,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      120.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

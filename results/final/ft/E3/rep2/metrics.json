@@ -1,0 +1,163 @@
+{
+  "requests": {
+    "attempts": 3600,
+    "ok": 3593,
+    "failed": 7,
+    "availability": 0.99806,
+    "failures": {
+      "slow": 7
+    },
+    "latency_ms": {
+      "p50": 5.0,
+      "p95": 97.6,
+      "p99": 105.9
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 1,
+    "D_total_s": 1.0,
+    "U_total_s": 119.0,
+    "availability": 0.99167,
+    "MTTF_s": 119.0,
+    "MTTR_s": 1.0,
+    "MTBF_s": 120.0,
+    "failure_rate_per_h": 30.25
+  },
+  "fault": {
+    "client_impact_s": 0.13,
+    "detection_s": 2.21,
+    "detection_source": "student-2:breaker_opened",
+    "recovery_s": 1.0,
+    "recovered": true,
+    "downtime_s": 1.0,
+    "outages": 1,
+    "requests": {
+      "attempts": 3000,
+      "ok": 2993,
+      "failed": 7,
+      "availability": 0.99767,
+      "failures": {
+        "slow": 7
+      },
+      "latency_ms": {
+        "p50": 4.9,
+        "p95": 97.6,
+        "p99": 105.1
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 40.0,
+    "mean_fault_time_s": 40.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 0.99528,
+      "downtime_s": 1.0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 347,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 278,
+  "mechanisms": {
+    "breaker_closed": 2,
+    "breaker_half_open": 14,
+    "breaker_opened": 14,
+    "fallback_used": 18,
+    "registration_verified": 278,
+    "retry_attempt": 24
+  },
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 22.21,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 22.82,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 29.14,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 29.77,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 35.51,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 35.91,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 41.64,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 42.11,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 47.74,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 48.21,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 53.87,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 54.34,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 59.94,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 60.13,
+      "source": "student-1:breaker_opened"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "requests": {
+    "attempts": 3000,
+    "ok": 2968,
+    "failed": 32,
+    "availability": 0.98933,
+    "failures": {
+      "500": 32
+    },
+    "latency_ms": {
+      "p50": 4.2,
+      "p95": 93.9,
+      "p99": 96.0
+    }
+  },
+  "reliability": {
+    "T_obs_s": 100.0,
+    "N_failures": 5,
+    "D_total_s": 5.0,
+    "U_total_s": 95.0,
+    "availability": 0.95,
+    "MTTF_s": 19.0,
+    "MTTR_s": 1.0,
+    "MTBF_s": 20.0,
+    "failure_rate_per_h": 189.47
+  },
+  "fault": {
+    "client_impact_s": 19.57,
+    "detection_s": null,
+    "detection_source": null,
+    "recovery_s": 97.0,
+    "recovered": true,
+    "downtime_s": 5.0,
+    "outages": 5,
+    "requests": {
+      "attempts": 2970,
+      "ok": 2938,
+      "failed": 32,
+      "availability": 0.98923,
+      "failures": {
+        "500": 32
+      },
+      "latency_ms": {
+        "p50": 4.2,
+        "p95": 93.9,
+        "p99": 95.9
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 2,
+    "fault_time_s": 130.0,
+    "mean_fault_time_s": 65.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 0.95646,
+      "downtime_s": 37.0
+    },
+    "student": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 294,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 146,
+    "bad_copies": 146,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

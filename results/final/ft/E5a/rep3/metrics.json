@@ -1,0 +1,100 @@
+{
+  "requests": {
+    "attempts": 2700,
+    "ok": 2700,
+    "failed": 0,
+    "availability": 1.0,
+    "failures": {},
+    "latency_ms": {
+      "p50": 5.0,
+      "p95": 97.2,
+      "p99": 103.3
+    }
+  },
+  "reliability": {
+    "T_obs_s": 90.0,
+    "N_failures": 0,
+    "D_total_s": 0,
+    "U_total_s": 90.0,
+    "availability": 1.0,
+    "MTTF_s": null,
+    "MTTR_s": null,
+    "MTBF_s": null,
+    "failure_rate_per_h": 0.0
+  },
+  "fault": {
+    "client_impact_s": null,
+    "detection_s": null,
+    "detection_source": null,
+    "recovery_s": 0.0,
+    "recovered": true,
+    "downtime_s": 0,
+    "outages": 0,
+    "requests": {
+      "attempts": 2100,
+      "ok": 2100,
+      "failed": 0,
+      "availability": 1.0,
+      "failures": {},
+      "latency_ms": {
+        "p50": 4.9,
+        "p95": 97.1,
+        "p99": 103.3
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 20.0,
+    "mean_fault_time_s": 20.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 262,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 3,
+  "mechanisms": {
+    "duplicate_request": 1,
+    "payment_reconciled": 1,
+    "retry_attempt": 2,
+    "retry_succeeded": 2
+  },
+  "automatic_restarts": 1,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

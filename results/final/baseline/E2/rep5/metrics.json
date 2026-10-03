@@ -1,0 +1,103 @@
+{
+  "requests": {
+    "attempts": 3817,
+    "ok": 2411,
+    "failed": 1406,
+    "availability": 0.63165,
+    "failures": {
+      "timeout": 1285,
+      "slow": 117,
+      "500": 4
+    },
+    "latency_ms": {
+      "p50": 3.9,
+      "p95": 1399.2,
+      "p99": 4369.6
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 1,
+    "D_total_s": 42.0,
+    "U_total_s": 78.0,
+    "availability": 0.65,
+    "MTTF_s": 78.0,
+    "MTTR_s": 42.0,
+    "MTBF_s": 120.0,
+    "failure_rate_per_h": 46.15
+  },
+  "fault": {
+    "client_impact_s": 0.1,
+    "detection_s": null,
+    "detection_source": null,
+    "recovery_s": 42.0,
+    "recovered": true,
+    "downtime_s": 42.0,
+    "outages": 1,
+    "requests": {
+      "attempts": 3216,
+      "ok": 1810,
+      "failed": 1406,
+      "availability": 0.56281,
+      "failures": {
+        "timeout": 1285,
+        "slow": 117,
+        "500": 4
+      },
+      "latency_ms": {
+        "p50": 4.0,
+        "p95": 2649.4,
+        "p99": 4480.8
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 40.0,
+    "mean_fault_time_s": 40.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.55496,
+      "downtime_s": 41.0
+    },
+    "records": {
+      "availability": 0.68318,
+      "downtime_s": 39.0
+    },
+    "student": {
+      "availability": 0.65638,
+      "downtime_s": 42.0
+    },
+    "timetable": {
+      "availability": 0.64738,
+      "downtime_s": 40.0
+    }
+  },
+  "payments": {
+    "intents": 369,
+    "first_attempt_failed": 117,
+    "recovered_by_client_retry": 39,
+    "failed": 78
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 166,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 12,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

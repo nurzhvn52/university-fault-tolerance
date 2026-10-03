@@ -1,0 +1,23 @@
+[
+  {
+    "t": 1791027117.032355,
+    "at": 20,
+    "do": "hang",
+    "target": "payment-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791027157.0388808,
+    "at": 60,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

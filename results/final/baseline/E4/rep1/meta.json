@@ -1,0 +1,26 @@
+{
+  "scenario": "E4",
+  "title": "Node failure",
+  "mode": "baseline",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T07:17:50.384+00:00",
+  "t0": 1791011870.3844595,
+  "load_finished_s": 119.97,
+  "planned_requests": 3600,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      120.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

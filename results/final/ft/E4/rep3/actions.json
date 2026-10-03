@@ -1,0 +1,34 @@
+[
+  {
+    "t": 1791023093.0025926,
+    "at": 20,
+    "do": "kill_node",
+    "node": "a",
+    "result": [
+      "uft-ft-timetable-1-1",
+      "uft-ft-records-1-1",
+      "uft-ft-payment-1-1",
+      "uft-ft-student-1-1",
+      "uft-ft-pg-1-1",
+      "uft-ft-etcd-1-1"
+    ]
+  },
+  {
+    "t": 1791023133.0200622,
+    "at": 60,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-etcd-1-1",
+        "uft-ft-payment-1-1",
+        "uft-ft-pg-1-1",
+        "uft-ft-records-1-1",
+        "uft-ft-student-1-1",
+        "uft-ft-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

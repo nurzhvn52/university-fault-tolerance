@@ -1,0 +1,35 @@
+[
+  {
+    "t": 1791028814.1242406,
+    "at": 1,
+    "do": "create_documents",
+    "count": 150,
+    "result": {
+      "created": 119,
+      "statuses": [
+        201,
+        404
+      ]
+    }
+  },
+  {
+    "t": 1791028833.1401696,
+    "at": 20,
+    "do": "corrupt_disk",
+    "disk": 1,
+    "result": {
+      "disk": "/data/disk1",
+      "files": 606
+    }
+  },
+  {
+    "t": 1791028863.149223,
+    "at": 50,
+    "do": "wipe_disk",
+    "disk": 2,
+    "result": {
+      "disk": "/data/disk2",
+      "files": 649
+    }
+  }
+]

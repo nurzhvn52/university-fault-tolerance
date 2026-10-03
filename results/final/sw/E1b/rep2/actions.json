@@ -1,0 +1,25 @@
+[
+  {
+    "t": 1791019714.768765,
+    "at": 20,
+    "do": "hang",
+    "target": "payment-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791019754.7865043,
+    "at": 60,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-payment-1-1"
+      ],
+      "toxics_reset": true
+    }
+  }
+]

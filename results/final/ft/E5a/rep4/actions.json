@@ -1,0 +1,24 @@
+[
+  {
+    "t": 1791028017.5208309,
+    "at": 20,
+    "do": "arm_fault",
+    "target": "payment-1",
+    "point": "payment.after_charge",
+    "action": "crash",
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791028037.5133233,
+    "at": 40,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

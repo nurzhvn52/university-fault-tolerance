@@ -1,0 +1,32 @@
+[
+  {
+    "t": 1791021260.5882056,
+    "at": 20,
+    "do": "toxic",
+    "proxy": "payment",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "payment_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791021300.6030982,
+    "at": 60,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

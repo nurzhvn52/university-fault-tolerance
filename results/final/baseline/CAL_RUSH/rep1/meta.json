@@ -1,0 +1,42 @@
+{
+  "scenario": "CAL_RUSH",
+  "title": "Capacity calibration, registration rush",
+  "mode": "baseline",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T15:28:21.449+00:00",
+  "t0": 1791041301.4498944,
+  "load_finished_s": 105.02,
+  "planned_requests": 25000,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      20.0,
+      100.0
+    ],
+    [
+      20.0,
+      200.0
+    ],
+    [
+      20.0,
+      250.0
+    ],
+    [
+      20.0,
+      300.0
+    ],
+    [
+      20.0,
+      400.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "t": 1791029878.8893273,
+    "at": 20,
+    "do": "arm_fault",
+    "target": "service:timetable",
+    "point": "timetable.section_placed",
+    "action": "crash",
+    "skip": 60,
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791029879.870186,
+    "at": 21,
+    "do": "generate_timetable",
+    "result": {
+      "status": 202,
+      "body": "{\"id\":1,\"term\":\"2026-FALL\",\"status\":\"RUNNING\",\"sections_total\":0,\"sections_done\":0,\"error\":null,\"started_at\":\"2026-10-03T12:17:59.874822Z\",\"finished_at\":null}"
+    }
+  },
+  {
+    "t": 1791029893.8694746,
+    "at": 35,
+    "do": "disarm",
+    "target": "service:timetable",
+    "result": []
+  },
+  {
+    "t": 1791029898.8747404,
+    "at": 40,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791029908.8754427,
+    "at": 50,
+    "do": "generate_timetable",
+    "result": {
+      "status": 409,
+      "body": "{\"detail\":\"generation_in_progress\"}"
+    }
+  }
+]

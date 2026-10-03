@@ -1,0 +1,26 @@
+{
+  "scenario": "E3",
+  "title": "Service-to-service timeout",
+  "mode": "baseline",
+  "rep": 5,
+  "seed": 5,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T12:09:27.587+00:00",
+  "t0": 1791029367.5874202,
+  "load_finished_s": 119.99,
+  "planned_requests": 3600,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      120.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

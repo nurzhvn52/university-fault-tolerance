@@ -1,0 +1,26 @@
+{
+  "scenario": "E5b",
+  "title": "Interrupted grade import",
+  "mode": "ft",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T07:54:48.243+00:00",
+  "t0": 1791014088.2432613,
+  "load_finished_s": 89.97,
+  "planned_requests": 2700,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      90.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

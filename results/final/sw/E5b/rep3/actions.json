@@ -1,0 +1,56 @@
+[
+  {
+    "t": 1791025080.512516,
+    "at": 20,
+    "do": "arm_fault",
+    "target": "service:records",
+    "point": "records.grade_imported",
+    "action": "crash",
+    "skip": 100,
+    "result": [
+      "uft-baseline-records-1-1"
+    ]
+  },
+  {
+    "t": 1791025081.4939775,
+    "at": 21,
+    "do": "grade_batch",
+    "size": 200,
+    "result": {
+      "status": 502,
+      "body": "<html><body><h1>502 Bad Gateway</h1>\nThe server returned an invalid or incomplete response.\n</body></html>\n"
+    }
+  },
+  {
+    "t": 1791025100.5101397,
+    "at": 40,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-records-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791025105.495869,
+    "at": 45,
+    "do": "disarm",
+    "target": "service:records",
+    "result": [
+      "uft-baseline-records-1-1"
+    ]
+  },
+  {
+    "t": 1791025110.4961421,
+    "at": 50,
+    "do": "grade_batch",
+    "size": 200,
+    "result": {
+      "status": 201,
+      "body": "{\"imported\":200}"
+    }
+  }
+]

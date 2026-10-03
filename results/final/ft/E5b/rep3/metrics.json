@@ -1,0 +1,108 @@
+{
+  "requests": {
+    "attempts": 2700,
+    "ok": 2699,
+    "failed": 1,
+    "availability": 0.99963,
+    "failures": {
+      "RemoteProtocolError": 1
+    },
+    "latency_ms": {
+      "p50": 4.9,
+      "p95": 97.0,
+      "p99": 101.8
+    }
+  },
+  "reliability": {
+    "T_obs_s": 90.0,
+    "N_failures": 0,
+    "D_total_s": 0,
+    "U_total_s": 90.0,
+    "availability": 1.0,
+    "MTTF_s": null,
+    "MTTR_s": null,
+    "MTBF_s": null,
+    "failure_rate_per_h": 0.0
+  },
+  "fault": {
+    "client_impact_s": 1.17,
+    "detection_s": 1.93,
+    "detection_source": "gateway:haproxy_server_down",
+    "recovery_s": 0.0,
+    "recovered": true,
+    "downtime_s": 0,
+    "outages": 0,
+    "requests": {
+      "attempts": 2099,
+      "ok": 2098,
+      "failed": 1,
+      "availability": 0.99952,
+      "failures": {
+        "RemoteProtocolError": 1
+      },
+      "latency_ms": {
+        "p50": 4.9,
+        "p95": 96.9,
+        "p99": 101.4
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 20.0,
+    "mean_fault_time_s": 20.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 0.99848,
+      "downtime_s": 1.0
+    },
+    "student": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 262,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 1,
+  "detection_signals": [
+    {
+      "t_s": 21.93,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 21.93,
+      "source": "gateway:haproxy_server_down"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

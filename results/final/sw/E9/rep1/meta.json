@@ -1,0 +1,26 @@
+{
+  "scenario": "E9",
+  "title": "Storage corruption and disk failure",
+  "mode": "sw",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T08:26:45.786+00:00",
+  "t0": 1791016005.786105,
+  "load_finished_s": 99.97,
+  "planned_requests": 3000,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      100.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

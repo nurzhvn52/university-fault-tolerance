@@ -1,0 +1,196 @@
+{
+  "requests": {
+    "attempts": 36001,
+    "ok": 35939,
+    "failed": 62,
+    "availability": 0.99828,
+    "failures": {
+      "slow": 31,
+      "RemoteProtocolError": 30,
+      "timeout": 1
+    },
+    "latency_ms": {
+      "p50": 5.1,
+      "p95": 97.4,
+      "p99": 103.7
+    }
+  },
+  "reliability": {
+    "T_obs_s": 1200.0,
+    "N_failures": 5,
+    "D_total_s": 15.0,
+    "U_total_s": 1185.0,
+    "availability": 0.9875,
+    "MTTF_s": 237.0,
+    "MTTR_s": 3.0,
+    "MTBF_s": 240.0,
+    "failure_rate_per_h": 15.19
+  },
+  "fault": {
+    "client_impact_s": 108.82,
+    "detection_s": 1.09,
+    "detection_source": "gateway:haproxy_server_down",
+    "recovery_s": 965.0,
+    "recovered": true,
+    "downtime_s": 15.0,
+    "outages": 5,
+    "requests": {
+      "attempts": 30882,
+      "ok": 30820,
+      "failed": 62,
+      "availability": 0.99799,
+      "failures": {
+        "slow": 31,
+        "RemoteProtocolError": 30,
+        "timeout": 1
+      },
+      "latency_ms": {
+        "p50": 5.1,
+        "p95": 97.5,
+        "p99": 103.7
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 7,
+    "fault_time_s": 233.2,
+    "mean_fault_time_s": 33.3
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.99814,
+      "downtime_s": 11.0
+    },
+    "records": {
+      "availability": 0.99676,
+      "downtime_s": 7.0
+    },
+    "student": {
+      "availability": 0.99888,
+      "downtime_s": 5.0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 3656,
+    "first_attempt_failed": 1,
+    "recovered_by_client_retry": 1,
+    "failed": 0
+  },
+  "recovered_by_system": 137,
+  "mechanisms": {
+    "breaker_closed": 6,
+    "breaker_half_open": 16,
+    "breaker_opened": 16,
+    "duplicate_request": 1,
+    "fallback_used": 12,
+    "payment_deferred": 12,
+    "payment_reconciled": 99,
+    "registration_verified": 35,
+    "retry_attempt": 62,
+    "retry_succeeded": 1,
+    "watchdog_restart": 2
+  },
+  "automatic_restarts": 4,
+  "detection_signals": [
+    {
+      "t_s": 171.69,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 171.69,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 281.13,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 281.2,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 299.06,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 299.06,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 677.52,
+      "source": "payment-2:breaker_opened"
+    },
+    {
+      "t_s": 678.38,
+      "source": "payment-1:breaker_opened"
+    },
+    {
+      "t_s": 686.58,
+      "source": "payment-2:breaker_opened"
+    },
+    {
+      "t_s": 688.63,
+      "source": "payment-1:breaker_opened"
+    },
+    {
+      "t_s": 693.75,
+      "source": "payment-2:breaker_opened"
+    },
+    {
+      "t_s": 696.32,
+      "source": "payment-1:breaker_opened"
+    },
+    {
+      "t_s": 701.25,
+      "source": "payment-2:breaker_opened"
+    },
+    {
+      "t_s": 703.7,
+      "source": "payment-1:breaker_opened"
+    },
+    {
+      "t_s": 840.79,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 840.79,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 843.6,
+      "source": "uft-ft-records-1-1:unhealthy"
+    },
+    {
+      "t_s": 969.07,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 969.07,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 970.33,
+      "source": "uft-ft-records-1-1:unhealthy"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

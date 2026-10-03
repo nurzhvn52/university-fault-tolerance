@@ -1,0 +1,26 @@
+{
+  "scenario": "E5a",
+  "title": "Interrupted payment",
+  "mode": "baseline",
+  "rep": 3,
+  "seed": 3,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T09:58:35.950+00:00",
+  "t0": 1791021515.9506807,
+  "load_finished_s": 89.98,
+  "planned_requests": 2700,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      90.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

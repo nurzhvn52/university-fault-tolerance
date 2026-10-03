@@ -1,0 +1,189 @@
+{
+  "requests": {
+    "attempts": 3730,
+    "ok": 2998,
+    "failed": 732,
+    "availability": 0.80375,
+    "failures": {
+      "503": 695,
+      "RemoteProtocolError": 37
+    },
+    "latency_ms": {
+      "p50": 4.5,
+      "p95": 97.2,
+      "p99": 448.9
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 1,
+    "D_total_s": 25.0,
+    "U_total_s": 95.0,
+    "availability": 0.79167,
+    "MTTF_s": 95.0,
+    "MTTR_s": 25.0,
+    "MTBF_s": 120.0,
+    "failure_rate_per_h": 37.89
+  },
+  "fault": {
+    "client_impact_s": 0.13,
+    "detection_s": 0.64,
+    "detection_source": "student-2:db_unavailable",
+    "recovery_s": 25.0,
+    "recovered": true,
+    "downtime_s": 25.0,
+    "outages": 1,
+    "requests": {
+      "attempts": 3130,
+      "ok": 2398,
+      "failed": 732,
+      "availability": 0.76613,
+      "failures": {
+        "503": 695,
+        "RemoteProtocolError": 37
+      },
+      "latency_ms": {
+        "p50": 4.4,
+        "p95": 97.1,
+        "p99": 503.6
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 40.0,
+    "mean_fault_time_s": 40.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.69636,
+      "downtime_s": 25.0
+    },
+    "records": {
+      "availability": 0.92097,
+      "downtime_s": 24.0
+    },
+    "student": {
+      "availability": 0.80159,
+      "downtime_s": 25.0
+    },
+    "timetable": {
+      "availability": 0.81481,
+      "downtime_s": 25.0
+    }
+  },
+  "payments": {
+    "intents": 340,
+    "first_attempt_failed": 65,
+    "recovered_by_client_retry": 4,
+    "failed": 61
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {
+    "breaker_closed": 2,
+    "breaker_half_open": 4,
+    "breaker_opened": 4,
+    "db_unavailable": 16,
+    "fallback_used": 11,
+    "retry_attempt": 8
+  },
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 20.64,
+      "source": "student-2:db_unavailable"
+    },
+    {
+      "t_s": 20.67,
+      "source": "payment-1:db_unavailable"
+    },
+    {
+      "t_s": 20.7,
+      "source": "student-1:db_unavailable"
+    },
+    {
+      "t_s": 20.74,
+      "source": "payment-2:db_unavailable"
+    },
+    {
+      "t_s": 21.27,
+      "source": "records-2:db_unavailable"
+    },
+    {
+      "t_s": 21.3,
+      "source": "records-1:db_unavailable"
+    },
+    {
+      "t_s": 21.4,
+      "source": "timetable-1:db_unavailable"
+    },
+    {
+      "t_s": 21.47,
+      "source": "timetable-2:db_unavailable"
+    },
+    {
+      "t_s": 21.77,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 21.77,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 21.86,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 21.86,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.08,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.08,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.1,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.1,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.15,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.15,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.4,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.4,
+      "source": "gateway:haproxy_server_down"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

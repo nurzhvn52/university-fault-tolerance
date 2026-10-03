@@ -1,0 +1,57 @@
+{
+  "payments": {
+    "bank_charges": 0,
+    "payment_records": 0,
+    "lost_payments": {
+      "violations": 0,
+      "amount": "0"
+    },
+    "duplicate_charges": {
+      "violations": 0
+    },
+    "phantom_payments": {
+      "violations": 0
+    },
+    "invoice_mismatch": {
+      "violations": 0
+    },
+    "unfinished_payments": {
+      "violations": 0
+    }
+  },
+  "registrations": {
+    "overbooked_sections": {
+      "violations": 35,
+      "extra_seats": 50
+    },
+    "seat_counter_drift": {
+      "violations": 36,
+      "total_abs_drift": 51
+    },
+    "confirmed_without_tuition": {
+      "violations": 0
+    }
+  },
+  "records": {
+    "documents": 0,
+    "lost_documents": {
+      "violations": 0
+    },
+    "bad_copies": {
+      "violations": 0
+    },
+    "imported": 0,
+    "expected": null,
+    "partial_batch": {
+      "violations": 0
+    }
+  },
+  "timetable": {
+    "stuck_jobs": {
+      "violations": 0
+    },
+    "unscheduled_sections": {
+      "violations": 0
+    }
+  }
+}

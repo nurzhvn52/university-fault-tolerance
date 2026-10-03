@@ -1,0 +1,122 @@
+{
+  "requests": {
+    "attempts": 3603,
+    "ok": 3590,
+    "failed": 13,
+    "availability": 0.99639,
+    "failures": {
+      "RemoteProtocolError": 11,
+      "slow": 2
+    },
+    "latency_ms": {
+      "p50": 4.9,
+      "p95": 97.5,
+      "p99": 103.0
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 1,
+    "D_total_s": 3.0,
+    "U_total_s": 117.0,
+    "availability": 0.975,
+    "MTTF_s": 117.0,
+    "MTTR_s": 3.0,
+    "MTBF_s": 120.0,
+    "failure_rate_per_h": 30.77
+  },
+  "fault": {
+    "client_impact_s": 0.03,
+    "detection_s": 2.96,
+    "detection_source": "gateway:haproxy_server_down",
+    "recovery_s": 3.0,
+    "recovered": true,
+    "downtime_s": 3.0,
+    "outages": 1,
+    "requests": {
+      "attempts": 3003,
+      "ok": 2990,
+      "failed": 13,
+      "availability": 0.99567,
+      "failures": {
+        "RemoteProtocolError": 11,
+        "slow": 2
+      },
+      "latency_ms": {
+        "p50": 4.9,
+        "p95": 97.3,
+        "p99": 103.0
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 40.0,
+    "mean_fault_time_s": 40.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.98754,
+      "downtime_s": 3.0
+    },
+    "records": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 0.99865,
+      "downtime_s": 1.0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 347,
+    "first_attempt_failed": 3,
+    "recovered_by_client_retry": 3,
+    "failed": 0
+  },
+  "recovered_by_system": 9,
+  "mechanisms": {
+    "duplicate_request": 1,
+    "fallback_used": 1,
+    "payment_reconciled": 1,
+    "registration_verified": 2,
+    "retry_attempt": 7,
+    "retry_succeeded": 5,
+    "watchdog_restart": 1
+  },
+  "automatic_restarts": 1,
+  "detection_signals": [
+    {
+      "t_s": 22.96,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 22.96,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 25.57,
+      "source": "uft-ft-payment-1-1:unhealthy"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

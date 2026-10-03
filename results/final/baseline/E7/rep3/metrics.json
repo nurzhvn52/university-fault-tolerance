@@ -1,0 +1,118 @@
+{
+  "requests": {
+    "attempts": 37709,
+    "ok": 24125,
+    "failed": 13584,
+    "availability": 0.63977,
+    "failures": {
+      "timeout": 12034,
+      "slow": 607,
+      "connect": 518,
+      "502": 170,
+      "503": 147,
+      "500": 108
+    },
+    "latency_ms": {
+      "p50": 4.0,
+      "p95": 321.6,
+      "p99": 4086.5
+    }
+  },
+  "reliability": {
+    "T_obs_s": 1200.0,
+    "N_failures": 15,
+    "D_total_s": 561.0,
+    "U_total_s": 639.0,
+    "availability": 0.5325,
+    "MTTF_s": 42.6,
+    "MTTR_s": 37.4,
+    "MTBF_s": 80.0,
+    "failure_rate_per_h": 84.51
+  },
+  "fault": {
+    "client_impact_s": 0.33,
+    "detection_s": 263.06,
+    "detection_source": "gateway:haproxy_server_down",
+    "recovery_s": 1084.0,
+    "recovered": true,
+    "downtime_s": 559.0,
+    "outages": 15,
+    "requests": {
+      "attempts": 36443,
+      "ok": 22859,
+      "failed": 13584,
+      "availability": 0.62725,
+      "failures": {
+        "timeout": 12034,
+        "slow": 607,
+        "connect": 518,
+        "502": 170,
+        "503": 147,
+        "500": 108
+      },
+      "latency_ms": {
+        "p50": 4.0,
+        "p95": 600.2,
+        "p99": 4103.8
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 15,
+    "fault_time_s": 522.6,
+    "mean_fault_time_s": 34.8
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.63369,
+      "downtime_s": 323.0
+    },
+    "records": {
+      "availability": 0.76822,
+      "downtime_s": 280.0
+    },
+    "student": {
+      "availability": 0.55394,
+      "downtime_s": 563.0
+    },
+    "timetable": {
+      "availability": 0.67612,
+      "downtime_s": 392.0
+    }
+  },
+  "payments": {
+    "intents": 3632,
+    "first_attempt_failed": 916,
+    "recovered_by_client_retry": 231,
+    "failed": 685
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 305.26,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 305.26,
+      "source": "gateway:haproxy_server_down"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 540,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 6,
+    "seat_counter_drift": 33,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

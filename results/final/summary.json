@@ -1,0 +1,6995 @@
+[
+  {
+    "mode": "baseline",
+    "scenario": "CAL",
+    "runs": 1,
+    "availability": {
+      "n": 1,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "p95_ms": {
+      "n": 1,
+      "mean": 89.0,
+      "std": 0.0,
+      "min": 89.0,
+      "max": 89.0
+    },
+    "client_impact_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovered_share": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "downtime_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "fault_window_failed": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "MTTR_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "payments_recovered_by_retry": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 1,
+        "mean": 8.0,
+        "std": 0.0,
+        "min": 8,
+        "max": 8
+      },
+      "stuck_jobs": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "CAL_RUSH",
+    "runs": 1,
+    "availability": {
+      "n": 1,
+      "mean": 0.7225,
+      "std": 0.0,
+      "min": 0.72248,
+      "max": 0.72248
+    },
+    "failed_requests": {
+      "n": 1,
+      "mean": 6938.0,
+      "std": 0.0,
+      "min": 6938,
+      "max": 6938
+    },
+    "p95_ms": {
+      "n": 1,
+      "mean": 3076.9,
+      "std": 0.0,
+      "min": 3076.9,
+      "max": 3076.9
+    },
+    "client_impact_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovered_share": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "downtime_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "fault_window_failed": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "MTTR_s": {
+      "n": 1,
+      "mean": 28.0,
+      "std": 0.0,
+      "min": 28.0,
+      "max": 28.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 1,
+        "mean": 35.0,
+        "std": 0.0,
+        "min": 35,
+        "max": 35
+      },
+      "partial_batch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 1,
+        "mean": 36.0,
+        "std": 0.0,
+        "min": 36,
+        "max": 36
+      },
+      "stuck_jobs": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E1",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.7556,
+      "std": 0.0048,
+      "min": 0.74728,
+      "max": 0.7589
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 936.8,
+      "std": 22.8954,
+      "min": 921,
+      "max": 977
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 90.94,
+      "std": 0.7956,
+      "min": 90.4,
+      "max": 92.3
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.1,
+      "std": 0.0539,
+      "min": 0.03,
+      "max": 0.17
+    },
+    "detection_s": {
+      "n": 5,
+      "mean": 31.678,
+      "std": 0.0952,
+      "min": 31.59,
+      "max": 31.82
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 41.0,
+      "std": 0.0,
+      "min": 41.0,
+      "max": 41.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 41.0,
+      "std": 0.0,
+      "min": 41.0,
+      "max": 41.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 936.6,
+      "std": 22.4566,
+      "min": 921,
+      "max": 976
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 41.0,
+      "std": 0.0,
+      "min": 41.0,
+      "max": 41.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 4.6,
+      "std": 1.6733,
+      "min": 2,
+      "max": 6
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "min": 0,
+        "max": 1
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E1b",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.7364,
+      "std": 0.003,
+      "min": 0.73192,
+      "max": 0.73926
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 1009.4,
+      "std": 15.3721,
+      "min": 995,
+      "max": 1034
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 268.86,
+      "std": 125.654,
+      "min": 92.8,
+      "max": 410.5
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.1,
+      "std": 0.0539,
+      "min": 0.03,
+      "max": 0.17
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 1009.2,
+      "std": 14.9733,
+      "min": 995,
+      "max": 1033
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 33.8,
+      "std": 3.8987,
+      "min": 30,
+      "max": 40
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "min": 0,
+        "max": 1
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 9.8,
+        "std": 2.1679,
+        "min": 8,
+        "max": 13
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E2",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.6288,
+      "std": 0.0082,
+      "min": 0.61429,
+      "max": 0.63437
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 1410.4,
+      "std": 33.0651,
+      "min": 1385,
+      "max": 1468
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 1574.72,
+      "std": 247.3295,
+      "min": 1260.9,
+      "max": 1885.9
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.08,
+      "std": 0.0308,
+      "min": 0.03,
+      "max": 0.1
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 42.4,
+      "std": 0.8944,
+      "min": 42.0,
+      "max": 44.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 42.4,
+      "std": 0.8944,
+      "min": 42.0,
+      "max": 44.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 1410.4,
+      "std": 33.0651,
+      "min": 1385,
+      "max": 1468
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 42.4,
+      "std": 0.8944,
+      "min": 42.0,
+      "max": 44.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 33.0,
+      "std": 5.0498,
+      "min": 25,
+      "max": 39
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 152.0,
+        "std": 9.7211,
+        "min": 143,
+        "max": 166
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.4,
+        "std": 0.5477,
+        "min": 0,
+        "max": 1
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 11.4,
+        "std": 3.4351,
+        "min": 8,
+        "max": 17
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E3",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.8735,
+      "std": 0.0025,
+      "min": 0.87111,
+      "max": 0.87639
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 455.4,
+      "std": 9.1542,
+      "min": 445,
+      "max": 464
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 91.08,
+      "std": 0.0837,
+      "min": 91.0,
+      "max": 91.2
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.392,
+      "std": 0.4329,
+      "min": 0.03,
+      "max": 1.1
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 40.0,
+      "std": 0.0,
+      "min": 40.0,
+      "max": 40.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 39.8,
+      "std": 0.4472,
+      "min": 39.0,
+      "max": 40.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 455.4,
+      "std": 9.1542,
+      "min": 445,
+      "max": 464
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 39.8,
+      "std": 0.4472,
+      "min": 39.0,
+      "max": 40.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 10.4,
+        "std": 2.9665,
+        "min": 7,
+        "max": 15
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E4",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.6072,
+      "std": 0.0055,
+      "min": 0.5999,
+      "max": 0.61536
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 1508.4,
+      "std": 29.382,
+      "min": 1467,
+      "max": 1550
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 90.18,
+      "std": 0.1643,
+      "min": 90.0,
+      "max": 90.4
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.086,
+      "std": 0.0378,
+      "min": 0.03,
+      "max": 0.13
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 1508.2,
+      "std": 29.0293,
+      "min": 1467,
+      "max": 1549
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 13.0,
+      "std": 9.6177,
+      "min": 6,
+      "max": 29
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E5a",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.8426,
+      "std": 0.0056,
+      "min": 0.8341,
+      "max": 0.84772
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 440.4,
+      "std": 16.772,
+      "min": 427,
+      "max": 466
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 1177.4,
+      "std": 484.9329,
+      "min": 873.2,
+      "max": 2039.5
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.24,
+      "std": 0.3176,
+      "min": 0.03,
+      "max": 0.8
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 440.2,
+      "std": 16.3921,
+      "min": 427,
+      "max": 465
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 34.6,
+      "std": 3.2094,
+      "min": 29,
+      "max": 37
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 1.2,
+        "std": 0.4472,
+        "min": 1,
+        "max": 2
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E5b",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9454,
+      "std": 0.0046,
+      "min": 0.93963,
+      "max": 0.95037
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 147.4,
+      "std": 12.3814,
+      "min": 134,
+      "max": 163
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 90.68,
+      "std": 0.1924,
+      "min": 90.5,
+      "max": 91.0
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 1.222,
+      "std": 0.0867,
+      "min": 1.17,
+      "max": 1.37
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 20.0,
+      "std": 0.0,
+      "min": 20.0,
+      "max": 20.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 147.4,
+      "std": 12.3814,
+      "min": 134,
+      "max": 163
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 20.0,
+      "std": 0.0,
+      "min": 20.0,
+      "max": 20.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "min": 1,
+        "max": 1
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E5c",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9332,
+      "std": 0.0066,
+      "min": 0.92444,
+      "max": 0.94222
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 180.4,
+      "std": 17.7848,
+      "min": 156,
+      "max": 204
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 92.04,
+      "std": 0.7127,
+      "min": 91.6,
+      "max": 93.3
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 7.206,
+      "std": 0.0899,
+      "min": 7.13,
+      "max": 7.33
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 14.0,
+      "std": 0.0,
+      "min": 14.0,
+      "max": 14.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 180.4,
+      "std": 17.7848,
+      "min": 156,
+      "max": 204
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 14.0,
+      "std": 0.0,
+      "min": 14.0,
+      "max": 14.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "min": 1,
+        "max": 1
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E6",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.3772,
+      "std": 0.1,
+      "min": 0.19981,
+      "max": 0.439
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 13079.4,
+      "std": 2099.4732,
+      "min": 11781,
+      "max": 16804
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 4256.02,
+      "std": 176.3823,
+      "min": 4062.3,
+      "max": 4492.4
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.342,
+      "std": 0.2389,
+      "min": 0.11,
+      "max": 0.62
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 81.0,
+      "std": 6.7454,
+      "min": 77.0,
+      "max": 93.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 80.4,
+      "std": 7.1274,
+      "min": 76.0,
+      "max": 93.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 13079.4,
+      "std": 2099.4732,
+      "min": 11781,
+      "max": 16804
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 80.4,
+      "std": 7.1274,
+      "min": 76.0,
+      "max": 93.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 81.8,
+        "std": 3.0332,
+        "min": 78,
+        "max": 86
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 100.0,
+        "std": 3.5355,
+        "min": 96,
+        "max": 105
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E7",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.7747,
+      "std": 0.133,
+      "min": 0.63977,
+      "max": 0.90561
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 8395.6667,
+      "std": 5066.7272,
+      "min": 3460,
+      "max": 13584
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 167.6667,
+      "std": 133.3126,
+      "min": 89.9,
+      "max": 321.6
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.2833,
+      "std": 0.0808,
+      "min": 0.19,
+      "max": 0.33
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 177.2933,
+      "std": 127.0204,
+      "min": 31.37,
+      "max": 263.06
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 1032.3333,
+      "std": 52.5198,
+      "min": 979.0,
+      "max": 1084.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 422.3333,
+      "std": 163.6378,
+      "min": 241.0,
+      "max": 559.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 8395.6667,
+      "std": 5066.7272,
+      "min": 3460,
+      "max": 13584
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 38.1,
+      "std": 4.194,
+      "min": 34.3,
+      "max": 42.6
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 133.3333,
+      "std": 99.0269,
+      "min": 33,
+      "max": 231
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 299.6667,
+        "std": 212.4296,
+        "min": 137,
+        "max": 540
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 29.6667,
+        "std": 51.3842,
+        "min": 0,
+        "max": 89
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 6.6667,
+        "std": 4.0415,
+        "min": 3,
+        "max": 11
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 24.6667,
+        "std": 16.1967,
+        "min": 6,
+        "max": 35
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "baseline",
+    "scenario": "E9",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9885,
+      "std": 0.0015,
+      "min": 0.986,
+      "max": 0.99
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 34.4,
+      "std": 4.5607,
+      "min": 30,
+      "max": 42
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 90.06,
+      "std": 0.2702,
+      "min": 89.8,
+      "max": 90.5
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 21.974,
+      "std": 3.2446,
+      "min": 19.57,
+      "max": 27.43
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 88.0,
+      "std": 8.4261,
+      "min": 77.0,
+      "max": 97.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 5.4,
+      "std": 1.5166,
+      "min": 3.0,
+      "max": 7.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 34.4,
+      "std": 4.5607,
+      "min": 30,
+      "max": 42
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 1.04,
+      "std": 0.0894,
+      "min": 1.0,
+      "max": 1.2
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 149.0,
+        "std": 6.245,
+        "min": 144,
+        "max": 158
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 149.0,
+        "std": 6.245,
+        "min": 144,
+        "max": 158
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "CAL",
+    "runs": 1,
+    "availability": {
+      "n": 1,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "p95_ms": {
+      "n": 1,
+      "mean": 97.6,
+      "std": 0.0,
+      "min": 97.6,
+      "max": 97.6
+    },
+    "client_impact_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovered_share": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "downtime_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "fault_window_failed": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "MTTR_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "payments_recovered_by_retry": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "CAL_RUSH",
+    "runs": 1,
+    "availability": {
+      "n": 1,
+      "mean": 0.9771,
+      "std": 0.0,
+      "min": 0.97712,
+      "max": 0.97712
+    },
+    "failed_requests": {
+      "n": 1,
+      "mean": 572.0,
+      "std": 0.0,
+      "min": 572,
+      "max": 572
+    },
+    "p95_ms": {
+      "n": 1,
+      "mean": 390.9,
+      "std": 0.0,
+      "min": 390.9,
+      "max": 390.9
+    },
+    "client_impact_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovered_share": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "downtime_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "fault_window_failed": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "MTTR_s": {
+      "n": 1,
+      "mean": 15.0,
+      "std": 0.0,
+      "min": 15.0,
+      "max": 15.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E1",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9999,
+      "std": 0.0002,
+      "min": 0.99972,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 0.4,
+      "std": 0.5477,
+      "min": 0,
+      "max": 1
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 97.5,
+      "std": 0.8972,
+      "min": 97.0,
+      "max": 99.1
+    },
+    "client_impact_s": {
+      "n": 1,
+      "mean": 0.03,
+      "std": 0.0,
+      "min": 0.03,
+      "max": 0.03
+    },
+    "detection_s": {
+      "n": 1,
+      "mean": 0.94,
+      "std": 0.0,
+      "min": 0.94,
+      "max": 0.94
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 0.2,
+      "std": 0.4472,
+      "min": 0,
+      "max": 1
+    },
+    "MTTR_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.4,
+      "std": 0.5477,
+      "min": 0,
+      "max": 1
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 1.4,
+      "std": 1.1402,
+      "min": 0,
+      "max": 3
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1,
+      "max": 1
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E1b",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9959,
+      "std": 0.0005,
+      "min": 0.99528,
+      "max": 0.99639
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 14.6,
+      "std": 1.8166,
+      "min": 13,
+      "max": 17
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 98.36,
+      "std": 1.9794,
+      "min": 97.4,
+      "max": 101.9
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.128,
+      "std": 0.0944,
+      "min": 0.03,
+      "max": 0.27
+    },
+    "detection_s": {
+      "n": 5,
+      "mean": 3.188,
+      "std": 0.2322,
+      "min": 2.91,
+      "max": 3.37
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 3.4,
+      "std": 0.5477,
+      "min": 3.0,
+      "max": 4.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 3.4,
+      "std": 0.5477,
+      "min": 3.0,
+      "max": 4.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 14.6,
+      "std": 1.8166,
+      "min": 13,
+      "max": 17
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 3.4,
+      "std": 0.5477,
+      "min": 3.0,
+      "max": 4.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 5.0,
+      "std": 1.2247,
+      "min": 3,
+      "max": 6
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 8.6,
+      "std": 3.7815,
+      "min": 5,
+      "max": 14
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1,
+      "max": 1
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E2",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.7937,
+      "std": 0.008,
+      "min": 0.78444,
+      "max": 0.80375
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 772.2,
+      "std": 32.1201,
+      "min": 732,
+      "max": 809
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 98.02,
+      "std": 1.9032,
+      "min": 96.8,
+      "max": 101.4
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.16,
+      "std": 0.03,
+      "min": 0.13,
+      "max": 0.2
+    },
+    "detection_s": {
+      "n": 5,
+      "mean": 0.664,
+      "std": 0.0251,
+      "min": 0.64,
+      "max": 0.7
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 25.4,
+      "std": 0.5477,
+      "min": 25.0,
+      "max": 26.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 25.4,
+      "std": 0.5477,
+      "min": 25.0,
+      "max": 26.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 772.2,
+      "std": 32.1201,
+      "min": 732,
+      "max": 809
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 25.4,
+      "std": 0.5477,
+      "min": 25.0,
+      "max": 26.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 5.8,
+      "std": 3.1937,
+      "min": 2,
+      "max": 10
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E3",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.998,
+      "std": 0.0001,
+      "min": 0.99778,
+      "max": 0.99806
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 7.2,
+      "std": 0.4472,
+      "min": 7,
+      "max": 8
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 98.26,
+      "std": 1.0139,
+      "min": 97.5,
+      "max": 100.0
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.392,
+      "std": 0.4329,
+      "min": 0.03,
+      "max": 1.1
+    },
+    "detection_s": {
+      "n": 5,
+      "mean": 2.352,
+      "std": 0.5228,
+      "min": 1.54,
+      "max": 2.94
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 1.4,
+      "std": 0.5477,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 1.2,
+      "std": 0.4472,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 7.2,
+      "std": 0.4472,
+      "min": 7,
+      "max": 8
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 1.2,
+      "std": 0.4472,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 258.8,
+      "std": 17.5983,
+      "min": 241,
+      "max": 278
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E4",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.7706,
+      "std": 0.0312,
+      "min": 0.72046,
+      "max": 0.79603
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 863.2,
+      "std": 126.0603,
+      "min": 761,
+      "max": 1067
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 96.84,
+      "std": 0.1817,
+      "min": 96.6,
+      "max": 97.0
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 0.254,
+      "std": 0.0508,
+      "min": 0.2,
+      "max": 0.3
+    },
+    "detection_s": {
+      "n": 5,
+      "mean": 1.454,
+      "std": 0.0467,
+      "min": 1.39,
+      "max": 1.5
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 28.8,
+      "std": 3.2711,
+      "min": 26.0,
+      "max": 34.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 28.8,
+      "std": 3.2711,
+      "min": 26.0,
+      "max": 34.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 863.2,
+      "std": 126.0603,
+      "min": 761,
+      "max": 1067
+    },
+    "MTTR_s": {
+      "n": 5,
+      "mean": 28.8,
+      "std": 3.2711,
+      "min": 26.0,
+      "max": 34.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 5.8,
+      "std": 2.49,
+      "min": 4,
+      "max": 9
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 8.2,
+      "std": 17.782,
+      "min": 0,
+      "max": 40
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E5a",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9993,
+      "std": 0.0005,
+      "min": 0.99889,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 1.8,
+      "std": 1.3038,
+      "min": 0,
+      "max": 3
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 97.4,
+      "std": 0.255,
+      "min": 97.2,
+      "max": 97.8
+    },
+    "client_impact_s": {
+      "n": 4,
+      "mean": 1.19,
+      "std": 0.7986,
+      "min": 0.5,
+      "max": 2.33
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 2.1133,
+      "std": 1.0,
+      "min": 1.11,
+      "max": 3.11
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 1.2,
+      "std": 1.3038,
+      "min": 0.0,
+      "max": 3.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 0.6,
+      "std": 0.5477,
+      "min": 0,
+      "max": 1.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 1.8,
+      "std": 1.3038,
+      "min": 0,
+      "max": 3
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 1.2,
+      "std": 0.8367,
+      "min": 0,
+      "max": 2
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 1.6,
+      "std": 0.8944,
+      "min": 1,
+      "max": 3
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1,
+      "max": 1
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E5b",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9998,
+      "std": 0.0003,
+      "min": 0.99926,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 0.6,
+      "std": 0.8944,
+      "min": 0,
+      "max": 2
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 97.24,
+      "std": 0.1817,
+      "min": 97.0,
+      "max": 97.4
+    },
+    "client_impact_s": {
+      "n": 2,
+      "mean": 1.65,
+      "std": 0.6788,
+      "min": 1.17,
+      "max": 2.13
+    },
+    "detection_s": {
+      "n": 2,
+      "mean": 2.14,
+      "std": 0.297,
+      "min": 1.93,
+      "max": 2.35
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 0.6,
+      "std": 1.3416,
+      "min": 0.0,
+      "max": 3.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 0.2,
+      "std": 0.4472,
+      "min": 0,
+      "max": 1.0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 0.6,
+      "std": 0.8944,
+      "min": 0,
+      "max": 2
+    },
+    "MTTR_s": {
+      "n": 1,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.2,
+      "std": 0.4472,
+      "min": 0,
+      "max": 1
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 1.2,
+      "std": 0.4472,
+      "min": 1,
+      "max": 2
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E5c",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 97.24,
+      "std": 0.2881,
+      "min": 97.0,
+      "max": 97.7
+    },
+    "client_impact_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "MTTR_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 2.0,
+      "std": 1.7321,
+      "min": 1,
+      "max": 5
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 1.2,
+      "std": 0.4472,
+      "min": 1,
+      "max": 2
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E6",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 0.9993,
+      "std": 0.0008,
+      "min": 0.998,
+      "max": 0.99995
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 15.4,
+      "std": 16.4256,
+      "min": 1,
+      "max": 42
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 204.3,
+      "std": 40.5959,
+      "min": 169.5,
+      "max": 262.8
+    },
+    "client_impact_s": {
+      "n": 5,
+      "mean": 5.364,
+      "std": 5.756,
+      "min": 0.77,
+      "max": 12.83
+    },
+    "detection_s": {
+      "n": 5,
+      "mean": 5.398,
+      "std": 5.738,
+      "min": 0.81,
+      "max": 12.85
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 15.4,
+      "std": 16.4256,
+      "min": 1,
+      "max": 42
+    },
+    "MTTR_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E7",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.9564,
+      "std": 0.0454,
+      "min": 0.90812,
+      "max": 0.99828
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 1591.6667,
+      "std": 1665.533,
+      "min": 62,
+      "max": 3366
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 97.0667,
+      "std": 0.2887,
+      "min": 96.9,
+      "max": 97.4
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 36.5267,
+      "std": 62.6079,
+      "min": 0.33,
+      "max": 108.82
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 2.38,
+      "std": 1.1692,
+      "min": 1.09,
+      "max": 3.37
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 988.3333,
+      "std": 86.3964,
+      "min": 916.0,
+      "max": 1084.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 68.3333,
+      "std": 61.7603,
+      "min": 15.0,
+      "max": 136.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 1591.6667,
+      "std": 1665.533,
+      "min": 62,
+      "max": 3366
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 6.9333,
+      "std": 3.7634,
+      "min": 3.0,
+      "max": 10.5
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 19.0,
+      "std": 19.0788,
+      "min": 1,
+      "max": 39
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 151.3333,
+      "std": 139.0551,
+      "min": 20,
+      "max": 297
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 6.0,
+      "std": 2.0,
+      "min": 4,
+      "max": 8
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "ft",
+    "scenario": "E9",
+    "runs": 5,
+    "availability": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "failed_requests": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "p95_ms": {
+      "n": 5,
+      "mean": 97.38,
+      "std": 0.2683,
+      "min": 97.1,
+      "max": 97.7
+    },
+    "client_impact_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "recovered_share": {
+      "n": 5,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "fault_window_failed": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "MTTR_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "payments_recovered_by_retry": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 5,
+      "mean": 1153.0,
+      "std": 11.3358,
+      "min": 1139,
+      "max": 1168
+    },
+    "automatic_restarts": {
+      "n": 5,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E1",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.8631,
+      "std": 0.0034,
+      "min": 0.86113,
+      "max": 0.86705
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 523.6667,
+      "std": 13.5769,
+      "min": 508,
+      "max": 532
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 93.4667,
+      "std": 0.2309,
+      "min": 93.2,
+      "max": 93.6
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.0667,
+      "std": 0.0351,
+      "min": 0.03,
+      "max": 0.1
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 1.9633,
+      "std": 0.6926,
+      "min": 1.41,
+      "max": 2.74
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 41.0,
+      "std": 0.0,
+      "min": 41.0,
+      "max": 41.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 41.0,
+      "std": 0.0,
+      "min": 41.0,
+      "max": 41.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 523.3333,
+      "std": 13.2791,
+      "min": 508,
+      "max": 531
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 41.0,
+      "std": 0.0,
+      "min": 41.0,
+      "max": 41.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 4.3333,
+      "std": 2.0817,
+      "min": 2,
+      "max": 6
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 261.6667,
+      "std": 16.0104,
+      "min": 246,
+      "max": 278
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E1b",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.8674,
+      "std": 0.0027,
+      "min": 0.86588,
+      "max": 0.87051
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 506.6667,
+      "std": 10.9697,
+      "min": 494,
+      "max": 513
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 94.9,
+      "std": 0.2646,
+      "min": 94.7,
+      "max": 95.2
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.0667,
+      "std": 0.0351,
+      "min": 0.03,
+      "max": 0.1
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 1.9633,
+      "std": 0.6926,
+      "min": 1.41,
+      "max": 2.74
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 506.6667,
+      "std": 10.9697,
+      "min": 494,
+      "max": 513
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 32.3333,
+      "std": 2.5166,
+      "min": 30,
+      "max": 35
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 271.6667,
+      "std": 19.218,
+      "min": 251,
+      "max": 289
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E2",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.6685,
+      "std": 0.0115,
+      "min": 0.65522,
+      "max": 0.67556
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 1269.3333,
+      "std": 48.2113,
+      "min": 1241,
+      "max": 1325
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 504.1667,
+      "std": 0.0577,
+      "min": 504.1,
+      "max": 504.2
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.0667,
+      "std": 0.0351,
+      "min": 0.03,
+      "max": 0.1
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 0.4533,
+      "std": 0.3062,
+      "min": 0.1,
+      "max": 0.64
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 42.0,
+      "std": 1.7321,
+      "min": 41.0,
+      "max": 44.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 42.0,
+      "std": 1.7321,
+      "min": 41.0,
+      "max": 44.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 1269.3333,
+      "std": 48.2113,
+      "min": 1241,
+      "max": 1325
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 42.0,
+      "std": 1.7321,
+      "min": 41.0,
+      "max": 44.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 9.3333,
+      "std": 2.0817,
+      "min": 7,
+      "max": 11
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 0.6667,
+      "std": 0.5774,
+      "min": 0,
+      "max": 1
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E3",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.999,
+      "std": 0.0002,
+      "min": 0.99889,
+      "max": 0.99917
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 3.6667,
+      "std": 0.5774,
+      "min": 3,
+      "max": 4
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 93.9,
+      "std": 0.1,
+      "min": 93.8,
+      "max": 94.0
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.42,
+      "std": 0.591,
+      "min": 0.03,
+      "max": 1.1
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 1.95,
+      "std": 0.7087,
+      "min": 1.37,
+      "max": 2.74
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 1.3333,
+      "std": 0.5774,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 3.6667,
+      "std": 0.5774,
+      "min": 3,
+      "max": 4
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 270.0,
+      "std": 18.5203,
+      "min": 251,
+      "max": 288
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E4",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.6077,
+      "std": 0.001,
+      "min": 0.60653,
+      "max": 0.60828
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 1505.0,
+      "std": 2.0,
+      "min": 1503,
+      "max": 1507
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 93.8667,
+      "std": 0.0577,
+      "min": 93.8,
+      "max": 93.9
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.0667,
+      "std": 0.0351,
+      "min": 0.03,
+      "max": 0.1
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 1505.0,
+      "std": 2.0,
+      "min": 1503,
+      "max": 1507
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 43.0,
+      "std": 0.0,
+      "min": 43.0,
+      "max": 43.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 12.0,
+      "std": 7.5498,
+      "min": 4,
+      "max": 19
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E5a",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.9192,
+      "std": 0.0032,
+      "min": 0.91613,
+      "max": 0.92253
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 226.0,
+      "std": 9.0,
+      "min": 217,
+      "max": 235
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 94.8333,
+      "std": 0.2887,
+      "min": 94.5,
+      "max": 95.0
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.3,
+      "std": 0.4335,
+      "min": 0.03,
+      "max": 0.8
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 1.9167,
+      "std": 0.7207,
+      "min": 1.4,
+      "max": 2.74
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 226.0,
+      "std": 9.0,
+      "min": 217,
+      "max": 235
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 34.0,
+      "std": 3.6056,
+      "min": 30,
+      "max": 37
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 144.3333,
+      "std": 28.2902,
+      "min": 113,
+      "max": 168
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E5b",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.9447,
+      "std": 0.0046,
+      "min": 0.94,
+      "max": 0.94926
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 149.3333,
+      "std": 12.5033,
+      "min": 137,
+      "max": 162
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 94.6667,
+      "std": 0.4041,
+      "min": 94.3,
+      "max": 95.1
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 1.2233,
+      "std": 0.1501,
+      "min": 1.07,
+      "max": 1.37
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 21.0,
+      "std": 0.0,
+      "min": 21.0,
+      "max": 21.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 20.0,
+      "std": 0.0,
+      "min": 20.0,
+      "max": 20.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 149.3333,
+      "std": 12.5033,
+      "min": 137,
+      "max": 162
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 20.0,
+      "std": 0.0,
+      "min": 20.0,
+      "max": 20.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E5c",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.984,
+      "std": 0.0041,
+      "min": 0.97926,
+      "max": 0.98667
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 43.3333,
+      "std": 11.0151,
+      "min": 36,
+      "max": 56
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 94.2333,
+      "std": 0.2082,
+      "min": 94.0,
+      "max": 94.4
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 7.2633,
+      "std": 0.0577,
+      "min": 7.23,
+      "max": 7.33
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 8.9367,
+      "std": 0.5977,
+      "min": 8.44,
+      "max": 9.6
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 20.3333,
+      "std": 1.1547,
+      "min": 19.0,
+      "max": 21.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 13.3333,
+      "std": 1.1547,
+      "min": 12.0,
+      "max": 14.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 43.3333,
+      "std": 11.0151,
+      "min": 36,
+      "max": 56
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 13.3333,
+      "std": 1.1547,
+      "min": 12.0,
+      "max": 14.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1,
+      "max": 1
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E6",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.8563,
+      "std": 0.0076,
+      "min": 0.84938,
+      "max": 0.86448
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 3017.3333,
+      "std": 160.051,
+      "min": 2846,
+      "max": 3163
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 435.1667,
+      "std": 3.9804,
+      "min": 430.6,
+      "max": 437.9
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 0.3,
+      "std": 0.03,
+      "min": 0.27,
+      "max": 0.33
+    },
+    "detection_s": {
+      "n": 3,
+      "mean": 0.3733,
+      "std": 0.0153,
+      "min": 0.36,
+      "max": 0.39
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 59.6667,
+      "std": 0.5774,
+      "min": 59.0,
+      "max": 60.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 59.6667,
+      "std": 0.5774,
+      "min": 59.0,
+      "max": 60.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 3017.3333,
+      "std": 160.051,
+      "min": 2846,
+      "max": 3163
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 59.6667,
+      "std": 0.5774,
+      "min": 59.0,
+      "max": 60.0
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E7",
+    "runs": 1,
+    "availability": {
+      "n": 1,
+      "mean": 0.9054,
+      "std": 0.0,
+      "min": 0.90537,
+      "max": 0.90537
+    },
+    "failed_requests": {
+      "n": 1,
+      "mean": 3491.0,
+      "std": 0.0,
+      "min": 3491,
+      "max": 3491
+    },
+    "p95_ms": {
+      "n": 1,
+      "mean": 503.1,
+      "std": 0.0,
+      "min": 503.1,
+      "max": 503.1
+    },
+    "client_impact_s": {
+      "n": 1,
+      "mean": 0.33,
+      "std": 0.0,
+      "min": 0.33,
+      "max": 0.33
+    },
+    "detection_s": {
+      "n": 1,
+      "mean": 2.44,
+      "std": 0.0,
+      "min": 2.44,
+      "max": 2.44
+    },
+    "recovery_s": {
+      "n": 1,
+      "mean": 915.0,
+      "std": 0.0,
+      "min": 915.0,
+      "max": 915.0
+    },
+    "recovered_share": {
+      "n": 1,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 1,
+      "mean": 269.0,
+      "std": 0.0,
+      "min": 269.0,
+      "max": 269.0
+    },
+    "fault_window_failed": {
+      "n": 1,
+      "mean": 3491.0,
+      "std": 0.0,
+      "min": 3491,
+      "max": 3491
+    },
+    "MTTR_s": {
+      "n": 1,
+      "mean": 24.5,
+      "std": 0.0,
+      "min": 24.5,
+      "max": 24.5
+    },
+    "payments_recovered_by_retry": {
+      "n": 1,
+      "mean": 79.0,
+      "std": 0.0,
+      "min": 79,
+      "max": 79
+    },
+    "recovered_by_system": {
+      "n": 1,
+      "mean": 558.0,
+      "std": 0.0,
+      "min": 558,
+      "max": 558
+    },
+    "automatic_restarts": {
+      "n": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "confirmed_without_tuition": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 1,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+  {
+    "mode": "sw",
+    "scenario": "E9",
+    "runs": 3,
+    "availability": {
+      "n": 3,
+      "mean": 0.9889,
+      "std": 0.0004,
+      "min": 0.98867,
+      "max": 0.98933
+    },
+    "failed_requests": {
+      "n": 3,
+      "mean": 33.3333,
+      "std": 1.1547,
+      "min": 32,
+      "max": 34
+    },
+    "p95_ms": {
+      "n": 3,
+      "mean": 94.0,
+      "std": 0.1,
+      "min": 93.9,
+      "max": 94.1
+    },
+    "client_impact_s": {
+      "n": 3,
+      "mean": 20.89,
+      "std": 1.4068,
+      "min": 19.57,
+      "max": 22.37
+    },
+    "detection_s": {
+      "n": 0,
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null
+    },
+    "recovery_s": {
+      "n": 3,
+      "mean": 89.0,
+      "std": 6.9282,
+      "min": 85.0,
+      "max": 97.0
+    },
+    "recovered_share": {
+      "n": 3,
+      "mean": 1.0,
+      "std": 0.0,
+      "min": true,
+      "max": true
+    },
+    "downtime_s": {
+      "n": 3,
+      "mean": 5.6667,
+      "std": 0.5774,
+      "min": 5.0,
+      "max": 6.0
+    },
+    "fault_window_failed": {
+      "n": 3,
+      "mean": 33.3333,
+      "std": 1.1547,
+      "min": 32,
+      "max": 34
+    },
+    "MTTR_s": {
+      "n": 3,
+      "mean": 1.0667,
+      "std": 0.1155,
+      "min": 1.0,
+      "max": 1.2
+    },
+    "payments_recovered_by_retry": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "recovered_by_system": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "automatic_restarts": {
+      "n": 3,
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0,
+      "max": 0
+    },
+    "consistency": {
+      "bad_copies": {
+        "n": 3,
+        "mean": 149.3333,
+        "std": 7.5719,
+        "min": 144,
+        "max": 158
+      },
+      "confirmed_without_tuition": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "duplicate_charges": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "invoice_mismatch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "lost_documents": {
+        "n": 3,
+        "mean": 149.3333,
+        "std": 7.5719,
+        "min": 144,
+        "max": 158
+      },
+      "lost_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "overbooked_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "partial_batch": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "phantom_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "seat_counter_drift": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "stuck_jobs": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unfinished_payments": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "unscheduled_sections": {
+        "n": 3,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    }
+  }
+]

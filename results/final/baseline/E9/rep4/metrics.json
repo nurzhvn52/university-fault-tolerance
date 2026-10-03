@@ -1,0 +1,99 @@
+{
+  "requests": {
+    "attempts": 3000,
+    "ok": 2958,
+    "failed": 42,
+    "availability": 0.986,
+    "failures": {
+      "500": 42
+    },
+    "latency_ms": {
+      "p50": 3.6,
+      "p95": 89.8,
+      "p99": 91.5
+    }
+  },
+  "reliability": {
+    "T_obs_s": 100.0,
+    "N_failures": 7,
+    "D_total_s": 7.0,
+    "U_total_s": 93.0,
+    "availability": 0.93,
+    "MTTF_s": 13.3,
+    "MTTR_s": 1.0,
+    "MTBF_s": 14.3,
+    "failure_rate_per_h": 270.97
+  },
+  "fault": {
+    "client_impact_s": 19.77,
+    "detection_s": null,
+    "detection_source": null,
+    "recovery_s": 96.0,
+    "recovered": true,
+    "downtime_s": 7.0,
+    "outages": 7,
+    "requests": {
+      "attempts": 2970,
+      "ok": 2928,
+      "failed": 42,
+      "availability": 0.98586,
+      "failures": {
+        "500": 42
+      },
+      "latency_ms": {
+        "p50": 3.6,
+        "p95": 89.8,
+        "p99": 91.5
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 2,
+    "fault_time_s": 130.0,
+    "mean_fault_time_s": 65.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 0.94663,
+      "downtime_s": 47.0
+    },
+    "student": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 275,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 153,
+    "bad_copies": 153,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

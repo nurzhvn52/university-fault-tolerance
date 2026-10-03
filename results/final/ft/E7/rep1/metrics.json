@@ -1,0 +1,195 @@
+{
+  "requests": {
+    "attempts": 36265,
+    "ok": 34918,
+    "failed": 1347,
+    "availability": 0.96286,
+    "failures": {
+      "503": 1256,
+      "RemoteProtocolError": 69,
+      "slow": 22
+    },
+    "latency_ms": {
+      "p50": 4.8,
+      "p95": 96.9,
+      "p99": 103.4
+    }
+  },
+  "reliability": {
+    "T_obs_s": 1200.0,
+    "N_failures": 7,
+    "D_total_s": 51.0,
+    "U_total_s": 1149.0,
+    "availability": 0.9575,
+    "MTTF_s": 164.1,
+    "MTTR_s": 7.3,
+    "MTBF_s": 171.4,
+    "failure_rate_per_h": 21.93
+  },
+  "fault": {
+    "client_impact_s": 0.33,
+    "detection_s": 2.68,
+    "detection_source": "student-2:breaker_opened",
+    "recovery_s": 916.0,
+    "recovered": true,
+    "downtime_s": 54.0,
+    "outages": 7,
+    "requests": {
+      "attempts": 35169,
+      "ok": 33822,
+      "failed": 1347,
+      "availability": 0.9617,
+      "failures": {
+        "503": 1256,
+        "RemoteProtocolError": 69,
+        "slow": 22
+      },
+      "latency_ms": {
+        "p50": 4.8,
+        "p95": 96.9,
+        "p99": 103.3
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 11,
+    "fault_time_s": 448.9,
+    "mean_fault_time_s": 40.8
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.93816,
+      "downtime_s": 46.0
+    },
+    "records": {
+      "availability": 0.98892,
+      "downtime_s": 40.0
+    },
+    "student": {
+      "availability": 0.96213,
+      "downtime_s": 51.0
+    },
+    "timetable": {
+      "availability": 0.96581,
+      "downtime_s": 46.0
+    }
+  },
+  "payments": {
+    "intents": 3538,
+    "first_attempt_failed": 137,
+    "recovered_by_client_retry": 17,
+    "failed": 120
+  },
+  "recovered_by_system": 297,
+  "mechanisms": {
+    "breaker_closed": 8,
+    "breaker_half_open": 71,
+    "breaker_opened": 71,
+    "db_unavailable": 28,
+    "fallback_used": 100,
+    "payment_reconciled": 1,
+    "registration_verified": 280,
+    "retry_attempt": 126,
+    "retry_succeeded": 14,
+    "watchdog_restart": 2
+  },
+  "automatic_restarts": 6,
+  "detection_signals": [
+    {
+      "t_s": 39.18,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 39.58,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 46.17,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 46.91,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 52.51,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 53.11,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 58.64,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 59.29,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 64.91,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 65.65,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 71.04,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 71.88,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 77.08,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 78.21,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 83.31,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 84.36,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 90.04,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 90.54,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 101.59,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 101.59,
+      "source": "gateway:haproxy_server_down"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

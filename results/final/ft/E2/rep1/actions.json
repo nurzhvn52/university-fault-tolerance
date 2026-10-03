@@ -1,0 +1,24 @@
+[
+  {
+    "t": 1791013130.090209,
+    "at": 20,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791013170.108189,
+    "at": 60,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

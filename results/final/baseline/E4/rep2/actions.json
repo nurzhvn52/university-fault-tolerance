@@ -1,0 +1,34 @@
+[
+  {
+    "t": 1791016696.7069845,
+    "at": 20,
+    "do": "kill_node",
+    "node": "a",
+    "result": [
+      "uft-baseline-gateway-1",
+      "uft-baseline-payment-1-1",
+      "uft-baseline-records-1-1",
+      "uft-baseline-timetable-1-1",
+      "uft-baseline-student-1-1",
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791016736.7412555,
+    "at": 60,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-gateway-1",
+        "uft-baseline-payment-1-1",
+        "uft-baseline-pg-1-1",
+        "uft-baseline-records-1-1",
+        "uft-baseline-student-1-1",
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

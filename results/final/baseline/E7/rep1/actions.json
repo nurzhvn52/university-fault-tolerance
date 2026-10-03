@@ -1,0 +1,270 @@
+[
+  {
+    "t": 1791032410.8483517,
+    "at": 36.5,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791032467.2435992,
+    "at": 92.9,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791032472.8118644,
+    "at": 98.5,
+    "do": "hang",
+    "target": "timetable-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791032515.8450584,
+    "at": 141.5,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791032585.7376559,
+    "at": 211.4,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791032590.7087007,
+    "at": 216.4,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791032616.228553,
+    "at": 241.9,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791032659.3023527,
+    "at": 285.0,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791032673.3142076,
+    "at": 299.0,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791032721.8025892,
+    "at": 347.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791032826.1698809,
+    "at": 451.8,
+    "do": "crash",
+    "target": "payment-1",
+    "result": [
+      "uft-baseline-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791032831.0976884,
+    "at": 456.8,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-payment-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791032957.1238925,
+    "at": 582.8,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791032971.4995859,
+    "at": 597.2,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033029.7448921,
+    "at": 655.4,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791033052.2089925,
+    "at": 677.9,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033088.4190624,
+    "at": 714.1,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791033101.19688,
+    "at": 726.9,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033238.076672,
+    "at": 863.7,
+    "do": "hang",
+    "target": "payment-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791033316.3533688,
+    "at": 942.0,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-payment-1-1"
+      ],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033325.5753517,
+    "at": 951.3,
+    "do": "toxic",
+    "proxy": "payment",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "payment_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791033445.6701536,
+    "at": 1071.3,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

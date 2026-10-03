@@ -1,0 +1,174 @@
+[
+  {
+    "t": 1791036360.43962,
+    "at": 170.6,
+    "do": "crash",
+    "target": "payment-1",
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791036449.016128,
+    "at": 259.2,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791036469.0560231,
+    "at": 279.3,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791036474.641905,
+    "at": 284.9,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791036487.647471,
+    "at": 297.9,
+    "do": "crash",
+    "target": "student-1",
+    "result": [
+      "uft-ft-student-1-1"
+    ]
+  },
+  {
+    "t": 1791036494.8375437,
+    "at": 305.1,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791036862.821953,
+    "at": 673.0,
+    "do": "toxic",
+    "proxy": "bank",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "bank_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791036893.3493044,
+    "at": 703.6,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037027.6154225,
+    "at": 837.8,
+    "do": "hang",
+    "target": "records-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-records-1-1"
+    ]
+  },
+  {
+    "t": 1791037051.1253326,
+    "at": 861.4,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037155.4109657,
+    "at": 965.6,
+    "do": "hang",
+    "target": "records-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-records-1-1"
+    ]
+  },
+  {
+    "t": 1791037216.7429,
+    "at": 1027.0,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037324.0429504,
+    "at": 1134.3,
+    "do": "toxic",
+    "proxy": "payment",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "payment_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791037340.5218651,
+    "at": 1150.8,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

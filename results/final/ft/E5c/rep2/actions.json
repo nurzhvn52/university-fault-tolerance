@@ -1,0 +1,54 @@
+[
+  {
+    "t": 1791019013.8321977,
+    "at": 20,
+    "do": "arm_fault",
+    "target": "service:timetable",
+    "point": "timetable.section_placed",
+    "action": "crash",
+    "skip": 60,
+    "result": [
+      "uft-ft-timetable-2-1",
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791019014.8131475,
+    "at": 21,
+    "do": "generate_timetable",
+    "result": {
+      "status": 202,
+      "body": "{\"id\":1,\"term\":\"2026-FALL\",\"status\":\"RUNNING\",\"sections_total\":0,\"sections_done\":0,\"error\":null,\"started_at\":\"2026-10-03T09:16:54.817431Z\",\"finished_at\":null}"
+    }
+  },
+  {
+    "t": 1791019028.8152916,
+    "at": 35,
+    "do": "disarm",
+    "target": "service:timetable",
+    "result": [
+      "uft-ft-timetable-2-1",
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791019033.8161077,
+    "at": 40,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791019043.8182988,
+    "at": 50,
+    "do": "generate_timetable",
+    "result": {
+      "status": 202,
+      "body": "{\"id\":2,\"term\":\"2026-FALL\",\"status\":\"RUNNING\",\"sections_total\":0,\"sections_done\":0,\"error\":null,\"started_at\":\"2026-10-03T09:17:23.822904Z\",\"finished_at\":null}"
+    }
+  }
+]

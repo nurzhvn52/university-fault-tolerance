@@ -1,0 +1,258 @@
+[
+  {
+    "t": 1791033697.9509535,
+    "at": 36.5,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791033754.3355975,
+    "at": 92.9,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033759.9328492,
+    "at": 98.5,
+    "do": "hang",
+    "target": "timetable-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791033802.955841,
+    "at": 141.5,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033872.829309,
+    "at": 211.4,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791033877.828688,
+    "at": 216.4,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033903.3428364,
+    "at": 241.9,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791033946.4591765,
+    "at": 285.0,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791033960.4351661,
+    "at": 299.0,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791034008.9667833,
+    "at": 347.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791034113.3135986,
+    "at": 451.8,
+    "do": "crash",
+    "target": "payment-1",
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791034118.215939,
+    "at": 456.8,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791034244.2350035,
+    "at": 582.8,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-ft-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791034258.6126313,
+    "at": 597.2,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791034316.8550935,
+    "at": 655.4,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791034339.3261116,
+    "at": 677.9,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791034375.5390508,
+    "at": 714.1,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-2-1"
+    ]
+  },
+  {
+    "t": 1791034388.315835,
+    "at": 726.9,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-2-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791034525.1932993,
+    "at": 863.7,
+    "do": "hang",
+    "target": "payment-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791034603.4601083,
+    "at": 942.0,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791034612.7025316,
+    "at": 951.3,
+    "do": "toxic",
+    "proxy": "payment",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "payment_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791034732.7893915,
+    "at": 1071.3,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

@@ -1,0 +1,119 @@
+{
+  "requests": {
+    "attempts": 2700,
+    "ok": 2644,
+    "failed": 56,
+    "availability": 0.97926,
+    "failures": {
+      "timeout": 35,
+      "503": 17,
+      "slow": 4
+    },
+    "latency_ms": {
+      "p50": 4.3,
+      "p95": 94.4,
+      "p99": 100.9
+    }
+  },
+  "reliability": {
+    "T_obs_s": 90.0,
+    "N_failures": 1,
+    "D_total_s": 14.0,
+    "U_total_s": 76.0,
+    "availability": 0.84444,
+    "MTTF_s": 76.0,
+    "MTTR_s": 14.0,
+    "MTBF_s": 90.0,
+    "failure_rate_per_h": 47.37
+  },
+  "fault": {
+    "client_impact_s": 7.23,
+    "detection_s": 9.6,
+    "detection_source": "student-1:breaker_opened",
+    "recovery_s": 21.0,
+    "recovered": true,
+    "downtime_s": 14.0,
+    "outages": 1,
+    "requests": {
+      "attempts": 2100,
+      "ok": 2044,
+      "failed": 56,
+      "availability": 0.97333,
+      "failures": {
+        "timeout": 35,
+        "503": 17,
+        "slow": 4
+      },
+      "latency_ms": {
+        "p50": 4.3,
+        "p95": 94.4,
+        "p99": 1019.6
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 20.0,
+    "mean_fault_time_s": 20.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 0.99815,
+      "downtime_s": 1.0
+    },
+    "timetable": {
+      "availability": 0.80919,
+      "downtime_s": 14.0
+    }
+  },
+  "payments": {
+    "intents": 262,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 1,
+  "mechanisms": {
+    "breaker_closed": 1,
+    "breaker_half_open": 2,
+    "breaker_opened": 2,
+    "fallback_used": 3,
+    "job_resumed": 1,
+    "retry_attempt": 10
+  },
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 29.6,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 36.64,
+      "source": "student-1:breaker_opened"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

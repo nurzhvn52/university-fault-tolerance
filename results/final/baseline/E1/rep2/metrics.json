@@ -1,0 +1,116 @@
+{
+  "requests": {
+    "attempts": 3829,
+    "ok": 2904,
+    "failed": 925,
+    "availability": 0.75842,
+    "failures": {
+      "timeout": 634,
+      "503": 161,
+      "500": 90,
+      "slow": 39,
+      "RemoteProtocolError": 1
+    },
+    "latency_ms": {
+      "p50": 3.8,
+      "p95": 90.4,
+      "p99": 3125.2
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 1,
+    "D_total_s": 41.0,
+    "U_total_s": 79.0,
+    "availability": 0.65833,
+    "MTTF_s": 79.0,
+    "MTTR_s": 41.0,
+    "MTBF_s": 120.0,
+    "failure_rate_per_h": 45.57
+  },
+  "fault": {
+    "client_impact_s": 0.03,
+    "detection_s": 31.59,
+    "detection_source": "gateway:haproxy_server_down",
+    "recovery_s": 41.0,
+    "recovered": true,
+    "downtime_s": 41.0,
+    "outages": 1,
+    "requests": {
+      "attempts": 3228,
+      "ok": 2303,
+      "failed": 925,
+      "availability": 0.71344,
+      "failures": {
+        "timeout": 634,
+        "503": 161,
+        "500": 90,
+        "slow": 39,
+        "RemoteProtocolError": 1
+      },
+      "latency_ms": {
+        "p50": 3.8,
+        "p95": 90.5,
+        "p99": 3620.8
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 1,
+    "fault_time_s": 40.0,
+    "mean_fault_time_s": 40.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.5266,
+      "downtime_s": 41.0
+    },
+    "records": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 0.73046,
+      "downtime_s": 41.0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 347,
+    "first_attempt_failed": 115,
+    "recovered_by_client_retry": 5,
+    "failed": 110
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 51.59,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 51.59,
+      "source": "gateway:haproxy_server_down"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 1,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

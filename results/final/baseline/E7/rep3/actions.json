@@ -1,0 +1,372 @@
+[
+  {
+    "t": 1791037475.469762,
+    "at": 42.2,
+    "do": "hang",
+    "target": "timetable-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791037499.0524278,
+    "at": 65.8,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037543.2670224,
+    "at": 110.0,
+    "do": "crash",
+    "target": "timetable-1",
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791037548.2309313,
+    "at": 115.0,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037561.7364068,
+    "at": 128.5,
+    "do": "kill_node",
+    "node": "a",
+    "result": [
+      "uft-baseline-gateway-1",
+      "uft-baseline-timetable-1-1",
+      "uft-baseline-payment-1-1",
+      "uft-baseline-records-1-1",
+      "uft-baseline-student-1-1",
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791037569.7327852,
+    "at": 136.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-gateway-1",
+        "uft-baseline-payment-1-1",
+        "uft-baseline-pg-1-1",
+        "uft-baseline-records-1-1",
+        "uft-baseline-student-1-1",
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037604.8576553,
+    "at": 171.6,
+    "do": "hang",
+    "target": "student-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-student-1-1"
+    ]
+  },
+  {
+    "t": 1791037628.7470229,
+    "at": 195.5,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-student-1-1"
+      ],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037640.6340134,
+    "at": 207.4,
+    "do": "kill_node",
+    "node": "a",
+    "result": [
+      "uft-baseline-gateway-1",
+      "uft-baseline-timetable-1-1",
+      "uft-baseline-payment-1-1",
+      "uft-baseline-records-1-1",
+      "uft-baseline-student-1-1",
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791037645.626552,
+    "at": 212.4,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-gateway-1",
+        "uft-baseline-payment-1-1",
+        "uft-baseline-pg-1-1",
+        "uft-baseline-records-1-1",
+        "uft-baseline-student-1-1",
+        "uft-baseline-timetable-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037706.478423,
+    "at": 273.2,
+    "do": "crash",
+    "target": "payment-1",
+    "result": [
+      "uft-baseline-payment-1-1"
+    ]
+  },
+  {
+    "t": 1791037739.851247,
+    "at": 306.6,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-payment-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037755.9353204,
+    "at": 322.7,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791037760.9232154,
+    "at": 327.7,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037801.6175487,
+    "at": 368.4,
+    "do": "hang",
+    "target": "timetable-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-timetable-1-1"
+    ]
+  },
+  {
+    "t": 1791037877.482145,
+    "at": 444.2,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-timetable-1-1"
+      ],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791037900.0217996,
+    "at": 466.8,
+    "do": "hang",
+    "target": "student-1",
+    "seconds": 3600,
+    "result": [
+      "uft-baseline-student-1-1"
+    ]
+  },
+  {
+    "t": 1791037948.5554888,
+    "at": 515.3,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [
+        "uft-baseline-student-1-1"
+      ],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038043.5002859,
+    "at": 610.2,
+    "do": "crash",
+    "target": "student-1",
+    "result": [
+      "uft-baseline-student-1-1"
+    ]
+  },
+  {
+    "t": 1791038048.4081783,
+    "at": 615.2,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-student-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038061.9083266,
+    "at": 628.7,
+    "do": "toxic",
+    "proxy": "timetable",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "timetable_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1791038095.3139138,
+    "at": 662.1,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038119.9298103,
+    "at": 686.7,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791038173.7567725,
+    "at": 740.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038213.2383657,
+    "at": 780.0,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791038283.6672904,
+    "at": 850.4,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038370.9162805,
+    "at": 937.7,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791038490.9874322,
+    "at": 1057.7,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1791038544.941149,
+    "at": 1111.7,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-baseline-pg-1-1"
+    ]
+  },
+  {
+    "t": 1791038556.7012322,
+    "at": 1123.5,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-baseline-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  }
+]

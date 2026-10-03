@@ -1,0 +1,99 @@
+{
+  "requests": {
+    "attempts": 3000,
+    "ok": 2970,
+    "failed": 30,
+    "availability": 0.99,
+    "failures": {
+      "500": 30
+    },
+    "latency_ms": {
+      "p50": 3.6,
+      "p95": 90.1,
+      "p99": 91.5
+    }
+  },
+  "reliability": {
+    "T_obs_s": 100.0,
+    "N_failures": 3,
+    "D_total_s": 3.0,
+    "U_total_s": 97.0,
+    "availability": 0.97,
+    "MTTF_s": 32.3,
+    "MTTR_s": 1.0,
+    "MTBF_s": 33.3,
+    "failure_rate_per_h": 111.34
+  },
+  "fault": {
+    "client_impact_s": 27.43,
+    "detection_s": null,
+    "detection_source": null,
+    "recovery_s": 77.0,
+    "recovered": true,
+    "downtime_s": 3.0,
+    "outages": 3,
+    "requests": {
+      "attempts": 2970,
+      "ok": 2940,
+      "failed": 30,
+      "availability": 0.9899,
+      "failures": {
+        "500": 30
+      },
+      "latency_ms": {
+        "p50": 3.6,
+        "p95": 90.1,
+        "p99": 91.5
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 2,
+    "fault_time_s": 130.0,
+    "mean_fault_time_s": 65.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 0.95851,
+      "downtime_s": 45.0
+    },
+    "student": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 308,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 144,
+    "bad_copies": 144,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

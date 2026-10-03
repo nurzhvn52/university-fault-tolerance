@@ -1,0 +1,26 @@
+{
+  "scenario": "E1",
+  "title": "Application crash",
+  "mode": "baseline",
+  "rep": 4,
+  "seed": 4,
+  "git_commit": "6b29baf",
+  "started_at": "2026-10-03T11:05:34.252+00:00",
+  "t0": 1791025534.2526228,
+  "load_finished_s": 119.97,
+  "planned_requests": 3600,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      120.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

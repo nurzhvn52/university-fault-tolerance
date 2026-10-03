@@ -1,0 +1,36 @@
+[
+  {
+    "t": 1791021980.5678098,
+    "at": 1,
+    "do": "create_documents",
+    "count": 150,
+    "result": {
+      "created": 119,
+      "statuses": [
+        201,
+        404
+      ]
+    }
+  },
+  {
+    "t": 1791021999.5848641,
+    "at": 20,
+    "do": "corrupt_disk",
+    "disk": 1,
+    "result": {
+      "disk": "/data/transcripts",
+      "files": 146
+    }
+  },
+  {
+    "t": 1791022029.5944505,
+    "at": 50,
+    "do": "wipe_disk",
+    "disk": 2,
+    "result": {
+      "disk": 2,
+      "files": 0,
+      "note": "no such disk"
+    }
+  }
+]

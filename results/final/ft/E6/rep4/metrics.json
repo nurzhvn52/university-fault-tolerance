@@ -1,0 +1,147 @@
+{
+  "requests": {
+    "attempts": 21000,
+    "ok": 20958,
+    "failed": 42,
+    "availability": 0.998,
+    "failures": {
+      "503": 42
+    },
+    "latency_ms": {
+      "p50": 18.0,
+      "p95": 262.8,
+      "p99": 491.2
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 0,
+    "D_total_s": 0,
+    "U_total_s": 120.0,
+    "availability": 1.0,
+    "MTTF_s": null,
+    "MTTR_s": null,
+    "MTBF_s": null,
+    "failure_rate_per_h": 0.0
+  },
+  "fault": {
+    "client_impact_s": 0.77,
+    "detection_s": 0.81,
+    "detection_source": "student-2:load_shed",
+    "recovery_s": 0.0,
+    "recovered": true,
+    "downtime_s": 0,
+    "outages": 0,
+    "requests": {
+      "attempts": 20000,
+      "ok": 19958,
+      "failed": 42,
+      "availability": 0.9979,
+      "failures": {
+        "503": 42
+      },
+      "latency_ms": {
+        "p50": 18.6,
+        "p95": 270.4,
+        "p99": 502.7
+      }
+    }
+  },
+  "load_steps": [
+    {
+      "rate": 50.0,
+      "attempts": 1000,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 14.3,
+        "p95": 24.5,
+        "p99": 35.9
+      },
+      "failures": {}
+    },
+    {
+      "rate": 300.0,
+      "attempts": 18001,
+      "availability": 0.99767,
+      "latency_ms": {
+        "p50": 20.4,
+        "p95": 284.0,
+        "p99": 519.9
+      },
+      "failures": {
+        "503": 42
+      }
+    },
+    {
+      "rate": 50.0,
+      "attempts": 1999,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 11.7,
+        "p95": 18.3,
+        "p99": 22.8
+      },
+      "failures": {}
+    }
+  ],
+  "injected": {
+    "faults": 0,
+    "fault_time_s": 0,
+    "mean_fault_time_s": null
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 0.99777,
+      "downtime_s": 1.0
+    }
+  },
+  "payments": {
+    "intents": 0,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {
+    "db_unavailable": 1,
+    "load_shed": 3
+  },
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 20.81,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 20.81,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 23.87,
+      "source": "student-1:db_unavailable"
+    },
+    {
+      "t_s": 27.63,
+      "source": "student-1:load_shed"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}
