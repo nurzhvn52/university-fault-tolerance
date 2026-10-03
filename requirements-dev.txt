@@ -1,3 +1,4 @@
 -r services/requirements.txt
 pytest==9.1.1
 ruff==0.16.9
+matplotlib==3.11.2

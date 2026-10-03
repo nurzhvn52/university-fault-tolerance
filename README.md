@@ -8,9 +8,9 @@ records and timetable generation) built twice: a baseline without fault-toleranc
 and a fault-tolerant version. Both are exposed to the same injected failures and compared by
 measured reliability and availability.
 
-Status: the baseline, the fault-tolerant version (software mechanisms and infrastructure
-redundancy) and the experiment tooling are ready; the final experiments and the report are
-in progress.
+Status: complete. The final dataset (141 runs, code at tag `v1.0-experiments`) is in
+`results/final`, the evaluation in `results/final/analysis.json` and the figures in
+`docs/figures`; the main numbers are in [Results](#results).
 
 ## Services
 
@@ -202,6 +202,69 @@ Code paths where a crash matters are marked with `fault_point(...)`; the lab arm
 the `/_chaos` endpoint, which is mounted only when `UFT_CHAOS_ENABLED=true` and is not routed
 by the gateway.
 
+## Results
+
+Final series: every scenario 5 times for the baseline and the fault-tolerant version and 3
+times with the software mechanisms only (seeds 1-5); E7 3, 3 and 1 times. Means over the
+repetitions; A is the share of good requests over the whole run (in E1-E4: failure at 20 s,
+repair at 60 s, 120 s of load).
+
+| Scenario | A baseline | A software only | A fault-tolerant | Failed requests baseline / FT | Recovery baseline / FT, s | Consistency violations baseline / FT |
+|---|---|---|---|---|---|---|
+| E1 application crash | 75.56% | 86.31% | 99.99% | 937 / 0.4 | 41 / 0.0 | 0.6 / 0 |
+| E1b application hang | 73.64% | 86.74% | 99.59% | 1009 / 15 | 43 / 3.4 | 10 / 0 |
+| E2 database failure | 62.88% | 66.85% | 79.37% | 1410 / 772 | 42 / 25.4 | 164 / 0 |
+| E3 service-to-service timeout | 87.35% | 99.90% | 99.80% | 455 / 7.2 | 40 / 1.4 | 10 / 0 |
+| E4 node failure | 60.72% | 60.77% | 77.06% | 1508 / 863 | 43 / 28.8 | 0 / 0 |
+| E5a interrupted payment | 84.26% | 91.92% | 99.93% | 440 / 1.8 | 21 / 1.2 | 1.2 / 0 |
+| E5b interrupted grade import | 94.54% | 94.47% | 99.98% | 147 / 0.6 | 21 / 0.6 | 1 / 0 |
+| E5c interrupted timetable generation | 93.32% | 98.40% | 100.00% | 180 / 0 | 21 / 0.0 | 1 / 0 |
+| E6 high load | 37.72% | 85.63% | 99.93% | 13079 / 15 | 81 / 0.0 | 182 / 0 |
+| E9 storage corruption, disk failure | 98.85% | 98.89% | 100.00% | 34 / 0 | 88 / 0.0 | 298 / 0 |
+
+| E7 (20 min, random failures) | Runs | Outages per run | MTTF, s | MTTR, s | MTBF, s | A (time) | A predicted from E1-E4 |
+|---|---|---|---|---|---|---|---|
+| baseline | 3 | 11.0 | 82.1 | 38.1 | 120.2 | 64.72% | 65.09% |
+| software only | 1 | 11.0 | 84.6 | 24.5 | 109.1 | 77.58% | 77.75% |
+| fault-tolerant | 3 | 8.3 | 161.0 | 6.9 | 167.9 | 94.39% | 94.78% |
+
+What remains in the fault-tolerant version is the database failover (Patroni needs its 20 s
+leader lease to expire, about 25 s in total) and the single gateway.
+
+![Availability per scenario](docs/figures/availability.png)
+
+## Analysis
+
+```
+python -m lab.summarize --tag final     # results/final/summary.csv
+python -m analysis.run --tag final      # results/final/analysis.json and docs/figures/*.png
+```
+
+`analysis/model.py` holds the reliability model (block diagrams, fault tree, sensitivity of
+availability to MTBF and MTTR), `analysis/fmea.py` the FMEA table, `analysis/results.py` the
+comparison, the per-failure-type breakdown of E7 and the prediction of E7 from the
+single-failure scenarios, `analysis/diagrams.py` and `analysis/figures.py` the figures
+(architecture, block diagrams, fault tree, timelines, capacity).
+
+## Live demonstration
+
+`lab/demo.py` runs one failure under load and prints, every second, the share of good
+requests, which replicas answered and which database node is the primary; at the end it runs
+the consistency checks.
+
+```
+docker compose -f docker-compose.ft.yml up -d --build
+docker compose -f docker-compose.ft.yml run --rm lab python -m lab.demo db        # failover
+docker compose -f docker-compose.ft.yml run --rm lab python -m lab.demo crash     # replica takes over
+docker compose -f docker-compose.ft.yml run --rm lab python -m lab.demo payment   # crash after the bank charge
+docker compose -f docker-compose.baseline.yml up -d --build
+docker compose -f docker-compose.baseline.yml run --rm lab python -m lab.demo db --repair 40
+```
+
+Other failures: `hang`, `node`, `network`. After `db` or `node`, `docker compose -f
+docker-compose.ft.yml up -d` brings the killed containers back (the old primary rejoins as a
+standby).
+
 ## Development
 
 ```
@@ -222,6 +285,9 @@ UFT_BASE_URL=http://localhost:8080 pytest -m integration   # needs the running s
 | `services/tools/seed.py` | synthetic data |
 | `migrations` | Alembic migrations for all schemas |
 | `infra/haproxy`, `infra/toxiproxy` | gateway and network fault proxy configuration |
-| `lab` | load generator, failure injection, consistency checks, metrics, scenarios |
-| `results` | experiment datasets |
+| `infra/patroni`, `infra/backup`, `infra/monitoring` | database cluster, backups and restore check, Prometheus and Grafana |
+| `lab` | load generator, failure injection, consistency checks, metrics, scenarios, ECC simulation, live demo |
+| `analysis` | reliability model, FMEA, evaluation of the results, figures |
+| `results/final` | final dataset: one directory per run, `summary.csv`, `analysis.json`, `backup_check.json` |
+| `docs/figures` | architecture, block diagrams, fault tree and result figures |
 | `tests/unit`, `tests/integration` | unit tests and end-to-end smoke tests |

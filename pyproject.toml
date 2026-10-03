@@ -6,7 +6,7 @@ target-version = "py311"
 select = ["E", "F", "I", "B", "UP", "SIM"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["common", "student", "payment", "records", "timetable", "bank_mock", "tools", "lab"]
+known-first-party = ["common", "student", "payment", "records", "timetable", "bank_mock", "tools", "lab", "analysis"]
 
 [tool.pytest.ini_options]
 pythonpath = ["services", "."]
