@@ -10,6 +10,7 @@ import json
 from collections import Counter
 
 from analysis.results import stats
+from lab.loadgen import read_attempts
 
 MODES = ("baseline", "ft", "ft2")
 SCENARIOS = ("X0", "X1", "X1b", "X2", "X3", "X4", "X5", "X6", "X7", "X8", "X9", "X10")
@@ -66,6 +67,12 @@ def _alert_rows(metrics: list[dict]) -> dict:
         "false_positives": dict(false_positives),
         "false_positive_total": sum(false_positives.values()),
     }
+
+
+def _mean_latency_ms(run: dict) -> float | None:
+    """Mean over answered requests (the metrics file keeps percentiles only)."""
+    latencies = [a.latency_ms for a in read_attempts(run["dir"] / "requests.csv.gz") if a.status]
+    return sum(latencies) / len(latencies) if latencies else None
 
 
 def _security(scenario: str, metrics: list[dict]) -> dict:
@@ -156,6 +163,7 @@ def summarize(runs: dict) -> dict:
             "availability_after_fault": stats([d.get("availability") for d in during]),
             "failed": stats([m["requests"]["failed"] for m in metrics]),
             "attempts": stats([m["requests"]["attempts"] for m in metrics]),
+            "mean_ms": stats([_mean_latency_ms(run) for run in group]),
             "p50_ms": stats([m["requests"]["latency_ms"]["p50"] for m in metrics]),
             "p95_ms": stats([m["requests"]["latency_ms"]["p95"] for m in metrics]),
             "p95_after_fault_ms": stats([(d.get("latency_ms") or {}).get("p95") for d in during]),
