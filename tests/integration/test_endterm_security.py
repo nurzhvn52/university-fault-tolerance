@@ -49,6 +49,14 @@ def api():
             time.sleep(1)
         if login(client, "admin1").status_code != 200:
             pytest.skip("the stack runs without the security layer")
+        # Every service must be up: the stack is ready when an authorised read works on each.
+        admin = bearer(login(client, "admin1").json()["access_token"])
+        paths = ["/api/students/1", f"/api/tuition/1?term={TERM}", "/api/transcripts/2",
+                 f"/api/timetable?term={TERM}"]  # fmt: skip
+        while not all(client.get(path, headers=admin).status_code == 200 for path in paths):
+            if time.monotonic() > deadline:
+                pytest.fail("the services did not become ready")
+            time.sleep(2)
         yield client
 
 

@@ -6,6 +6,8 @@ UFT_FT_MODE=ft UFT_BASE_URL=http://localhost:8080 pytest -m integration
 
 import asyncio
 import os
+import random
+import string
 import time
 import uuid
 from decimal import Decimal
@@ -82,7 +84,8 @@ def test_repeated_payment_returns_the_original(api):
 
 
 def test_grade_import_can_be_repeated_safely(api):
-    term = f"T{uuid.uuid4().hex[:8]}"
+    # A term has the form 2026-ABC (the input patterns apply in every configuration).
+    term = "2026-" + "".join(random.choices(string.ascii_uppercase, k=8))
     items = [
         {"student_id": i, "course_code": "CSE316", "term": term, "letter": "A", "credits": 5}
         for i in range(1, 21)
