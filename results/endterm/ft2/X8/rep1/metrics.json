@@ -1,0 +1,157 @@
+{
+  "requests": {
+    "attempts": 3000,
+    "ok": 3000,
+    "failed": 0,
+    "availability": 1.0,
+    "failures": {},
+    "latency_ms": {
+      "p50": 5.3,
+      "p95": 99.3,
+      "p99": 108.8
+    }
+  },
+  "reliability": {
+    "T_obs_s": 100.0,
+    "N_failures": 0,
+    "D_total_s": 0,
+    "U_total_s": 100.0,
+    "availability": 1.0,
+    "MTTF_s": null,
+    "MTTR_s": null,
+    "MTBF_s": null,
+    "failure_rate_per_h": 0.0
+  },
+  "fault": {
+    "client_impact_s": null,
+    "detection_s": null,
+    "detection_source": null,
+    "recovery_s": 0.0,
+    "recovered": true,
+    "downtime_s": 0,
+    "outages": 0,
+    "requests": {
+      "attempts": 2099,
+      "ok": 2099,
+      "failed": 0,
+      "availability": 1.0,
+      "failures": {},
+      "latency_ms": {
+        "p50": 5.3,
+        "p95": 99.1,
+        "p99": 109.3
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 0,
+    "fault_time_s": 0,
+    "mean_fault_time_s": null
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "records": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "timetable": {
+      "availability": 1.0,
+      "downtime_s": 0
+    }
+  },
+  "payments": {
+    "intents": 276,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {},
+  "automatic_restarts": 0,
+  "detection_signals": [],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0,
+    "victim_registrations_changed": 0,
+    "victim_payments_changed": 0,
+    "victim_invoices_changed": 0,
+    "victim_grades_changed": 0,
+    "victim_documents_changed": 0,
+    "poisoned_grades": 0,
+    "lost_from_table": 0,
+    "denial_reasons_without_event": 3
+  },
+  "security": {
+    "probe_malformed": {
+      "total": 13,
+      "refused": 13,
+      "succeeded": 0,
+      "leaked": 0,
+      "server_errors": 0,
+      "statuses": {
+        "422": 9,
+        "413": 1,
+        "405": 1,
+        "404": 1,
+        "200": 1
+      }
+    },
+    "floods": [
+      {
+        "sent": 4500,
+        "rate": 150,
+        "seconds": 30,
+        "statuses": {
+          "200": 1279,
+          "429": 3221
+        },
+        "latency_ms": {
+          "p50": 2.7,
+          "p95": 5.4
+        }
+      }
+    ]
+  },
+  "alerts": {
+    "expected": [
+      {
+        "alert": "RateLimitAbuse",
+        "window_s": [
+          30,
+          60
+        ],
+        "fired": true,
+        "detection_s": 9.0,
+        "notification_s": 10.5
+      }
+    ],
+    "expected_total": 1,
+    "detected": 1,
+    "missed": 0,
+    "false_positives": [],
+    "false_positive_count": 0,
+    "fired": [
+      "RateLimitAbuse"
+    ],
+    "quiet_at_start": true
+  }
+}

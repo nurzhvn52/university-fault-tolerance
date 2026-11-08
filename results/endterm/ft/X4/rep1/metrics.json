@@ -1,0 +1,211 @@
+{
+  "requests": {
+    "attempts": 21000,
+    "ok": 20439,
+    "failed": 561,
+    "availability": 0.97329,
+    "failures": {
+      "503": 561
+    },
+    "latency_ms": {
+      "p50": 101.0,
+      "p95": 585.6,
+      "p99": 895.1
+    }
+  },
+  "reliability": {
+    "T_obs_s": 120.0,
+    "N_failures": 4,
+    "D_total_s": 18.0,
+    "U_total_s": 102.0,
+    "availability": 0.85,
+    "MTTF_s": 25.5,
+    "MTTR_s": 4.5,
+    "MTBF_s": 30.0,
+    "failure_rate_per_h": 141.18
+  },
+  "fault": {
+    "client_impact_s": 1.25,
+    "detection_s": 1.47,
+    "detection_source": "student-2:load_shed",
+    "recovery_s": 40.0,
+    "recovered": true,
+    "downtime_s": 18.0,
+    "outages": 4,
+    "requests": {
+      "attempts": 20000,
+      "ok": 19439,
+      "failed": 561,
+      "availability": 0.97195,
+      "failures": {
+        "503": 561
+      },
+      "latency_ms": {
+        "p50": 117.7,
+        "p95": 594.6,
+        "p99": 906.9
+      }
+    }
+  },
+  "load_steps": [
+    {
+      "rate": 50.0,
+      "attempts": 1000,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 16.8,
+        "p95": 28.7,
+        "p99": 36.1
+      },
+      "failures": {}
+    },
+    {
+      "rate": 300.0,
+      "attempts": 18001,
+      "availability": 0.96884,
+      "latency_ms": {
+        "p50": 152.0,
+        "p95": 613.9,
+        "p99": 922.9
+      },
+      "failures": {
+        "503": 561
+      }
+    },
+    {
+      "rate": 50.0,
+      "attempts": 1999,
+      "availability": 1.0,
+      "latency_ms": {
+        "p50": 12.9,
+        "p95": 21.6,
+        "p99": 26.5
+      },
+      "failures": {}
+    }
+  ],
+  "injected": {
+    "faults": 0,
+    "fault_time_s": 0,
+    "mean_fault_time_s": null
+  },
+  "per_service": {
+    "payment": {
+      "availability": 1.0,
+      "downtime_s": 0
+    },
+    "student": {
+      "availability": 0.97027,
+      "downtime_s": 18.0
+    }
+  },
+  "payments": {
+    "intents": 0,
+    "first_attempt_failed": 0,
+    "recovered_by_client_retry": 0,
+    "failed": 0
+  },
+  "recovered_by_system": 0,
+  "mechanisms": {
+    "db_unavailable": 6,
+    "load_shed": 15
+  },
+  "automatic_restarts": 0,
+  "detection_signals": [
+    {
+      "t_s": 21.47,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 21.48,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 24.36,
+      "source": "student-1:db_unavailable"
+    },
+    {
+      "t_s": 26.48,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 27.07,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 30.09,
+      "source": "student-2:db_unavailable"
+    },
+    {
+      "t_s": 31.96,
+      "source": "student-1:db_unavailable"
+    },
+    {
+      "t_s": 33.11,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 33.27,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 38.12,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 38.63,
+      "source": "student-2:db_unavailable"
+    },
+    {
+      "t_s": 43.14,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 44.88,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 46.76,
+      "source": "student-2:db_unavailable"
+    },
+    {
+      "t_s": 49.89,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 49.94,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 56.77,
+      "source": "student-1:load_shed"
+    },
+    {
+      "t_s": 56.85,
+      "source": "student-2:load_shed"
+    },
+    {
+      "t_s": 60.32,
+      "source": "student-2:db_unavailable"
+    },
+    {
+      "t_s": 64.24,
+      "source": "student-2:load_shed"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0
+  }
+}

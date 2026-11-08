@@ -1,0 +1,26 @@
+{
+  "scenario": "X7",
+  "title": "Unauthorized access",
+  "mode": "ft2",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "e28e8ff",
+  "started_at": "2026-11-08T16:40:12.894+00:00",
+  "t0": 1794156012.894066,
+  "load_finished_s": 89.97,
+  "planned_requests": 2700,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      90.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 590,
+    "paid": 413,
+    "unpaid": 177,
+    "with_grades": 444,
+    "sections": 120
+  }
+}

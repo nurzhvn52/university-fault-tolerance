@@ -1,0 +1,327 @@
+{
+  "requests": {
+    "attempts": 10328,
+    "ok": 9562,
+    "failed": 766,
+    "availability": 0.92583,
+    "failures": {
+      "503": 713,
+      "RemoteProtocolError": 46,
+      "slow": 7
+    },
+    "latency_ms": {
+      "p50": 5.5,
+      "p95": 99.7,
+      "p99": 1512.6
+    }
+  },
+  "reliability": {
+    "T_obs_s": 340.0,
+    "N_failures": 3,
+    "D_total_s": 31.0,
+    "U_total_s": 309.0,
+    "availability": 0.90882,
+    "MTTF_s": 103.0,
+    "MTTR_s": 10.3,
+    "MTBF_s": 113.3,
+    "failure_rate_per_h": 34.95
+  },
+  "fault": {
+    "client_impact_s": 0.37,
+    "detection_s": 3.23,
+    "detection_source": "gateway:haproxy_server_down",
+    "recovery_s": 196.0,
+    "recovered": true,
+    "downtime_s": 31.0,
+    "outages": 3,
+    "requests": {
+      "attempts": 9727,
+      "ok": 8961,
+      "failed": 766,
+      "availability": 0.92125,
+      "failures": {
+        "503": 713,
+        "RemoteProtocolError": 46,
+        "slow": 7
+      },
+      "latency_ms": {
+        "p50": 5.5,
+        "p95": 99.9,
+        "p99": 1597.0
+      }
+    }
+  },
+  "load_steps": null,
+  "injected": {
+    "faults": 4,
+    "fault_time_s": 120.0,
+    "mean_fault_time_s": 30.0
+  },
+  "per_service": {
+    "payment": {
+      "availability": 0.88211,
+      "downtime_s": 29.0
+    },
+    "records": {
+      "availability": 0.96813,
+      "downtime_s": 25.0
+    },
+    "student": {
+      "availability": 0.92581,
+      "downtime_s": 29.0
+    },
+    "timetable": {
+      "availability": 0.93452,
+      "downtime_s": 25.0
+    }
+  },
+  "payments": {
+    "intents": 967,
+    "first_attempt_failed": 68,
+    "recovered_by_client_retry": 10,
+    "failed": 58
+  },
+  "recovered_by_system": 176,
+  "mechanisms": {
+    "breaker_closed": 4,
+    "breaker_half_open": 14,
+    "breaker_opened": 14,
+    "db_unavailable": 16,
+    "fallback_used": 26,
+    "registration_verified": 171,
+    "retry_attempt": 37,
+    "retry_succeeded": 4,
+    "watchdog_restart": 1
+  },
+  "automatic_restarts": 1,
+  "detection_signals": [
+    {
+      "t_s": 23.23,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 23.23,
+      "source": "gateway:haproxy_server_down"
+    },
+    {
+      "t_s": 25.22,
+      "source": "uft-ft-payment-1-1:unhealthy"
+    },
+    {
+      "t_s": 82.14,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 82.94,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 89.07,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 90.07,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 95.14,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 96.57,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 101.34,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 103.33,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 107.58,
+      "source": "student-2:breaker_opened"
+    },
+    {
+      "t_s": 109.4,
+      "source": "student-1:breaker_opened"
+    },
+    {
+      "t_s": 190.77,
+      "source": "payment-2:db_unavailable"
+    },
+    {
+      "t_s": 190.86,
+      "source": "student-1:db_unavailable"
+    },
+    {
+      "t_s": 190.9,
+      "source": "student-2:db_unavailable"
+    },
+    {
+      "t_s": 190.93,
+      "source": "payment-1:db_unavailable"
+    },
+    {
+      "t_s": 191.0,
+      "source": "timetable-1:db_unavailable"
+    },
+    {
+      "t_s": 191.03,
+      "source": "records-2:db_unavailable"
+    },
+    {
+      "t_s": 191.13,
+      "source": "timetable-2:db_unavailable"
+    }
+  ],
+  "consistency": {
+    "lost_payments": 0,
+    "duplicate_charges": 0,
+    "phantom_payments": 0,
+    "invoice_mismatch": 0,
+    "unfinished_payments": 0,
+    "overbooked_sections": 0,
+    "seat_counter_drift": 0,
+    "confirmed_without_tuition": 0,
+    "lost_documents": 0,
+    "bad_copies": 0,
+    "partial_batch": 0,
+    "stuck_jobs": 0,
+    "unscheduled_sections": 0,
+    "lost_from_table": 0,
+    "denial_reasons_without_event": 0
+  },
+  "security": {
+    "floods": [
+      {
+        "sent": 600,
+        "rate": 40,
+        "seconds": 15,
+        "statuses": {
+          "401": 600
+        },
+        "latency_ms": {
+          "p50": 2.4,
+          "p95": 3.5
+        }
+      },
+      {
+        "sent": 2250,
+        "rate": 150,
+        "seconds": 15,
+        "statuses": {
+          "200": 678,
+          "429": 1572
+        },
+        "latency_ms": {
+          "p50": 2.8,
+          "p95": 5.6
+        }
+      }
+    ]
+  },
+  "alerts": {
+    "expected": [
+      {
+        "alert": "InstanceDown",
+        "window_s": [
+          20,
+          60
+        ],
+        "fired": true,
+        "detection_s": 5.0,
+        "notification_s": 6.6
+      },
+      {
+        "alert": "ReplicaUnready",
+        "window_s": [
+          20,
+          60
+        ],
+        "fired": true,
+        "detection_s": 9.0,
+        "notification_s": 10.6
+      },
+      {
+        "alert": "CircuitBreakerOpen",
+        "window_s": [
+          80,
+          115
+        ],
+        "fired": true,
+        "detection_s": 7.0,
+        "notification_s": 8.6
+      },
+      {
+        "alert": "HighLatencyP95",
+        "window_s": [
+          135,
+          170
+        ],
+        "fired": true,
+        "detection_s": 14.0,
+        "notification_s": 15.6
+      },
+      {
+        "alert": "NoPrimaryDatabase",
+        "window_s": [
+          190,
+          245
+        ],
+        "fired": true,
+        "detection_s": 5.0,
+        "notification_s": 6.6
+      },
+      {
+        "alert": "BackendUnavailable",
+        "window_s": [
+          190,
+          245
+        ],
+        "fired": true,
+        "detection_s": 9.0,
+        "notification_s": 10.6
+      },
+      {
+        "alert": "AuthFailureBurst",
+        "window_s": [
+          260,
+          285
+        ],
+        "fired": true,
+        "detection_s": 7.0,
+        "notification_s": 8.6
+      },
+      {
+        "alert": "RateLimitAbuse",
+        "window_s": [
+          300,
+          325
+        ],
+        "fired": true,
+        "detection_s": 9.0,
+        "notification_s": 10.6
+      }
+    ],
+    "expected_total": 8,
+    "detected": 8,
+    "missed": 0,
+    "false_positives": [],
+    "false_positive_count": 0,
+    "fired": [
+      "AuthFailureBurst",
+      "BackendUnavailable",
+      "CircuitBreakerOpen",
+      "HighErrorRate",
+      "HighLatencyP95",
+      "InstanceDown",
+      "InstanceRestarted",
+      "NoPrimaryDatabase",
+      "RateLimitAbuse",
+      "ReplicaUnready"
+    ],
+    "quiet_at_start": true
+  }
+}

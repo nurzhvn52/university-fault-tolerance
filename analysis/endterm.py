@@ -1,4 +1,4 @@
-"""Evaluation of the endterm experiments (scenarios X0-X10, modes baseline, ft, ft2).
+"""Evaluation of the endterm experiments (scenarios X1-X8, modes ft and ft2).
 
     python -m analysis.run_endterm --tag final
 
@@ -12,8 +12,8 @@ from collections import Counter
 from analysis.results import stats
 from lab.loadgen import read_attempts
 
-MODES = ("baseline", "ft", "ft2")
-SCENARIOS = ("X0", "X1", "X1b", "X2", "X3", "X4", "X5", "X6", "X7", "X8", "X9", "X10")
+MODES = ("ft", "ft2")
+SCENARIOS = ("X1", "X2", "X3", "X4", "X5", "X6", "X7", "X8")
 # Findings about the audit trail itself, kept apart from damage to business data.
 AUDIT_CHECKS = {"lost_from_table", "denial_reasons_without_event"}
 # Statements a taken-over service must not be able to run.

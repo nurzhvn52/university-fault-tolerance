@@ -1,0 +1,26 @@
+{
+  "scenario": "X1",
+  "title": "Instance crash",
+  "mode": "ft2",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "3abe06c",
+  "started_at": "2026-11-08T16:05:27.942+00:00",
+  "t0": 1794153927.9426384,
+  "load_finished_s": 119.98,
+  "planned_requests": 3600,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      120.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

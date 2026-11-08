@@ -1,0 +1,26 @@
+{
+  "scenario": "X3",
+  "title": "Database failure",
+  "mode": "ft2",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "e28e8ff",
+  "started_at": "2026-11-08T16:21:04.556+00:00",
+  "t0": 1794154864.5566685,
+  "load_finished_s": 119.97,
+  "planned_requests": 3600,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      120.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

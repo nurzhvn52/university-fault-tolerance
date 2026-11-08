@@ -1,0 +1,146 @@
+[
+  {
+    "t": 1794155370.8064258,
+    "at": 20,
+    "do": "hang",
+    "target": "payment-1",
+    "seconds": 3600,
+    "result": [
+      "uft-ft-payment-1-1"
+    ]
+  },
+  {
+    "t": 1794155405.8035817,
+    "at": 55,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1794155430.80877,
+    "at": 80,
+    "do": "toxic",
+    "proxy": "payment",
+    "toxic": "timeout",
+    "attributes": {
+      "timeout": 0
+    },
+    "result": {
+      "attributes": {
+        "timeout": 0
+      },
+      "name": "payment_timeout",
+      "type": "timeout",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1794155460.8114178,
+    "at": 110,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1794155485.8034887,
+    "at": 135,
+    "do": "toxic",
+    "proxy": "bank",
+    "toxic": "latency",
+    "attributes": {
+      "latency": 1500
+    },
+    "result": {
+      "attributes": {
+        "latency": 1500,
+        "jitter": 0
+      },
+      "name": "bank_latency",
+      "type": "latency",
+      "stream": "downstream",
+      "toxicity": 1
+    }
+  },
+  {
+    "t": 1794155515.8096824,
+    "at": 165,
+    "do": "repair",
+    "result": {
+      "started": [],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1794155540.8047774,
+    "at": 190,
+    "do": "kill",
+    "target": "db-primary",
+    "result": [
+      "uft-ft-pg-1-1"
+    ]
+  },
+  {
+    "t": 1794155565.80261,
+    "at": 215,
+    "do": "repair",
+    "result": {
+      "started": [
+        "uft-ft-pg-1-1"
+      ],
+      "unpaused": [],
+      "restarted_hung": [],
+      "toxics_reset": true
+    }
+  },
+  {
+    "t": 1794155610.8125496,
+    "at": 260,
+    "do": "flood",
+    "rate": 40,
+    "seconds": 15,
+    "anonymous": true,
+    "result": {
+      "sent": 600,
+      "rate": 40,
+      "seconds": 15,
+      "statuses": {
+        "401": 600
+      },
+      "latency_ms": {
+        "p50": 2.4,
+        "p95": 3.5
+      }
+    }
+  },
+  {
+    "t": 1794155650.7840626,
+    "at": 300,
+    "do": "flood",
+    "rate": 150,
+    "seconds": 15,
+    "result": {
+      "sent": 2250,
+      "rate": 150,
+      "seconds": 15,
+      "statuses": {
+        "200": 678,
+        "429": 1572
+      },
+      "latency_ms": {
+        "p50": 2.8,
+        "p95": 5.6
+      }
+    }
+  }
+]

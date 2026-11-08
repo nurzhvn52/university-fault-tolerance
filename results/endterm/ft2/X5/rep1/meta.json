@@ -1,0 +1,26 @@
+{
+  "scenario": "X5",
+  "title": "Alert test",
+  "mode": "ft2",
+  "rep": 1,
+  "seed": 1,
+  "git_commit": "e28e8ff",
+  "started_at": "2026-11-08T16:29:10.787+00:00",
+  "t0": 1794155350.7874885,
+  "load_finished_s": 339.99,
+  "planned_requests": 10200,
+  "load_workers": 4,
+  "rate_profile": [
+    [
+      340.0,
+      30.0
+    ]
+  ],
+  "population": {
+    "students": 600,
+    "paid": 420,
+    "unpaid": 180,
+    "with_grades": 453,
+    "sections": 120
+  }
+}

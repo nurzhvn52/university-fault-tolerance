@@ -1,0 +1,343 @@
+[
+  {
+    "t": 1794156032.912682,
+    "at": 20,
+    "do": "probe_unauthorized",
+    "result": {
+      "probes": [
+        {
+          "name": "no_token",
+          "method": "GET",
+          "path": "/api/students/591",
+          "status": 401,
+          "reason": "missing_token",
+          "expected": [
+            401
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156032.916916
+        },
+        {
+          "name": "garbage_token",
+          "method": "GET",
+          "path": "/api/students/591",
+          "status": 401,
+          "reason": "invalid_token",
+          "expected": [
+            401
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.0214076
+        },
+        {
+          "name": "forged_signature",
+          "method": "GET",
+          "path": "/api/students/591",
+          "status": 401,
+          "reason": "invalid_token",
+          "expected": [
+            401
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.1244886
+        },
+        {
+          "name": "alg_none",
+          "method": "GET",
+          "path": "/api/students/591",
+          "status": 401,
+          "reason": "invalid_token",
+          "expected": [
+            401
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.2270267
+        },
+        {
+          "name": "expired_token",
+          "method": "GET",
+          "path": "/api/students/11",
+          "status": 401,
+          "reason": "expired_token",
+          "expected": [
+            401
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.3318098
+        },
+        {
+          "name": "idor_student",
+          "method": "GET",
+          "path": "/api/students/591",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.4362469
+        },
+        {
+          "name": "idor_registrations",
+          "method": "GET",
+          "path": "/api/students/591/registrations",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.5397382
+        },
+        {
+          "name": "idor_tuition",
+          "method": "GET",
+          "path": "/api/tuition/591?term=2026-FALL",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.6445248
+        },
+        {
+          "name": "idor_payments",
+          "method": "GET",
+          "path": "/api/payments?student_id=591",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.7479384
+        },
+        {
+          "name": "idor_grades",
+          "method": "GET",
+          "path": "/api/grades/591",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.85134
+        },
+        {
+          "name": "idor_transcript",
+          "method": "GET",
+          "path": "/api/transcripts/591",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156033.9549918
+        },
+        {
+          "name": "idor_document",
+          "method": "GET",
+          "path": "/api/transcripts/591/documents/latest",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.058532
+        },
+        {
+          "name": "idor_register",
+          "method": "POST",
+          "path": "/api/registrations",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.1623833
+        },
+        {
+          "name": "idor_pay",
+          "method": "POST",
+          "path": "/api/payments",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.2655945
+        },
+        {
+          "name": "idor_document_create",
+          "method": "POST",
+          "path": "/api/transcripts/591/documents",
+          "status": 403,
+          "reason": "forbidden_owner",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.3685899
+        },
+        {
+          "name": "staff_grade_import",
+          "method": "POST",
+          "path": "/api/grades/batch",
+          "status": 403,
+          "reason": "forbidden_role",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.4712682
+        },
+        {
+          "name": "staff_timetable_generate",
+          "method": "POST",
+          "path": "/api/timetable/generate?term=2026-FALL",
+          "status": 403,
+          "reason": "forbidden_role",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.5751386
+        },
+        {
+          "name": "staff_invoice_list",
+          "method": "GET",
+          "path": "/api/tuition?term=2026-FALL&limit=5",
+          "status": 403,
+          "reason": "forbidden_role",
+          "expected": [
+            403
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.679021
+        },
+        {
+          "name": "internal_chaos",
+          "method": "POST",
+          "path": "/_chaos/crash",
+          "status": 404,
+          "reason": "",
+          "expected": [
+            404
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.7824745
+        },
+        {
+          "name": "internal_metrics",
+          "method": "GET",
+          "path": "/metrics",
+          "status": 404,
+          "reason": "",
+          "expected": [
+            404
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.8841176
+        },
+        {
+          "name": "internal_health",
+          "method": "GET",
+          "path": "/health/ready",
+          "status": 404,
+          "reason": "",
+          "expected": [
+            404
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794156034.9865358
+        }
+      ],
+      "total": 21,
+      "refused": 21,
+      "succeeded": 0,
+      "leaked": 0,
+      "server_errors": 0,
+      "statuses": {
+        "401": 5,
+        "403": 13,
+        "404": 3
+      },
+      "reasons": [
+        "expired_token",
+        "forbidden_owner",
+        "forbidden_role",
+        "invalid_token",
+        "missing_token"
+      ]
+    }
+  }
+]

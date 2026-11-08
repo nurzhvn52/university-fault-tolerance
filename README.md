@@ -1,6 +1,6 @@
 # Fault-tolerant university information system
 
-AITU, Fault Tolerance and Reliability, midterm project.
+AITU, Fault Tolerance and Reliability, midterm and endterm projects.
 Serikbekov Nurzhan Erlanuly (255149, CSE-2505M).
 
 A small distributed university platform (student registration, tuition payments, academic
@@ -11,6 +11,80 @@ measured reliability and availability.
 Status: complete. The final dataset (141 runs, code at tag `v1.0-experiments`) is in
 `results/final`, the evaluation in `results/final/analysis.json` and the figures in
 `docs/figures`; the main numbers are in [Results](#results).
+
+## Endterm: observability, security and misuse experiments
+
+The endterm project (tag `v2.0`) extends the midterm system below. The midterm configuration
+is kept unchanged (tag `v1.0`; with the new feature flags off the code behaves as before) so
+that the two can be compared on the same machine. Code under test of the experiments: tag
+`v2.0-experiments`; results in `results/endterm`.
+
+What is new:
+
+| Area | Content |
+|---|---|
+| Observability | `X-Request-ID` created at the gateway and forwarded through every service and to the bank, written into each JSON log line; dependency, retry, auth, rate-limit and audit metrics; 11 alert rules with threshold and expected response (`infra/monitoring/rules.yml`), Alertmanager and a webhook receiver that records notification times; generated Grafana dashboard; `lab.trace` |
+| Security | `auth` service (scrypt passwords, JWT, lock after 5 failed logins); every service verifies tokens itself; roles student / registrar / admin / service and an ownership check on student data; service tokens between services and an API key for the bank; token bucket per principal; strict request models and a 256 KiB body limit; audit trail (log plus `audit.events`); secrets from files with a startup check and key rotation; one database role per service; gateway limits; [threat model](docs/THREAT_MODEL.md) |
+| Architecture | `docs/figures/architecture_endterm.png` |
+| Tests | unit tests (tokens, roles, rate limiter, audit, request ids, alert evaluation) and integration tests of the secured stack (`tests/integration/test_endterm_security.py`), CI job for the endterm stack, `pip-audit` |
+| Experiments | scenarios X1-X8 (`lab/scenarios_endterm.toml`) on the midterm configuration (`ft`) and the endterm configuration (`ft2`), one run each |
+
+### Run the endterm stack
+
+```
+python -m lab.init_secrets                       # creates secrets/ (not in git), once
+UFT_TRACING=true UFT_SECURITY=true docker compose -f docker-compose.ft.yml \
+    -f docker-compose.endterm.yml --profile monitoring up -d --build
+```
+
+Grafana http://localhost:3000, Prometheus http://localhost:9090. A login is
+`POST /api/auth/login` (`admin1`, `registrar1`, or the student number `250001`..`250050`; the
+shared synthetic lab password is `UFT_SEED_PASSWORD`, default `synthetic-lab-password`).
+
+### Experiments
+
+| ID | Fault or misuse | Evidence recorded |
+|---|---|---|
+| X1 | crash of payment-1 | availability, recovery, alert detection, data checks |
+| X2 | timeout on student to payment | breaker alert, degradation, recovery |
+| X3 | SIGKILL of the database primary | failover time, alerts, audit continuity |
+| X4 | registration rush, 50 to 300 requests/s | availability, latency, shedding |
+| X5 | alert test: hang, timeout, slow bank, database failure, scanning, flood | detection and notification time per alert, false positives |
+| X6 | crash between bank charge and payment record | lost or doubled payments |
+| X7 | 21 unauthorized requests (no, forged, unsigned, expired token, other students' data, staff and internal endpoints) | refused, data exposed, data of victims changed |
+| X8 | 13 malformed requests and a flood of one client | status of each, throttling, other users |
+
+```
+python -m lab.orchestrate --mode ft2 --scenarios X1,X2 --reps 1 --tag endterm   # modes ft, ft2
+python -m analysis.run_endterm --tag endterm     # results/endterm/endterm_analysis.json, figures
+python -m lab.trace <request id> --run results/endterm/ft2/X1/rep1
+```
+
+Results (one run each, same machine; "good" = answered without a server error, without 401,
+403 or 429, within 2 s):
+
+| Scenario | midterm: good requests / recovery s | endterm: good requests / recovery s | data violations (midterm / endterm) |
+|---|---|---|---|
+| X1 application crash | 99.97% / 0 | 100.00% / 0 | 0 / 0 |
+| X2 dependency timeout | 99.81% / 2 | 99.81% / 2 | 0 / 0 |
+| X3 database failure | 75.41% / 31 | 79.44% / 25 | 0 / 0 |
+| X4 load spike | 97.33% / 40 | 89.26% / 59 | 0 / 0 |
+| X6 interrupted payment | 99.93% / 1 | 99.96% / 0 | 0 / 0 |
+
+Security: of the 21 unauthorized requests of X7 the midterm configuration refused 3 (16
+succeeded, 5 answers leaked data of a victim student, data of victims changed); the endterm
+refused all 21 with no leak and no change. Of 13 malformed requests of X8, 11 were refused by
+the midterm and 13 by the endterm; the flood of 4500 requests was throttled to 1279 served
+while the normal load kept 100% good requests. All 13 expected alerts fired (detection 4-14 s
+after the fault, no alert outside its window). The load spike X4 is a regression of the
+endterm (89.26% against 97.33%); its cause was not isolated (see the report, section 9).
+
+Live demonstrations inside the lab container (`docker compose ... run --rm lab ...`):
+`python -m lab.demo_endterm security | login | alert`, and the midterm `python -m lab.demo crash`.
+
+---
+
+## Midterm project
 
 ## Services
 

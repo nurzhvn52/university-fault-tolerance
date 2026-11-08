@@ -43,7 +43,7 @@ def availability_bars(summary: dict, scenarios, path: Path) -> Path:
     ax.set_xticks(range(len(scenarios)), scenarios)
     ax.set_ylabel("good requests, %", color=INK)
     ax.set_ylim(50, 100.5)
-    ax.set_title("Availability per scenario (mean and standard deviation)", color=INK,
+    ax.set_title("Availability per scenario (one run each)", color=INK,
                  fontsize=11, loc="left")  # fmt: skip
     _style(ax)
     ax.legend(frameon=False, fontsize=9, loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3)

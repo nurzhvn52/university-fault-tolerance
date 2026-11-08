@@ -1,0 +1,246 @@
+[
+  {
+    "t": 1794157765.9336998,
+    "at": 15,
+    "do": "probe_malformed",
+    "result": {
+      "probes": [
+        {
+          "name": "invalid_json",
+          "method": "POST",
+          "path": "/api/registrations",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157765.938556
+        },
+        {
+          "name": "wrong_type",
+          "method": "POST",
+          "path": "/api/registrations",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.0434763
+        },
+        {
+          "name": "unknown_field_role",
+          "method": "POST",
+          "path": "/api/registrations",
+          "status": 201,
+          "reason": "",
+          "expected": [
+            422
+          ],
+          "refused": false,
+          "succeeded": true,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.146574
+        },
+        {
+          "name": "negative_amount",
+          "method": "POST",
+          "path": "/api/payments",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.2673333
+        },
+        {
+          "name": "zero_amount",
+          "method": "POST",
+          "path": "/api/payments",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.3708167
+        },
+        {
+          "name": "amount_above_limit",
+          "method": "POST",
+          "path": "/api/payments",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.4755588
+        },
+        {
+          "name": "sql_injection_term",
+          "method": "POST",
+          "path": "/api/payments",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.5797153
+        },
+        {
+          "name": "long_idempotency_key",
+          "method": "POST",
+          "path": "/api/payments",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.6834717
+        },
+        {
+          "name": "oversized_body",
+          "method": "POST",
+          "path": "/api/registrations",
+          "status": 422,
+          "reason": "validation_error",
+          "expected": [
+            413
+          ],
+          "refused": false,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.7866018
+        },
+        {
+          "name": "sql_injection_ids",
+          "method": "GET",
+          "path": "/api/timetable/sections?term=2026-FALL&ids=1;DROP TABLE x",
+          "status": 422,
+          "reason": "ids must be comma separated integers",
+          "expected": [
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.8925085
+        },
+        {
+          "name": "method_misuse",
+          "method": "DELETE",
+          "path": "/api/students/11",
+          "status": 405,
+          "reason": "Method Not Allowed",
+          "expected": [
+            405
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157766.995292
+        },
+        {
+          "name": "path_traversal",
+          "method": "GET",
+          "path": "/api/students/..%2f..%2fetc%2fpasswd",
+          "status": 404,
+          "reason": "Not Found",
+          "expected": [
+            404,
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157767.097923
+        },
+        {
+          "name": "sql_injection_query",
+          "method": "GET",
+          "path": "/api/sections?term=' OR 1=1 --",
+          "status": 200,
+          "reason": "",
+          "expected": [
+            400,
+            404,
+            422
+          ],
+          "refused": true,
+          "succeeded": false,
+          "leaked": false,
+          "server_error": false,
+          "t": 1794157767.2004848
+        }
+      ],
+      "total": 13,
+      "refused": 11,
+      "succeeded": 1,
+      "leaked": 0,
+      "server_errors": 0,
+      "statuses": {
+        "422": 9,
+        "201": 1,
+        "405": 1,
+        "404": 1,
+        "200": 1
+      },
+      "reasons": [
+        "Method Not Allowed",
+        "Not Found",
+        "ids must be comma separated integers",
+        "validation_error"
+      ]
+    }
+  },
+  {
+    "t": 1794157780.9323814,
+    "at": 30,
+    "do": "flood",
+    "rate": 150,
+    "seconds": 30,
+    "result": {
+      "sent": 4500,
+      "rate": 150,
+      "seconds": 30,
+      "statuses": {
+        "200": 4500
+      },
+      "latency_ms": {
+        "p50": 3.9,
+        "p95": 6.0
+      }
+    }
+  }
+]

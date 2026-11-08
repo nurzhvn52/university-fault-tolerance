@@ -1,6 +1,6 @@
 """Builds the evaluation of the endterm result set.
 
-    python -m analysis.run_endterm --tag final
+    python -m analysis.run_endterm --tag endterm
 
 Writes results/<tag>/endterm_analysis.json and the figures in docs/figures/.
 """
@@ -13,13 +13,13 @@ from analysis.endterm_diagrams import architecture_endterm
 
 ROOT = Path(__file__).resolve().parent.parent
 FIGURES = ROOT / "docs" / "figures"
-RESILIENCE = ("X1", "X1b", "X2", "X3", "X4", "X6")
-MONITORED = {"X1": "crash", "X1b": "hang", "X2": "timeout", "X3": "database", "X5": "alert_test"}
+RESILIENCE = ("X1", "X2", "X3", "X4", "X6")
+MONITORED = {"X1": "crash", "X2": "timeout", "X3": "database", "X5": "alert_test"}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--tag", default="final")
+    parser.add_argument("--tag", default="endterm")
     args = parser.parse_args()
 
     runs = results.load_runs(args.tag)
@@ -44,7 +44,7 @@ def main() -> None:
             made.append(
                 endterm_figures.monitoring_view(
                     run["dir"],
-                    f"{scenario} ({name}): what the monitoring saw (repetition 1)",
+                    f"{scenario} ({name}): what the monitoring saw (single run)",
                     FIGURES / f"monitoring_{scenario}.png",
                 )
             )
