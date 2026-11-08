@@ -12,6 +12,19 @@ Status: complete. The final dataset (141 runs, code at tag `v1.0-experiments`) i
 `results/final`, the evaluation in `results/final/analysis.json` and the figures in
 `docs/figures`; the main numbers are in [Results](#results).
 
+## Final project
+
+The final project (tag `v3.0`) is the integrated dependability report over this system: it
+adds no new code or experiments, it combines the midterm series (E1-E9, `results/final`, 5
+repetitions, another computer) and the endterm series (X1-X8, `results/endterm`, 1 repetition,
+this computer) under the structure of the final assignment: requirements and fault model,
+reliability calculations (MTTF, MTBF, MTTR, availability, failure rate), architecture,
+infrastructure and software fault tolerance, monitoring, security, verification, and a
+consolidated results table that maps the experiments to the eight required scenarios. The two
+series are never mixed in one statistic. Live demonstration scenarios: instance crash
+(`python -m lab.demo crash`), database failover (`lab.demo db`), unauthorized access
+(`lab.demo_endterm security`) and an alert (`lab.demo_endterm alert`), see the sections below.
+
 ## Endterm: observability, security and misuse experiments
 
 The endterm project (tag `v2.0`) extends the midterm system below. The midterm configuration
