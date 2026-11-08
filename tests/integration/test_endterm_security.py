@@ -3,7 +3,7 @@
     python -m lab.init_secrets
     UFT_TRACING=true UFT_SECURITY=true docker compose -f docker-compose.ft.yml \
         -f docker-compose.endterm.yml --profile monitoring up -d --build
-    UFT_BASE_URL=http://localhost:8080 pytest -m integration tests/integration/test_endterm_security.py
+    UFT_BASE_URL=http://localhost:8080 pytest -m integration \n        tests/integration/test_endterm_security.py
 """
 
 import concurrent.futures
