@@ -73,7 +73,7 @@ jobs:
   endterm-stack:
     needs: lint-and-unit
     runs-on: ubuntu-latest
-    name: stack (endterm: security, request ids, alerting)
+    name: "stack (endterm: security, request ids, alerting)"
     env:
       UFT_TRACING: "true"
       UFT_SECURITY: "true"
