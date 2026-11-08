@@ -17,7 +17,7 @@ from typing import TypeVar
 
 import httpx
 
-from common.telemetry import BREAKER_OPEN
+from common.telemetry import BREAKER_OPEN, DEPENDENCY_CALLS, DEPENDENCY_SECONDS, RETRIES
 
 logger = logging.getLogger("common.resilience")
 
@@ -70,6 +70,7 @@ async def retry(
             if attempt == attempts or not retry_on(exc):
                 raise
             delay = delays[attempt - 1]
+            RETRIES.labels(name).inc()
             logger.info(
                 "retry_attempt",
                 extra={"dependency": name, "attempt": attempt, "error": type(exc).__name__},
@@ -107,6 +108,7 @@ class CircuitBreaker:
         self._failures = 0
         self._opened_at = 0.0
         self._trial_running = False
+        BREAKER_OPEN.labels(name).set(0)
 
     async def call(self, call: Callable[[], Awaitable[T]]) -> T:
         if self.state == "open":
@@ -227,11 +229,27 @@ class Dependency:
 
     async def call(self, call: Callable[[], Awaitable[T]], *, idempotent: bool = True) -> T:
         async def attempt() -> T:
-            async with asyncio.timeout(self.timeout_s):
-                return await call()
+            started = time.perf_counter()
+            outcome = "ok"
+            try:
+                async with asyncio.timeout(self.timeout_s):
+                    return await call()
+            except TimeoutError:
+                outcome = "timeout"
+                raise
+            except Exception as exc:
+                outcome = "error" if is_transient(exc) else "ok"
+                raise
+            finally:
+                DEPENDENCY_CALLS.labels(self.name, outcome).inc()
+                DEPENDENCY_SECONDS.labels(self.name).observe(time.perf_counter() - started)
 
         async def guarded() -> T:
-            return await self.breaker.call(attempt)
+            try:
+                return await self.breaker.call(attempt)
+            except CircuitOpen:
+                DEPENDENCY_CALLS.labels(self.name, "circuit_open").inc()
+                raise
 
         try:
             if not idempotent:

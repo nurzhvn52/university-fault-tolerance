@@ -18,6 +18,12 @@ class Settings(BaseSettings):
     # Mounts the /_chaos admin endpoint used by the experiment tooling.
     chaos_enabled: bool = False
     term: str = "2026-FALL"
+    version: str = "2.0.0"
+    # Endterm features, off by default so that the midterm configuration stays unchanged.
+    # Request ids across services and request_failed logs.
+    tracing: bool = False
+    # One log line per API request (for demonstrations; failures are always logged).
+    access_log: bool = False
 
     database_url: str = "postgresql+asyncpg://uft:uft_local_only@localhost:5432/university"
     db_pool_size: int = 10

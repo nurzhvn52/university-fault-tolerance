@@ -1,0 +1,51 @@
+# Endterm overlay on the fault-tolerant stack: request ids, alerting, security.
+#
+#   docker compose -f docker-compose.ft.yml -f docker-compose.endterm.yml --profile monitoring up -d --build
+#
+# The feature flags (UFT_TRACING, UFT_SECURITY) are read from the environment; the experiment
+# runner sets them for the "ft2" mode. Without the overlay and the flags the stack is the
+# midterm configuration.
+services:
+  gateway:
+    volumes:
+      - ./infra/haproxy/ft2.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+
+  prometheus:
+    volumes:
+      - ./infra/monitoring/prometheus.endterm.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infra/monitoring/rules.yml:/etc/prometheus/rules.yml:ro
+    depends_on: [alertmanager]
+
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    profiles: [monitoring]
+    restart: on-failure
+    command: [--config.file=/etc/alertmanager/alertmanager.yml, --storage.path=/alertmanager]
+    volumes:
+      - ./infra/monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    labels: {uft.node: c, uft.role: ops, uft.service: alertmanager}
+
+  alert-sink:
+    build:
+      context: .
+      dockerfile: services/Dockerfile
+      target: app
+    image: uft-app:dev
+    profiles: [monitoring]
+    hostname: alert-sink
+    restart: on-failure
+    command: uvicorn alert_sink.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    environment:
+      UFT_SERVICE_NAME: alert_sink
+      UFT_FT_MODE: ft
+      UFT_TRACING: "true"
+    labels: {uft.node: c, uft.role: ops, uft.service: alert-sink}
+
+  grafana:
+    environment:
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/uft2.json
+
+  lab:
+    environment:
+      UFT_PROMETHEUS_URL: http://prometheus:9090
+      UFT_ALERT_SINK_URL: http://alert-sink:8000

@@ -1,0 +1,119 @@
+# Alert rules of the endterm stack. Prometheus scrapes every 2 s and evaluates every 2 s, so a
+# rule with `for: 4s` fires after 4-6 s of a sustained condition. Every rule documents what it
+# detects, its threshold and the response expected from the system or the team.
+groups:
+  - name: uft
+    interval: 2s
+    rules:
+      - alert: InstanceDown
+        expr: up{job="services"} == 0
+        for: 4s
+        labels: {severity: critical}
+        annotations:
+          summary: "{{ $labels.instance }} does not answer metric scrapes"
+          detects: "crashed or hung service instance"
+          threshold: "scrape fails for 4 s"
+          response: "gateway stops routing to it (automatic); restart policy or watchdog restarts it; on call checks docker logs if it is not back within 60 s"
+
+      - alert: InstanceRestarted
+        expr: changes(process_start_time_seconds{job="services"}[30s]) > 0
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.instance }} restarted"
+          detects: "a process that crashed and was restarted (self-healed, so InstanceDown may not fire)"
+          threshold: "process start time changed within 30 s"
+          response: "no action if it happens once; find the cause in the logs if it repeats (crash loop)"
+
+      - alert: ReplicaUnready
+        expr: haproxy_server_status{state="DOWN", proxy=~"student|payment|records|timetable"} == 1
+        for: 3s
+        labels: {severity: warning}
+        annotations:
+          summary: "gateway marked {{ $labels.proxy }}/{{ $labels.server }} DOWN"
+          detects: "a replica failing its readiness check (dead, hung or cut off from the database)"
+          threshold: "2 failed health checks, DOWN for 3 s"
+          response: "traffic goes to the other replica (automatic); check /health/ready of the instance"
+
+      - alert: BackendUnavailable
+        expr: haproxy_backend_active_servers{proxy=~"student|payment|records|timetable"} == 0
+        for: 3s
+        labels: {severity: critical}
+        annotations:
+          summary: "no healthy replica behind {{ $labels.proxy }}"
+          detects: "user-visible outage of one service"
+          threshold: "0 healthy replicas for 3 s"
+          response: "page on call; check the database and both replicas; fail over or restart"
+
+      - alert: HighErrorRate
+        expr: |
+          sum by (service) (rate(uft_requests_total{status=~"5.."}[10s]))
+            / sum by (service) (rate(uft_requests_total[10s])) > 0.05
+          and sum by (service) (rate(uft_requests_total[10s])) > 1
+        for: 4s
+        labels: {severity: critical}
+        annotations:
+          summary: "{{ $labels.service }}: more than 5% of requests fail"
+          detects: "server errors seen by clients (dependency or database failure, overload)"
+          threshold: "5xx share above 5% for 4 s (at least 1 request per second)"
+          response: "check dependency and breaker panels; page on call if it lasts more than 30 s"
+
+      - alert: HighLatencyP95
+        expr: |
+          histogram_quantile(0.95, sum by (service, le) (rate(uft_request_seconds_bucket[15s]))) > 1
+        for: 6s
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.service }}: p95 latency above 1 s"
+          detects: "slow dependency, saturation or retries piling up"
+          threshold: "p95 above 1 s (the latency SLO) for 6 s"
+          response: "check dependency latency and in-flight requests; load shedding protects the service meanwhile"
+
+      - alert: CircuitBreakerOpen
+        expr: max by (dependency) (max_over_time(uft_breaker_open[10s])) == 1
+        for: 1s
+        labels: {severity: warning}
+        annotations:
+          summary: "circuit breaker of {{ $labels.dependency }} is open"
+          detects: "a dependency that keeps failing"
+          threshold: "5 consecutive failures opened the breaker"
+          response: "callers degrade (cached data, pending verification) automatically; investigate the dependency"
+
+      - alert: NoPrimaryDatabase
+        expr: (sum(patroni_primary) or vector(0)) < 1
+        for: 3s
+        labels: {severity: critical}
+        annotations:
+          summary: "no PostgreSQL node is primary"
+          detects: "database failure or failover in progress"
+          threshold: "no primary for 3 s"
+          response: "Patroni promotes the standby (about 25 s); services answer 503 or serve cached data meanwhile; check etcd quorum if it takes longer than 60 s"
+
+      - alert: LoadShedding
+        expr: sum by (service) (rate(uft_load_shed_total[10s])) > 1
+        for: 4s
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.service }} rejects requests to protect itself"
+          detects: "traffic above the capacity of the instances"
+          threshold: "more than 1 shed request per second for 4 s"
+          response: "scale out or throttle clients; shed requests get a fast 503 with Retry-After"
+
+      - alert: AuthFailureBurst
+        expr: sum by (reason) (rate(uft_auth_denied_total[10s])) > 2
+        for: 4s
+        labels: {severity: critical}
+        annotations:
+          summary: "burst of denied requests ({{ $labels.reason }})"
+          detects: "credential stuffing, token forgery or probing of the data of other users"
+          threshold: "more than 2 denials per second for 4 s"
+          response: "audit log shows actor and resource; block the source at the gateway and rotate keys if tokens were forged"
+
+      - alert: RateLimitAbuse
+        expr: sum by (service, scope) (rate(uft_rate_limited_total[10s])) > 1
+        for: 4s
+        labels: {severity: warning}
+        annotations:
+          summary: "{{ $labels.service }}: clients are being rate limited ({{ $labels.scope }})"
+          detects: "a client flooding the API or guessing passwords"
+          threshold: "more than 1 throttled request per second for 4 s"
+          response: "throttling is automatic; check the audit log for the offending principal and block it if it persists"

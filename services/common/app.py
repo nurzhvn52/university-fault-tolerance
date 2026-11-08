@@ -14,15 +14,24 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from common import chaos
 from common.config import Settings
+from common.context import REQUEST_ID_RE, current_request_id, new_request_id, request_id_var
 from common.db import create_engine, is_db_unavailable
 from common.health import router as health_router
 from common.logs import configure_logging
 from common.resilience import Bulkhead, DependencyUnavailable, RateLimitedLog
-from common.telemetry import IN_FLIGHT, LATENCY, REQUESTS, SHED
+from common.telemetry import BUILD_INFO, IN_FLIGHT, LATENCY, REQUESTS, SHED
 
 logger = logging.getLogger("common.app")
 
 Hook = Callable[[FastAPI], Awaitable[None]]
+
+
+async def forward_request_id(request: httpx.Request) -> None:
+    """Outgoing calls carry the id of the request being served, so that one user request can
+    be followed through every service it touches."""
+    request_id = current_request_id()
+    if request_id and "x-request-id" not in request.headers:
+        request.headers["X-Request-ID"] = request_id
 
 
 def create_service_app(
@@ -45,7 +54,9 @@ def create_service_app(
             app.state.sessionmaker = async_sessionmaker(app.state.engine, expire_on_commit=False)
         # Baseline: calls to other services have no timeout. In FT mode every call also gets
         # its own deadline from the Dependency wrapper; this is only the outer limit.
-        app.state.http = httpx.AsyncClient(timeout=5.0 if settings.ft else None)
+        hooks = {"request": [forward_request_id]} if settings.tracing else {}
+        app.state.http = httpx.AsyncClient(timeout=5.0 if settings.ft else None, event_hooks=hooks)
+        BUILD_INFO.labels(settings.service_name, settings.version, settings.ft_mode).set(1)
         if on_startup is not None:
             await on_startup(app)
         logger.info("service_started", extra={"mode": settings.ft_mode})
@@ -65,6 +76,7 @@ def create_service_app(
     # immediate 503 instead of queueing until everything times out.
     inbound = Bulkhead("inbound", settings.max_in_flight) if settings.ft else None
     rate_log = RateLimitedLog()
+    fail_log = RateLimitedLog(1.0)
 
     def error_response(request: Request, exc: Exception) -> JSONResponse:
         if settings.ft and isinstance(exc, DependencyUnavailable):
@@ -96,6 +108,13 @@ def create_service_app(
         api = request.url.path.startswith("/api")
         guarded = inbound is not None and api
         started = time.perf_counter()
+        request_id = None
+        id_token = None
+        if settings.tracing:
+            request_id = request.headers.get("x-request-id", "")
+            if not REQUEST_ID_RE.match(request_id):
+                request_id = new_request_id()
+            id_token = request_id_var.set(request_id)
         if guarded and not inbound.try_acquire():
             if rate_log.should_log("shed"):
                 logger.warning("load_shed", extra={"in_flight": inbound.in_use})
@@ -113,12 +132,40 @@ def create_service_app(
                 IN_FLIGHT.labels(service).dec()
                 if guarded:
                     inbound.release()
+        duration = time.perf_counter() - started
         if api:
             route = getattr(request.scope.get("route"), "path", "unmatched")
             REQUESTS.labels(service, route, request.method, response.status_code).inc()
-            LATENCY.labels(service, route).observe(time.perf_counter() - started)
+            LATENCY.labels(service, route).observe(duration)
+            if settings.access_log:
+                logger.info(
+                    "request",
+                    extra={
+                        "method": request.method,
+                        "route": route,
+                        "status": response.status_code,
+                        "duration_ms": round(duration * 1000),
+                    },
+                )
+            if (
+                settings.tracing
+                and response.status_code >= 500
+                and fail_log.should_log(f"{route}:{response.status_code}")
+            ):
+                logger.warning(
+                    "request_failed",
+                    extra={
+                        "method": request.method,
+                        "route": route,
+                        "status": response.status_code,
+                        "duration_ms": round(duration * 1000),
+                    },
+                )
         # Shows which replica served the request.
         response.headers["X-Instance"] = instance
+        if request_id is not None:
+            response.headers["X-Request-ID"] = request_id
+            request_id_var.reset(id_token)
         return response
 
     app.include_router(health_router)
