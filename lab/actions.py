@@ -13,6 +13,7 @@ of the system get the same repair actions at the same times.
 """
 
 import contextlib
+import json
 import logging
 import os
 import random
@@ -22,7 +23,8 @@ from pathlib import Path
 
 import httpx
 
-from lab import docker_ctl
+from lab import attacks, docker_ctl
+from lab.tokens import Tokens
 from lab.workload import TERM
 
 logger = logging.getLogger("lab.actions")
@@ -40,6 +42,11 @@ class LabContext:
     gateway_url: str
     toxiproxy_url: str
     seed: int
+    tokens: Tokens | None = None
+    victims: list[int] = field(default_factory=list)
+    markers: list[str] = field(default_factory=list)
+    attacker_id: int = 11
+    seed_password: str = "synthetic-lab-password"
 
 
 @dataclass
@@ -266,3 +273,67 @@ class ActionRunner:
         except httpx.HTTPError as exc:
             return {"status": 0, "error": type(exc).__name__}
         return {"status": response.status_code, "body": response.text[:500]}
+
+    # ------------------------------------------------------------ misuse and security probes
+
+    async def do_probe_unauthorized(self) -> dict:
+        """Tokens that are missing, forged or expired, other students' data, staff and
+        internal endpoints, all as one student."""
+        probes = attacks.unauthorized_probes(
+            self.ctx.tokens, self.ctx.attacker_id, self.ctx.victims[0]
+        )
+        return await attacks.run_probes(self.ctx.gateway_url, probes, self.ctx.markers)
+
+    async def do_probe_malformed(self) -> dict:
+        probes = attacks.malformed_probes(self.ctx.tokens, self.ctx.attacker_id)
+        return await attacks.run_probes(self.ctx.gateway_url, probes, self.ctx.markers)
+
+    async def do_flood(self, rate: float, seconds: float, anonymous: bool = False) -> dict:
+        """One principal sends far more requests than a person would; ``anonymous`` sends
+        them without any token (scanning)."""
+        token = "" if anonymous else self.ctx.tokens.attacker(self.ctx.attacker_id)
+        return await attacks.flood(self.ctx.gateway_url, token, self.ctx.attacker_id, rate, seconds)
+
+    async def do_login_attack(
+        self, attempts: int, rate: float = 20, accounts: int = 1, first_account: int = 49
+    ) -> dict:
+        """Password guessing from its own container (own source address, so the gateway
+        limit for one address does not hit the legitimate load generator).
+        Account names are the student numbers of the seeded accounts (250001 + n)."""
+        users = ",".join(str(250001 + n) for n in range(first_account, first_account + accounts))
+        out, _ = await docker_ctl.docker(
+            "run",
+            "--rm",
+            "--network",
+            f"{self.ctx.project}_default",
+            "uft-lab:dev",
+            "python",
+            "-m",
+            "lab.attacker",
+            "login",
+            "--gateway",
+            "http://gateway:8080",
+            "--users",
+            users,
+            "--attempts",
+            str(attempts),
+            "--rate",
+            str(rate),
+        )
+        return json.loads(out.strip().splitlines()[-1])
+
+    async def do_legit_login(self, username: str = "registrar1") -> dict:
+        response = await self.ctx.http.post(
+            f"{self.ctx.gateway_url}/api/auth/login",
+            json={"username": username, "password": self.ctx.seed_password},
+        )
+        return {"status": response.status_code, "username": username}
+
+    async def do_privilege_probe(self, target: str) -> dict:
+        """Database statements run with the credentials of a service container, as if the
+        service had been compromised."""
+        container = (await self.resolve(target))[0]
+        out, _ = await docker_ctl.docker(
+            "exec", container.name, "python", "-c", attacks.PRIVILEGE_SCRIPT
+        )
+        return json.loads(out.strip().splitlines()[-1])

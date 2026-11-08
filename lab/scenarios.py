@@ -15,6 +15,7 @@ from lab.actions import ActionRunner
 from lab.workload import SERVICE_OF
 
 SCENARIOS_FILE = Path(__file__).with_name("scenarios.toml")
+ENDTERM_FILE = Path(__file__).with_name("scenarios_endterm.toml")
 
 
 @dataclass(frozen=True)
@@ -27,6 +28,10 @@ class Scenario:
     fault_at: float | None
     # Operation weights of the load; None means the default mix of lab.workload.
     mix: dict[str, int] | None = None
+    # Endterm: students kept out of the load (attack targets) and the alerts the run is
+    # meant to raise, as windows [at, until] with expected and tolerated alert names.
+    victims: int = 0
+    windows: tuple[dict, ...] = ()
 
     @property
     def duration(self) -> float:
@@ -64,6 +69,9 @@ def generate_failures(generator: dict, duration: float, seed: int) -> list[dict]
 
 def load(path: Path = SCENARIOS_FILE, seed: int = 1) -> dict[str, Scenario]:
     data = tomllib.loads(path.read_text(encoding="utf-8"))
+    if path == SCENARIOS_FILE:
+        extra = tomllib.loads(ENDTERM_FILE.read_text(encoding="utf-8"))
+        data["scenario"].update(extra["scenario"])
     defaults = data.get("defaults", {})
     scenarios = {}
     for name, spec in data["scenario"].items():
@@ -76,6 +84,16 @@ def load(path: Path = SCENARIOS_FILE, seed: int = 1) -> dict[str, Scenario]:
             actions = generate_failures(spec["generator"], duration, seed)
         actions = sorted(actions, key=lambda a: a["at"])
         fault_at = spec.get("fault_at", actions[0]["at"] if actions else None)
+        windows = spec.get("windows")
+        if windows is None and ("expect" in spec or "tolerate" in spec):
+            windows = [
+                {
+                    "at": fault_at or 0,
+                    "until": sum(d for d, _ in profile),
+                    "expect": spec.get("expect", []),
+                    "tolerate": spec.get("tolerate", []),
+                }
+            ]
         scenario = Scenario(
             name,
             spec["title"],
@@ -84,6 +102,8 @@ def load(path: Path = SCENARIOS_FILE, seed: int = 1) -> dict[str, Scenario]:
             actions,
             fault_at,
             spec.get("mix"),
+            spec.get("victims", 0),
+            tuple(windows or ()),
         )
         _validate(scenario)
         scenarios[name] = scenario

@@ -28,6 +28,7 @@ from lab.actions import ActionRunner, LabContext
 from lab.loadgen import LoadGenerator, make_plan
 from lab.metrics import good
 from lab.run import load_population, wait_ready
+from lab.tokens import Tokens
 from lab.workload import Workload
 
 # failure -> (what happens, lab action, service whose replicas are shown every second)
@@ -67,8 +68,8 @@ class DemoWorkload(Workload):
     otherwise resend the idempotency keys of earlier runs (answered as duplicates, so nothing
     is charged) and reuse their amounts (which the double-charge check would flag)."""
 
-    def __init__(self, population, seed: int):
-        super().__init__(population, seed=seed)
+    def __init__(self, population, seed: int, token_for=None):
+        super().__init__(population, seed=seed, token_for=token_for)
         self.offset = Decimal(seed % 1000)
 
     def payment_amount(self, student_id: int) -> Decimal:
@@ -121,9 +122,12 @@ async def main(args: argparse.Namespace) -> None:
     project = os.environ["UFT_PROJECT"]
     ft = project.endswith("-ft")
     description, action, focus = FAILURES[args.failure]
+    settings = get_settings()
+    tokens = Tokens(settings)
+    headers = {"Authorization": f"Bearer {tokens.admin()}"} if settings.security else {}
     async with (
-        httpx.AsyncClient(base_url=gateway, timeout=30) as client,
-        httpx.AsyncClient(timeout=10) as admin,
+        httpx.AsyncClient(base_url=gateway, timeout=30, headers=headers) as client,
+        httpx.AsyncClient(timeout=10, headers=headers) as admin,
     ):
         await wait_ready(client)
         population = await load_population(client)
@@ -132,7 +136,12 @@ async def main(args: argparse.Namespace) -> None:
         )
         generator = LoadGenerator(client)
         plan = make_plan(
-            [(args.duration, args.rate)], DemoWorkload(population, seed=time.time_ns() % 2**31)
+            [(args.duration, args.rate)],
+            DemoWorkload(
+                population,
+                seed=time.time_ns() % 2**31,
+                token_for=tokens.student if settings.security else None,
+            ),
         )
         start = time.monotonic()
         print(f"stack {project}: {args.rate} requests/s for {args.duration} s")
@@ -164,7 +173,6 @@ async def main(args: argparse.Namespace) -> None:
     failed = len(attempts) - ok
     print(f"\navailability {ok / len(attempts) * 100:.2f}% ({failed} failed of {len(attempts)})")
     await asyncio.sleep(3)
-    settings = get_settings()
     engine = create_async_engine(settings.database_url, pool_size=1)
     roots = os.environ.get("UFT_TRANSCRIPT_DIRS", "/data/transcripts").split(",")
     try:

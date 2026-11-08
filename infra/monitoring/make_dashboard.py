@@ -78,7 +78,7 @@ panel(
     "Healthy replicas behind the gateway",
     [
         (
-            'haproxy_backend_active_servers{proxy=~"student|payment|records|timetable"}',
+            'haproxy_backend_active_servers{proxy=~"auth|student|payment|records|timetable"}',
             "{{proxy}}",
         )
     ],

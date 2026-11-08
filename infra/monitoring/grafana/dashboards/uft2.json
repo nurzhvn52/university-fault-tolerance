@@ -166,7 +166,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "haproxy_backend_active_servers{proxy=~\"student|payment|records|timetable\"}",
+          "expr": "haproxy_backend_active_servers{proxy=~\"auth|student|payment|records|timetable\"}",
           "legendFormat": "{{proxy}}",
           "refId": "A"
         }

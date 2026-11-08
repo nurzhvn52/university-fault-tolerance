@@ -1,0 +1,153 @@
+# Endterm scenarios (X*), merged with scenarios.toml. Run in every configuration; the alert
+# lists apply only where the monitoring stack exists (ft2).
+#
+# "expect": alerts that must start firing inside the window, counted from the injection;
+# "tolerate": alerts that may fire there without being false positives; any other alert that
+# fires is a false positive. "windows" give the same per stretch of a composite scenario.
+# "victims": number of students the legitimate load never touches (attack targets, used to
+# prove that attacks changed nothing).
+
+[scenario.X0]
+title = "Steady load, no fault"
+description = "100 requests per second for 120 s and no failure: cost of the security and monitoring layers, and a check that no alert fires without a reason."
+rate_profile = [[120, 100]]
+fault_at = 20
+actions = []
+expect = []
+tolerate = []
+
+[scenario.X1]
+title = "Instance crash"
+description = "The process of payment-1 dies under load; the restart policy brings it back before an outage alert can fire."
+actions = [
+    { at = 20, do = "crash", target = "payment-1" },
+    { at = 60, do = "repair" },
+]
+expect = ["InstanceRestarted"]
+tolerate = ["InstanceDown", "ReplicaUnready", "CircuitBreakerOpen", "HighErrorRate", "HighLatencyP95"]
+
+[scenario.X1b]
+title = "Instance hang"
+description = "payment-1 stops answering but stays alive; scrapes and health checks fail until the watchdog restarts it."
+actions = [
+    { at = 20, do = "hang", target = "payment-1", seconds = 3600 },
+    { at = 60, do = "repair" },
+]
+expect = ["InstanceDown", "ReplicaUnready"]
+tolerate = ["InstanceRestarted", "CircuitBreakerOpen", "HighErrorRate", "HighLatencyP95"]
+
+[scenario.X2]
+title = "Dependency timeout"
+description = "Calls from the student service to payment stop getting answers (timeout toxic)."
+actions = [
+    { at = 20, do = "toxic", proxy = "payment", toxic = "timeout", attributes = { timeout = 0 } },
+    { at = 60, do = "repair" },
+]
+expect = ["CircuitBreakerOpen"]
+tolerate = ["HighLatencyP95", "HighErrorRate"]
+
+[scenario.X3]
+title = "Database failure"
+description = "SIGKILL of the primary database; Patroni promotes the standby, tokens keep working without the database."
+actions = [
+    { at = 20, do = "kill", target = "db-primary" },
+    { at = 60, do = "repair" },
+]
+expect = ["NoPrimaryDatabase", "BackendUnavailable"]
+tolerate = ["HighErrorRate", "ReplicaUnready", "CircuitBreakerOpen", "HighLatencyP95", "InstanceDown", "InstanceRestarted"]
+
+[scenario.X4]
+title = "Load spike"
+description = "Registration rush: 50 -> 300 requests per second for 60 s and back."
+rate_profile = [[20, 50], [60, 300], [40, 50]]
+fault_at = 20
+mix = { "registration.create" = 60, "sections.list" = 20, "student.get" = 10, "tuition.get" = 10 }
+actions = []
+expect = []
+tolerate = ["LoadShedding", "HighLatencyP95", "HighErrorRate", "CircuitBreakerOpen"]
+
+[scenario.X5]
+title = "Alert test"
+description = "Known faults one after another, each meant to raise its own alert: hang, timeout, slow bank, database failure, scanning, flood of one client."
+rate_profile = [[340, 30]]
+actions = [
+    { at = 20, do = "hang", target = "payment-1", seconds = 3600 },
+    { at = 55, do = "repair" },
+    { at = 80, do = "toxic", proxy = "payment", toxic = "timeout", attributes = { timeout = 0 } },
+    { at = 110, do = "repair" },
+    { at = 135, do = "toxic", proxy = "bank", toxic = "latency", attributes = { latency = 1500 } },
+    { at = 165, do = "repair" },
+    { at = 190, do = "kill", target = "db-primary" },
+    { at = 215, do = "repair" },
+    { at = 260, do = "flood", rate = 40, seconds = 15, anonymous = true },
+    { at = 300, do = "flood", rate = 150, seconds = 15 },
+]
+windows = [
+    { at = 20, until = 60, expect = ["InstanceDown", "ReplicaUnready"], tolerate = ["InstanceRestarted", "CircuitBreakerOpen", "HighErrorRate", "HighLatencyP95"] },
+    { at = 80, until = 115, expect = ["CircuitBreakerOpen"], tolerate = ["HighLatencyP95", "HighErrorRate"] },
+    { at = 135, until = 170, expect = ["HighLatencyP95"], tolerate = ["CircuitBreakerOpen", "HighErrorRate"] },
+    { at = 190, until = 245, expect = ["NoPrimaryDatabase", "BackendUnavailable"], tolerate = ["HighErrorRate", "ReplicaUnready", "CircuitBreakerOpen", "HighLatencyP95", "InstanceRestarted", "InstanceDown"] },
+    { at = 260, until = 285, expect = ["AuthFailureBurst"], tolerate = ["RateLimitAbuse"] },
+    { at = 300, until = 325, expect = ["RateLimitAbuse"], tolerate = ["AuthFailureBurst", "HighLatencyP95", "LoadShedding"] },
+]
+
+[scenario.X6]
+title = "Interrupted payment"
+description = "payment-1 crashes after the bank charged the student, before the payment is saved; clients repeat the payment with the same idempotency key."
+rate_profile = [[90, 30]]
+actions = [
+    { at = 20, do = "arm_fault", target = "payment-1", point = "payment.after_charge", action = "crash" },
+    { at = 40, do = "repair" },
+]
+expect = ["InstanceRestarted"]
+tolerate = ["InstanceDown", "ReplicaUnready", "HighErrorRate", "CircuitBreakerOpen", "HighLatencyP95"]
+
+[scenario.X7]
+title = "Unauthorized access"
+description = "One student sends requests without credentials, with forged and expired tokens, for data of other students, to staff operations and to internal endpoints."
+rate_profile = [[90, 30]]
+victims = 10
+actions = [
+    { at = 20, do = "probe_unauthorized" },
+]
+expect = []
+tolerate = ["AuthFailureBurst", "RateLimitAbuse"]
+
+[scenario.X8]
+title = "Abusive and malformed requests"
+description = "Malformed and oversized requests, then one client floods the API at 150 requests per second for 30 s while the normal load continues."
+rate_profile = [[100, 30]]
+victims = 10
+fault_at = 30
+actions = [
+    { at = 15, do = "probe_malformed" },
+    { at = 30, do = "flood", rate = 150, seconds = 30 },
+]
+windows = [
+    { at = 30, until = 60, expect = ["RateLimitAbuse"], tolerate = ["AuthFailureBurst", "HighLatencyP95", "LoadShedding", "HighErrorRate"] },
+]
+
+[scenario.X9]
+title = "Password guessing"
+description = "Wrong passwords against one account, then spraying across 40 accounts, from a separate container; a legitimate user logs in meanwhile."
+rate_profile = [[100, 30]]
+actions = [
+    { at = 20, do = "login_attack", attempts = 80, rate = 10, accounts = 1, first_account = 48 },
+    { at = 40, do = "login_attack", attempts = 300, rate = 40, accounts = 40, first_account = 0 },
+    { at = 44, do = "legit_login", username = "registrar1" },
+    { at = 70, do = "legit_login", username = "registrar1" },
+]
+windows = [
+    { at = 20, until = 60, expect = ["RateLimitAbuse", "AuthFailureBurst"], tolerate = [] },
+]
+
+[scenario.X10]
+title = "Least privilege"
+description = "Database statements run with the credentials of the payment and student service containers, as if they had been taken over."
+rate_profile = [[90, 30]]
+actions = [
+    { at = 20, do = "privilege_probe", target = "payment-1" },
+    { at = 25, do = "privilege_probe", target = "student-1" },
+]
+expect = []
+tolerate = []

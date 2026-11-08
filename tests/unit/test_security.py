@@ -193,6 +193,8 @@ def test_body_identity_is_checked_and_unknown_fields_rejected(api):
     assert api.post("/api/pay", json={"student_id": 2}, headers=own).status_code == 403
     extra = api.post("/api/pay", json={"student_id": 1, "role": "admin"}, headers=own)
     assert extra.status_code == 422
+    rejected = [e for e in api.events if e[0] == "request.rejected"]
+    assert rejected and rejected[0][3]["reason"] == "validation_error"
 
 
 def test_unauthenticated_request_never_reaches_body_validation(api):
@@ -300,3 +302,13 @@ def test_audit_buffer_is_bounded_and_counts_dropped_events():
         audit.record("x", "ok", resource=str(i))
     assert [e["resource"] for e in audit._buffer] == ["4", "5", "6"]
     assert AUDIT_DROPPED.labels("dropper")._value.get() == 4
+
+
+def test_audit_insert_does_not_need_select_privilege():
+    from sqlalchemy import insert
+    from sqlalchemy.dialects import postgresql
+
+    from common.audit import events
+
+    sql = str(insert(events).compile(dialect=postgresql.dialect()))
+    assert "RETURNING" not in sql

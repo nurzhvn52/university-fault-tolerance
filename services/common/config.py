@@ -35,6 +35,8 @@ class Settings(BaseSettings):
     # Per-principal token bucket (students and staff; service tokens are exempt).
     rate_limit_rps: float = 20.0
     rate_limit_burst: int = 40
+    # Staff (registrar, admin) get this many times the student limit.
+    staff_rate_factor: float = 10.0
     max_body_bytes: int = 262144
     login_max_failures: int = 5
     login_lock_s: float = 30.0

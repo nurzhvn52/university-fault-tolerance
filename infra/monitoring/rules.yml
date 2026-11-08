@@ -25,7 +25,7 @@ groups:
           response: "no action if it happens once; find the cause in the logs if it repeats (crash loop)"
 
       - alert: ReplicaUnready
-        expr: haproxy_server_status{state="DOWN", proxy=~"student|payment|records|timetable"} == 1
+        expr: haproxy_server_status{state="DOWN", proxy=~"auth|student|payment|records|timetable"} == 1
         for: 3s
         labels: {severity: warning}
         annotations:
@@ -35,7 +35,7 @@ groups:
           response: "traffic goes to the other replica (automatic); check /health/ready of the instance"
 
       - alert: BackendUnavailable
-        expr: haproxy_backend_active_servers{proxy=~"student|payment|records|timetable"} == 0
+        expr: haproxy_backend_active_servers{proxy=~"auth|student|payment|records|timetable"} == 0
         for: 3s
         labels: {severity: critical}
         annotations:

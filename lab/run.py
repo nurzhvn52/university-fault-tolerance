@@ -22,10 +22,12 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from common.config import get_settings
 from common.logs import configure_logging
-from lab import consistency, docker_ctl, metrics
+from common.security import load_bank_api_key
+from lab import consistency, docker_ctl, metrics, observe, security_check
 from lab.actions import ActionRunner, LabContext
 from lab.loadgen import DistributedLoad, make_plan, write_attempts
 from lab.scenarios import Scenario, load
+from lab.tokens import Tokens
 from lab.workload import TERM, Population, Workload
 
 logger = logging.getLogger("lab.run")
@@ -74,6 +76,19 @@ async def load_population(client: httpx.AsyncClient) -> Population:
     years = await asyncio.gather(*(year(i) for i in range(1, students + 1)))
     with_grades = [i for i, y in enumerate(years, 1) if y > 1]
     return Population(students, paid, unpaid, with_grades, sections)
+
+
+def without_victims(population: Population, victims: list[int]) -> Population:
+    """The legitimate load never touches the victims (the highest student ids)."""
+    skip = set(victims)
+    keep = lambda ids: [i for i in ids if i not in skip]  # noqa: E731
+    return Population(
+        min(population.students, min(victims) - 1),
+        keep(population.paid),
+        keep(population.unpaid),
+        keep(population.with_grades),
+        population.sections,
+    )
 
 
 async def run_actions(runner: ActionRunner, scenario: Scenario, start_mono: float) -> None:
@@ -129,18 +144,45 @@ async def main(args: argparse.Namespace) -> None:
     gateway = os.environ["UFT_GATEWAY_URL"]
     workers = int(os.environ.get("UFT_LOAD_WORKERS", "4"))
 
+    settings = get_settings()
+    tokens = Tokens(settings)
+    secure = settings.security
+    headers = {"Authorization": f"Bearer {tokens.admin()}"} if secure else {}
+    admin_headers = {**headers, "X-Api-Key": load_bank_api_key(settings)} if secure else {}
+    prometheus = os.environ.get("UFT_PROMETHEUS_URL")
+    sink = os.environ.get("UFT_ALERT_SINK_URL")
+    engine = create_async_engine(settings.database_url, pool_size=2)
+
     async with (
-        httpx.AsyncClient(base_url=gateway, timeout=30) as client,
-        httpx.AsyncClient(timeout=10) as admin,
+        httpx.AsyncClient(base_url=gateway, timeout=30, headers=headers) as client,
+        httpx.AsyncClient(timeout=10, headers=admin_headers) as admin,
     ):
         await wait_ready(client)
+        quiet = await observe.wait_quiet(admin, prometheus) if prometheus else None
         population = await load_population(client)
-        ctx = LabContext(project, admin, gateway, os.environ["UFT_TOXIPROXY_URL"], args.rep)
+        victims, markers, before = [], [], None
+        if scenario.victims:
+            victims = await security_check.victim_ids(engine, scenario.victims)
+            markers = await security_check.victim_markers(engine, victims)
+            population = without_victims(population, victims)
+            before = await security_check.snapshot(engine, victims)
+        ctx = LabContext(
+            project,
+            admin,
+            gateway,
+            os.environ["UFT_TOXIPROXY_URL"],
+            args.rep,
+            tokens=tokens,
+            victims=victims,
+            markers=markers,
+            seed_password=os.environ.get("UFT_SEED_PASSWORD", "synthetic-lab-password"),
+        )
         runner = ActionRunner(ctx)
-        workload = (
-            Workload(population, seed=args.rep, mix=scenario.mix)
-            if scenario.mix
-            else Workload(population, seed=args.rep)
+        workload = Workload(
+            population,
+            seed=args.rep,
+            token_for=tokens.student if secure else None,
+            **({"mix": scenario.mix} if scenario.mix else {}),
         )
         plan = make_plan(scenario.rate_profile, workload)
         load_pool = DistributedLoad(gateway, workers=workers)
@@ -155,10 +197,28 @@ async def main(args: argparse.Namespace) -> None:
         )
         t_load_end = time.time()
         load_pool.close()
-        await asyncio.sleep(SETTLE_S)
+        await asyncio.sleep(SETTLE_S + (8 if prometheus else 0))
         report = await check_consistency(admin, scenario)
+        if before is not None:
+            report["security"] = security_check.diff(
+                before, await security_check.snapshot(engine, victims)
+            )
         events = await stream.stop()
         logs = metrics.parse_logs(await collect_logs(project, t0 - 1))
+        if secure:
+            reasons = [
+                reason
+                for record in runner.records
+                if isinstance(record.get("result"), dict)
+                for reason in record["result"].get("reasons", [])
+            ]
+            report["audit"] = security_check.audit_report(
+                await security_check.audit_rows(engine, t0), logs, reasons
+            )
+        collected = None
+        if prometheus:
+            collected = await observe.collect(admin, prometheus, sink, t0, time.time())
+    await engine.dispose()
 
     fault_at = t0 + scenario.fault_at if scenario.fault_at is not None else None
     result = metrics.compute(
@@ -172,6 +232,17 @@ async def main(args: argparse.Namespace) -> None:
         scenario.rate_profile,
     )
     result["consistency"] = consistency.violations(report)
+    summary = security_check.summarize_actions(runner.records)
+    if summary:
+        result["security"] = summary
+    if collected is not None:
+        windows = [
+            observe.Window(w["at"], w["until"], w.get("expect", []), w.get("tolerate", []))
+            for w in scenario.windows
+        ]
+        result["alerts"] = observe.evaluate(collected, t0, windows)
+        result["alerts"]["quiet_at_start"] = quiet == []
+        write_json(collected, out / "alerts.json")
 
     write_json(
         {
@@ -224,7 +295,7 @@ async def main(args: argparse.Namespace) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--scenario", required=True)
-    parser.add_argument("--mode", required=True, choices=["baseline", "sw", "ft"])
+    parser.add_argument("--mode", required=True, choices=["baseline", "sw", "ft", "ft2"])
     parser.add_argument("--rep", type=int, default=1)
     parser.add_argument("--out", required=True)
     asyncio.run(main(parser.parse_args()))

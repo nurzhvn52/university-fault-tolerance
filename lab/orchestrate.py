@@ -11,23 +11,37 @@ import argparse
 import json
 import os
 import subprocess
+import sys
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-# mode -> (compose file, extra environment). "sw" is the single-instance baseline stack with
-# the software mechanisms on, to separate their effect from the hardware redundancy of "ft".
+# mode -> (compose files, extra environment, profiles). "sw" is the single-instance baseline
+# stack with the software mechanisms on, to separate their effect from the hardware redundancy
+# of "ft" (the midterm configuration). "ft2" is the endterm configuration: "ft" plus request
+# ids, security, alerting and monitoring (docker-compose.endterm.yml).
 MODES = {
-    "baseline": ("docker-compose.baseline.yml", {"UFT_FT_MODE": "baseline"}),
-    "sw": ("docker-compose.baseline.yml", {"UFT_FT_MODE": "ft"}),
-    "ft": ("docker-compose.ft.yml", {}),
+    "baseline": (["docker-compose.baseline.yml"], {"UFT_FT_MODE": "baseline"}, []),
+    "sw": (["docker-compose.baseline.yml"], {"UFT_FT_MODE": "ft"}, []),
+    "ft": (["docker-compose.ft.yml"], {}, []),
+    "ft2": (
+        ["docker-compose.ft.yml", "docker-compose.endterm.yml"],
+        {"UFT_TRACING": "true", "UFT_SECURITY": "true"},
+        ["monitoring"],
+    ),
 }
 
 
 def compose(mode: str, *args: str, check: bool = True) -> subprocess.CompletedProcess:
-    compose_file, env = MODES[mode]
-    command = ["docker", "compose", "-f", compose_file, *args]
-    return subprocess.run(command, cwd=ROOT, check=check, env={**os.environ, **env})
+    files, env, profiles = MODES[mode]
+    command = ["docker", "compose"]
+    for file in files:
+        command += ["-f", file]
+    for profile in profiles:
+        command += ["--profile", profile]
+    if mode == "ft2":
+        subprocess.run([sys.executable, "-m", "lab.init_secrets"], cwd=ROOT, check=True)
+    return subprocess.run([*command, *args], cwd=ROOT, check=check, env={**os.environ, **env})
 
 
 def git_commit() -> str:

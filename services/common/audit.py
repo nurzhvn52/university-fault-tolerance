@@ -42,6 +42,9 @@ events = Table(
     Column("outcome", String(16)),
     Column("resource", String(160)),
     Column("detail", JSON),
+    # The service roles may only INSERT: RETURNING id would need SELECT and made every
+    # single-row insert fail with "permission denied".
+    implicit_returning=False,
 )
 
 BATCH = 100

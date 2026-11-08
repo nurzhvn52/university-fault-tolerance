@@ -199,6 +199,17 @@ def create_service_app(
                 if guarded:
                     inbound.release()
         duration = time.perf_counter() - started
+        if settings.security and api and response.status_code == 422:
+            who = client_address(request)
+            REJECTED.labels(service, "validation_error").inc()
+            request.app.state.audit.record(
+                "request.rejected",
+                "denied",
+                actor=who,
+                resource=request.url.path,
+                detail={"reason": "validation_error", "status": 422, "method": request.method},
+                dedup=("validation_error", who, request.url.path),
+            )
         if api:
             route = getattr(request.scope.get("route"), "path", "unmatched")
             REQUESTS.labels(service, route, request.method, response.status_code).inc()

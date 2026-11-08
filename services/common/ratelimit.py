@@ -23,13 +23,13 @@ class RateLimiter:
         self._max_keys = max_keys
         self._buckets: dict[str, tuple[float, float]] = {}  # key -> (tokens, last refill)
 
-    def allow(self, key: str) -> bool:
+    def allow(self, key: str, cost: float = 1.0) -> bool:
         now = self._clock()
         tokens, last = self._buckets.get(key, (self._burst, now))
         tokens = min(self._burst, tokens + (now - last) * self._rate)
-        allowed = tokens >= 1.0
+        allowed = tokens >= cost
         if allowed:
-            tokens -= 1.0
+            tokens -= cost
         if len(self._buckets) >= self._max_keys and key not in self._buckets:
             self._prune(now)
         self._buckets[key] = (tokens, now)

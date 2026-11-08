@@ -222,7 +222,8 @@ async def authenticate(request: Request) -> Principal:
     except TokenError as exc:
         raise deny(request, 401, exc.reason) from exc
     actor_var.set(principal.sub)
-    if principal.role != "service" and not state.limiter.allow(principal.sub):
+    cost = 1.0 / state.settings.staff_rate_factor if principal.is_staff else 1.0
+    if principal.role != "service" and not state.limiter.allow(principal.sub, cost):
         raise deny(request, 429, "rate_limited", actor=principal.sub, scope="principal")
     request.state.principal = principal
     return principal

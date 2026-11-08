@@ -43,8 +43,9 @@ class Attempt:
 
 def is_success(status: int) -> bool:
     """The system answered the request. Business rejections (4xx) are answers; server
-    errors, 429 (shed load) and no answer at all are failures."""
-    return 0 < status < 500 and status != 429
+    errors, 429 (shed load), 401/403 (a legitimate client is never denied) and no answer at all are
+    failures."""
+    return 0 < status < 500 and status not in (401, 403, 429)
 
 
 def schedule(profile: RateProfile) -> list[float]:
