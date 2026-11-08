@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict
 from sqlalchemy import select
 
 from common.db import SessionDep
+from common.security import Authenticated, Staff
 from timetable import checkpointed
 from timetable.jobs import start_generation
 from timetable.models import GenerationJob, Room, Timeslot, TimetableEntry
@@ -56,13 +57,15 @@ def _entries_query(term: str):
 
 
 @router.get("", response_model=list[EntryOut])
-async def get_timetable(term: str, session: SessionDep) -> list[EntryOut]:
+async def get_timetable(term: str, session: SessionDep, _: Authenticated) -> list[EntryOut]:
     rows = await session.execute(_entries_query(term))
     return [EntryOut(**row._mapping) for row in rows]
 
 
 @router.get("/sections", response_model=list[EntryOut])
-async def get_section_slots(term: str, ids: str, session: SessionDep) -> list[EntryOut]:
+async def get_section_slots(
+    term: str, ids: str, session: SessionDep, _: Authenticated
+) -> list[EntryOut]:
     try:
         section_ids = [int(part) for part in ids.split(",") if part]
     except ValueError as exc:
@@ -76,7 +79,12 @@ async def get_section_slots(term: str, ids: str, session: SessionDep) -> list[En
 
 
 @router.post("/generate", response_model=JobOut, status_code=202)
-async def generate(term: str, request: Request, session: SessionDep) -> GenerationJob:
+async def generate(
+    term: str, request: Request, session: SessionDep, principal: Staff
+) -> GenerationJob:
+    request.app.state.audit.record(
+        "timetable.generate", "ok", actor=principal.sub, resource=f"term:{term}"
+    )
     running = await session.scalar(
         select(GenerationJob.id).where(
             GenerationJob.term == term, GenerationJob.status == "RUNNING"
@@ -99,7 +107,7 @@ async def generate(term: str, request: Request, session: SessionDep) -> Generati
 
 
 @router.get("/jobs/{job_id}", response_model=JobOut)
-async def get_job(job_id: int, request: Request, session: SessionDep) -> JobOut:
+async def get_job(job_id: int, request: Request, session: SessionDep, _: Staff) -> JobOut:
     job = await session.get(GenerationJob, job_id)
     if job is None:
         raise HTTPException(404, "job_not_found")

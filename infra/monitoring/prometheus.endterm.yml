@@ -22,6 +22,8 @@ scrape_configs:
           - records-2:8000
           - timetable-1:8000
           - timetable-2:8000
+          - auth-1:8000
+          - auth-2:8000
     relabel_configs:
       - source_labels: [__address__]
         regex: "([^:]+):.*"

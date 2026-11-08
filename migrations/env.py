@@ -7,6 +7,7 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import create_async_engine
 
+from auth.models import Base as AuthBase
 from common.config import get_settings
 from payment.models import Base as PaymentBase
 from records.models import Base as RecordsBase
@@ -22,6 +23,7 @@ target_metadata = [
     PaymentBase.metadata,
     RecordsBase.metadata,
     TimetableBase.metadata,
+    AuthBase.metadata,
 ]
 SCHEMAS = {metadata.schema for metadata in target_metadata}
 

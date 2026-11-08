@@ -13,13 +13,16 @@ from prometheus_client import make_asgi_app
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from common import chaos
+from common.audit import AuditLog, NullAudit
 from common.config import Settings
 from common.context import REQUEST_ID_RE, current_request_id, new_request_id, request_id_var
 from common.db import create_engine, is_db_unavailable
 from common.health import router as health_router
 from common.logs import configure_logging
+from common.ratelimit import RateLimiter
 from common.resilience import Bulkhead, DependencyUnavailable, RateLimitedLog
-from common.telemetry import BUILD_INFO, IN_FLIGHT, LATENCY, REQUESTS, SHED
+from common.security import ServiceTokens, client_address, load_bank_api_key, validate_config
+from common.telemetry import BUILD_INFO, IN_FLIGHT, LATENCY, REJECTED, REQUESTS, SHED
 
 logger = logging.getLogger("common.app")
 
@@ -32,6 +35,41 @@ async def forward_request_id(request: httpx.Request) -> None:
     request_id = current_request_id()
     if request_id and "x-request-id" not in request.headers:
         request.headers["X-Request-ID"] = request_id
+
+
+def _reject_oversized(request: Request, settings: Settings) -> tuple[int, str] | None:
+    """Writes must declare a body size within the limit (a missing or huge size is refused
+    before the body is read)."""
+    if request.method not in ("POST", "PUT", "PATCH"):
+        return None
+    length = request.headers.get("content-length")
+    if length is None:
+        return 411, "length_required"
+    try:
+        size = int(length)
+    except ValueError:
+        return 400, "bad_content_length"
+    if size > settings.max_body_bytes:
+        return 413, "body_too_large"
+    return None
+
+
+def make_credentials_hook(settings: Settings, secrets: list[str]):
+    """Outgoing calls to other services carry a short-lived service token; calls to the bank
+    carry its API key instead (the bank must never see an internal token)."""
+    tokens = ServiceTokens(settings, secrets) if secrets else None
+    bank_key = load_bank_api_key(settings)
+    bank = httpx.URL(settings.bank_url)
+    bank_origin = (bank.host, bank.port)
+
+    async def hook(request: httpx.Request) -> None:
+        if (request.url.host, request.url.port) == bank_origin:
+            if bank_key:
+                request.headers["X-Api-Key"] = bank_key
+        elif tokens is not None and "authorization" not in request.headers:
+            request.headers["Authorization"] = f"Bearer {tokens.get()}"
+
+    return hook
 
 
 def create_service_app(
@@ -49,12 +87,26 @@ def create_service_app(
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         app.state.settings = settings
         app.state.engine = None
+        app.state.jwt_secrets = validate_config(settings)
         if use_db:
             app.state.engine = create_engine(settings)
             app.state.sessionmaker = async_sessionmaker(app.state.engine, expire_on_commit=False)
+        if settings.security:
+            app.state.limiter = RateLimiter(settings.rate_limit_rps, settings.rate_limit_burst)
+            app.state.audit = AuditLog(
+                settings.service_name, app.state.engine, queue_size=settings.audit_queue
+            )
+            app.state.audit.start()
+        else:
+            app.state.audit = NullAudit()
         # Baseline: calls to other services have no timeout. In FT mode every call also gets
         # its own deadline from the Dependency wrapper; this is only the outer limit.
-        hooks = {"request": [forward_request_id]} if settings.tracing else {}
+        hooks = []
+        if settings.tracing:
+            hooks.append(forward_request_id)
+        if settings.security:
+            hooks.append(make_credentials_hook(settings, app.state.jwt_secrets))
+        hooks = {"request": hooks} if hooks else {}
         app.state.http = httpx.AsyncClient(timeout=5.0 if settings.ft else None, event_hooks=hooks)
         BUILD_INFO.labels(settings.service_name, settings.version, settings.ft_mode).set(1)
         if on_startup is not None:
@@ -66,6 +118,7 @@ def create_service_app(
             if on_shutdown is not None:
                 await on_shutdown(app)
             await app.state.http.aclose()
+            await app.state.audit.stop()
             if app.state.engine is not None:
                 await app.state.engine.dispose()
             logger.info("service_stopped")
@@ -115,7 +168,20 @@ def create_service_app(
             if not REQUEST_ID_RE.match(request_id):
                 request_id = new_request_id()
             id_token = request_id_var.set(request_id)
-        if guarded and not inbound.try_acquire():
+        rejection = _reject_oversized(request, settings) if settings.security and api else None
+        if rejection is not None:
+            status, reason = rejection
+            REJECTED.labels(service, reason).inc()
+            request.app.state.audit.record(
+                "request.rejected",
+                "denied",
+                actor=client_address(request),
+                resource=request.url.path,
+                detail={"reason": reason, "status": status, "method": request.method},
+                dedup=(reason, client_address(request)),
+            )
+            response = JSONResponse(status_code=status, content={"error": reason})
+        elif guarded and not inbound.try_acquire():
             if rate_log.should_log("shed"):
                 logger.warning("load_shed", extra={"in_flight": inbound.in_use})
             SHED.labels(service).inc()

@@ -10,6 +10,8 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
 from common.db import SessionDep
+from common.security import Authenticated, StudentAccess, authorize_student, deny
+from common.validation import StrictInput
 from student import registration as ft_registration
 from student.clients import PaymentClient, TimetableClient
 from student.models import Course, Registration, Section, Student
@@ -47,7 +49,7 @@ class SectionOut(BaseModel):
     enrolled: int
 
 
-class RegistrationIn(BaseModel):
+class RegistrationIn(StrictInput):
     student_id: int = Field(gt=0)
     section_id: int = Field(gt=0)
 
@@ -75,7 +77,7 @@ def _sections_query():
 
 
 @router.get("/students/{student_id}", response_model=StudentOut)
-async def get_student(student_id: int, session: SessionDep) -> Student:
+async def get_student(student_id: int, session: SessionDep, _: StudentAccess) -> Student:
     student = await session.get(Student, student_id)
     if student is None:
         raise HTTPException(404, "student_not_found")
@@ -83,7 +85,9 @@ async def get_student(student_id: int, session: SessionDep) -> Student:
 
 
 @router.get("/students/{student_id}/registrations", response_model=list[RegistrationOut])
-async def list_registrations(student_id: int, session: SessionDep) -> list[Registration]:
+async def list_registrations(
+    student_id: int, session: SessionDep, _: StudentAccess
+) -> list[Registration]:
     registrations = await session.scalars(
         select(Registration).where(Registration.student_id == student_id).order_by(Registration.id)
     )
@@ -91,12 +95,14 @@ async def list_registrations(student_id: int, session: SessionDep) -> list[Regis
 
 
 @router.get("/courses", response_model=list[CourseOut])
-async def list_courses(session: SessionDep) -> list[Course]:
+async def list_courses(session: SessionDep, _: Authenticated) -> list[Course]:
     return list(await session.scalars(select(Course).order_by(Course.code)))
 
 
 @router.get("/sections", response_model=list[SectionOut])
-async def list_sections(session: SessionDep, term: str | None = None) -> list[SectionOut]:
+async def list_sections(
+    session: SessionDep, _: Authenticated, term: str | None = None
+) -> list[SectionOut]:
     query = _sections_query().order_by(Section.id)
     if term is not None:
         query = query.where(Section.term == term)
@@ -105,7 +111,7 @@ async def list_sections(session: SessionDep, term: str | None = None) -> list[Se
 
 
 @router.get("/sections/{section_id}", response_model=SectionOut)
-async def get_section(section_id: int, session: SessionDep) -> SectionOut:
+async def get_section(section_id: int, session: SessionDep, _: Authenticated) -> SectionOut:
     row = (await session.execute(_sections_query().where(Section.id == section_id))).first()
     if row is None:
         raise HTTPException(404, "section_not_found")
@@ -113,11 +119,22 @@ async def get_section(section_id: int, session: SessionDep) -> SectionOut:
 
 
 @router.post("/registrations", response_model=RegistrationOut, status_code=201)
-async def register(body: RegistrationIn, request: Request, session: SessionDep):
+async def register(
+    body: RegistrationIn, request: Request, session: SessionDep, principal: Authenticated
+):
+    authorize_student(request, principal, body.student_id)
+    audit = request.app.state.audit
+    resource = f"student:{body.student_id}/section:{body.section_id}"
     if request.app.state.settings.ft:
         # 201 confirmed, 202 accepted while tuition could not be checked yet.
         status, registration = await ft_registration.register(
             request.app, session, body.student_id, body.section_id
+        )
+        audit.record(
+            "registration.create",
+            "ok" if status == 201 else "accepted",
+            actor=principal.sub,
+            resource=resource,
         )
         return JSONResponse(
             status_code=status,
@@ -167,6 +184,7 @@ async def register(body: RegistrationIn, request: Request, session: SessionDep):
         await session.commit()
     except IntegrityError as exc:
         raise HTTPException(409, "already_registered") from exc
+    audit.record("registration.create", "ok", actor=principal.sub, resource=resource)
     logger.debug(
         "registration_confirmed",
         extra={"registration_id": registration.id, "section_id": section.id},
@@ -176,8 +194,25 @@ async def register(body: RegistrationIn, request: Request, session: SessionDep):
 
 @router.delete("/registrations/{registration_id}", status_code=204)
 async def cancel_registration(
-    registration_id: int, request: Request, session: SessionDep
+    registration_id: int, request: Request, session: SessionDep, principal: Authenticated
 ) -> Response:
+    if principal.role == "student":
+        owner = await session.scalar(
+            select(Registration.student_id).where(Registration.id == registration_id)
+        )
+        if owner is None:
+            raise HTTPException(404, "registration_not_found")
+        if owner != principal.student_id:
+            raise deny(
+                request,
+                403,
+                "forbidden_owner",
+                actor=principal.sub,
+                resource=f"registration:{registration_id}",
+            )
+    request.app.state.audit.record(
+        "registration.cancel", "ok", actor=principal.sub, resource=f"registration:{registration_id}"
+    )
     if request.app.state.settings.ft:
         await ft_registration.cancel(session, registration_id)
         return Response(status_code=204)

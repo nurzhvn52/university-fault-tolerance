@@ -12,6 +12,19 @@ from sqlalchemy import select, update
 
 from common.chaos import fault_point
 from common.db import SessionDep
+from common.security import (
+    Authenticated,
+    Staff,
+    StudentAccess,
+    authorize_student,
+    deny,
+)
+from common.validation import (
+    IDEMPOTENCY_KEY_PATTERN,
+    MAX_AMOUNT,
+    TERM_PATTERN,
+    StrictInput,
+)
 from payment import journal
 from payment.bank import BankClient
 from payment.models import Invoice, Payment
@@ -41,10 +54,10 @@ class TuitionOut(BaseModel):
         )
 
 
-class PaymentIn(BaseModel):
+class PaymentIn(StrictInput):
     student_id: int = Field(gt=0)
-    term: str = Field(max_length=16)
-    amount: Decimal = Field(gt=0, max_digits=12, decimal_places=2)
+    term: str = Field(pattern=TERM_PATTERN)
+    amount: Decimal = Field(gt=0, le=MAX_AMOUNT, max_digits=12, decimal_places=2)
 
 
 class PaymentOut(BaseModel):
@@ -70,7 +83,7 @@ async def _get_invoice(session, student_id: int, term: str) -> Invoice:
 
 @router.get("/tuition", response_model=list[TuitionOut])
 async def list_tuition(
-    session: SessionDep, term: str, paid: bool | None = None, limit: int = 100
+    session: SessionDep, _: Staff, term: str, paid: bool | None = None, limit: int = 100
 ) -> list[TuitionOut]:
     query = select(Invoice).where(Invoice.term == term).order_by(Invoice.student_id)
     if paid is not None:
@@ -81,7 +94,9 @@ async def list_tuition(
 
 
 @router.get("/tuition/{student_id}", response_model=TuitionOut)
-async def tuition_status(student_id: int, term: str, session: SessionDep) -> TuitionOut:
+async def tuition_status(
+    student_id: int, term: str, session: SessionDep, _: StudentAccess
+) -> TuitionOut:
     return TuitionOut.from_invoice(await _get_invoice(session, student_id, term))
 
 
@@ -90,8 +105,12 @@ async def create_payment(
     body: PaymentIn,
     request: Request,
     session: SessionDep,
-    idempotency_key: Annotated[str | None, Header(max_length=128)] = None,
+    principal: Authenticated,
+    idempotency_key: Annotated[str | None, Header(pattern=IDEMPOTENCY_KEY_PATTERN)] = None,
 ):
+    if principal.role == "service":
+        raise deny(request, 403, "forbidden_role", actor=principal.sub)
+    authorize_student(request, principal, body.student_id)
     if request.app.state.settings.ft:
         # 201 captured now, 200 repeated request (same key), 202 accepted and still pending.
         status, payment = await journal.create_payment(
@@ -101,6 +120,12 @@ async def create_payment(
             term=body.term,
             amount=body.amount,
             key=idempotency_key,
+        )
+        request.app.state.audit.record(
+            "payment.create",
+            {201: "ok", 200: "duplicate", 202: "accepted"}.get(status, str(status)),
+            actor=principal.sub,
+            resource=f"student:{body.student_id}/payment:{payment.id}",
         )
         return JSONResponse(
             status_code=status, content=PaymentOut.model_validate(payment).model_dump(mode="json")
@@ -136,6 +161,12 @@ async def create_payment(
         .values(amount_paid=Invoice.amount_paid + body.amount)
     )
     await session.commit()
+    request.app.state.audit.record(
+        "payment.create",
+        "ok",
+        actor=principal.sub,
+        resource=f"student:{body.student_id}/payment:{payment.id}",
+    )
     logger.info(
         "payment_captured",
         extra={
@@ -149,7 +180,7 @@ async def create_payment(
 
 
 @router.get("/payments", response_model=list[PaymentOut])
-async def list_payments(session: SessionDep, student_id: int) -> list[Payment]:
+async def list_payments(session: SessionDep, student_id: int, _: StudentAccess) -> list[Payment]:
     payments = await session.scalars(
         select(Payment).where(Payment.student_id == student_id).order_by(Payment.id)
     )
@@ -157,8 +188,11 @@ async def list_payments(session: SessionDep, student_id: int) -> list[Payment]:
 
 
 @router.get("/payments/{payment_id}", response_model=PaymentOut)
-async def get_payment(payment_id: int, session: SessionDep) -> Payment:
+async def get_payment(
+    payment_id: int, request: Request, session: SessionDep, principal: Authenticated
+) -> Payment:
     payment = await session.get(Payment, payment_id)
     if payment is None:
         raise HTTPException(404, "payment_not_found")
+    authorize_student(request, principal, payment.student_id)
     return payment

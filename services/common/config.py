@@ -24,6 +24,24 @@ class Settings(BaseSettings):
     tracing: bool = False
     # One log line per API request (for demonstrations; failures are always logged).
     access_log: bool = False
+    # Authentication, authorization, rate limiting, body limits and audit.
+    security: bool = False
+    # File with the signing secrets, one per line: the first signs new tokens, all of them
+    # verify (so a key can be rotated without logging everybody out).
+    jwt_secret_file: str = ""
+    jwt_secret: str = ""
+    jwt_ttl_s: int = 900
+    service_token_ttl_s: int = 300
+    # Per-principal token bucket (students and staff; service tokens are exempt).
+    rate_limit_rps: float = 20.0
+    rate_limit_burst: int = 40
+    max_body_bytes: int = 262144
+    login_max_failures: int = 5
+    login_lock_s: float = 30.0
+    # API key the bank requires from its clients (file or value).
+    bank_api_key_file: str = ""
+    bank_api_key: str = ""
+    audit_queue: int = 5000
 
     database_url: str = "postgresql+asyncpg://uft:uft_local_only@localhost:5432/university"
     db_pool_size: int = 10

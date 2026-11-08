@@ -13,6 +13,7 @@ from sqlalchemy.exc import IntegrityError
 
 from common.chaos import fault_point
 from common.db import SessionDep, is_db_unavailable
+from common.security import Staff, StudentAccess
 from records import resilient
 from records.gpa import GRADE_POINTS
 from records.models import Grade, TranscriptDocument
@@ -30,12 +31,17 @@ async def _transcript(session, student_id: int, *, voting: bool = False) -> Tran
 
 
 @router.get("/grades/{student_id}", response_model=list[GradeOut])
-async def list_grades(student_id: int, session: SessionDep) -> list[GradeOut]:
+async def list_grades(student_id: int, session: SessionDep, _: StudentAccess) -> list[GradeOut]:
     return (await _transcript(session, student_id)).grades
 
 
 @router.post("/grades/batch", status_code=201)
-async def import_grades(body: GradeBatchIn, request: Request, session: SessionDep) -> dict:
+async def import_grades(
+    body: GradeBatchIn, request: Request, session: SessionDep, principal: Staff
+) -> dict:
+    request.app.state.audit.record(
+        "grades.import", "ok", actor=principal.sub, resource=f"batch:{len(body.items)}"
+    )
     if request.app.state.settings.ft:
         return {"imported": await resilient.import_grades(session, body.items)}
     # Baseline: every grade is committed on its own. If the import stops half way, the
@@ -57,7 +63,7 @@ async def import_grades(body: GradeBatchIn, request: Request, session: SessionDe
 
 
 @router.get("/transcripts/{student_id}", response_model=TranscriptOut)
-async def get_transcript(student_id: int, request: Request, session: SessionDep):
+async def get_transcript(student_id: int, request: Request, session: SessionDep, _: StudentAccess):
     app = request.app
     if not app.state.settings.ft:
         return await _transcript(session, student_id)
@@ -75,7 +81,7 @@ async def get_transcript(student_id: int, request: Request, session: SessionDep)
 
 @router.post("/transcripts/{student_id}/documents", response_model=DocumentOut, status_code=201)
 async def create_document(
-    student_id: int, request: Request, session: SessionDep
+    student_id: int, request: Request, session: SessionDep, principal: StudentAccess
 ) -> TranscriptDocument:
     transcript = await _transcript(session, student_id)
     if not transcript.grades:
@@ -96,12 +102,20 @@ async def create_document(
     )
     session.add(document)
     await session.commit()
+    request.app.state.audit.record(
+        "document.create",
+        "ok",
+        actor=principal.sub,
+        resource=f"student:{student_id}/doc:{document.id}",
+    )
     logger.info("transcript_document_created", extra={"document_id": document.id, "key": key})
     return document
 
 
 @router.get("/transcripts/{student_id}/documents/latest")
-async def latest_document(student_id: int, request: Request, session: SessionDep) -> dict:
+async def latest_document(
+    student_id: int, request: Request, session: SessionDep, _: StudentAccess
+) -> dict:
     document = await session.scalar(
         select(TranscriptDocument)
         .where(TranscriptDocument.student_id == student_id)

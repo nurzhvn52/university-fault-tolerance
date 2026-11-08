@@ -1,14 +1,135 @@
 # Endterm overlay on the fault-tolerant stack: request ids, alerting, security.
 #
-#   docker compose -f docker-compose.ft.yml -f docker-compose.endterm.yml --profile monitoring up -d --build
+#   python -m lab.init_secrets          # creates secrets/ (not in git) once
+#   UFT_TRACING=true UFT_SECURITY=true docker compose -f docker-compose.ft.yml \
+#       -f docker-compose.endterm.yml --profile monitoring up -d --build
 #
 # The feature flags (UFT_TRACING, UFT_SECURITY) are read from the environment; the experiment
-# runner sets them for the "ft2" mode. Without the overlay and the flags the stack is the
+# runner sets both for the "ft2" mode. Without the overlay and the flags the stack is the
 # midterm configuration.
+#
+# What the overlay adds: a second gateway configuration (request ids, size and login limits),
+# the auth service, Prometheus rules with Alertmanager and a webhook receiver, secrets from
+# files instead of environment variables, and one database role per service that can touch
+# only its own schema (plus append to the audit table).
+
+x-jwt: &jwt
+  UFT_JWT_SECRET_FILE: /run/secrets/jwt_secret
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: services/Dockerfile
+    target: app
+  image: uft-app:dev
+  restart: on-failure
+  healthcheck:
+    test: [CMD, python, -c, "import urllib.request as u; u.urlopen('http://localhost:8000/health/live', timeout=1)"]
+    interval: 2s
+    timeout: 2s
+    retries: 2
+    start_period: 10s
+
 services:
   gateway:
     volumes:
       - ./infra/haproxy/ft2.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+
+  migrate:
+    command: [sh, -c, "python -m tools.wait_db && alembic upgrade head && python -m tools.seed && python -m tools.seed_auth"]
+
+  bank:
+    secrets: [bank_api_key]
+    environment:
+      UFT_BANK_API_KEY_FILE: /run/secrets/bank_api_key
+
+  auth-1:
+    <<: *app
+    hostname: auth-1
+    command: uvicorn auth.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_FT_MODE: ft
+      UFT_CHAOS_ENABLED: "true"
+      UFT_TRACING: ${UFT_TRACING:-false}
+      UFT_SECURITY: ${UFT_SECURITY:-false}
+      UFT_ACCESS_LOG: ${UFT_ACCESS_LOG:-false}
+      UFT_DB_POOL_SIZE: "8"
+      UFT_SERVICE_NAME: auth
+      UFT_NODE: "a"
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_auth:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+    labels: {uft.node: "a", uft.role: app, uft.service: auth, uft.watchdog: "true"}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  auth-2:
+    <<: *app
+    hostname: auth-2
+    command: uvicorn auth.main:app --host 0.0.0.0 --port 8000 --no-access-log
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_FT_MODE: ft
+      UFT_CHAOS_ENABLED: "true"
+      UFT_TRACING: ${UFT_TRACING:-false}
+      UFT_SECURITY: ${UFT_SECURITY:-false}
+      UFT_ACCESS_LOG: ${UFT_ACCESS_LOG:-false}
+      UFT_DB_POOL_SIZE: "8"
+      UFT_SERVICE_NAME: auth
+      UFT_NODE: "b"
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_auth:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+    labels: {uft.node: "b", uft.role: app, uft.service: auth, uft.watchdog: "true"}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  student-1:
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_student:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+  student-2:
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_student:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+
+  payment-1:
+    secrets: [jwt_secret, bank_api_key]
+    environment:
+      <<: *jwt
+      UFT_BANK_API_KEY_FILE: /run/secrets/bank_api_key
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_payment:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+  payment-2:
+    secrets: [jwt_secret, bank_api_key]
+    environment:
+      <<: *jwt
+      UFT_BANK_API_KEY_FILE: /run/secrets/bank_api_key
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_payment:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+
+  records-1:
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_records:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+  records-2:
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_records:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+
+  timetable-1:
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_timetable:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
+  timetable-2:
+    secrets: [jwt_secret]
+    environment:
+      <<: *jwt
+      UFT_DATABASE_URL: postgresql+asyncpg://svc_timetable:${UFT_SVC_PASSWORD:-uft_local_only}@gateway:5432/university
 
   prometheus:
     volumes:
@@ -26,14 +147,9 @@ services:
     labels: {uft.node: c, uft.role: ops, uft.service: alertmanager}
 
   alert-sink:
-    build:
-      context: .
-      dockerfile: services/Dockerfile
-      target: app
-    image: uft-app:dev
+    <<: *app
     profiles: [monitoring]
     hostname: alert-sink
-    restart: on-failure
     command: uvicorn alert_sink.main:app --host 0.0.0.0 --port 8000 --no-access-log
     environment:
       UFT_SERVICE_NAME: alert_sink
@@ -46,6 +162,15 @@ services:
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/uft2.json
 
   lab:
+    secrets: [jwt_secret, bank_api_key]
     environment:
+      <<: *jwt
+      UFT_BANK_API_KEY_FILE: /run/secrets/bank_api_key
       UFT_PROMETHEUS_URL: http://prometheus:9090
       UFT_ALERT_SINK_URL: http://alert-sink:8000
+
+secrets:
+  jwt_secret:
+    file: ./secrets/jwt_secret
+  bank_api_key:
+    file: ./secrets/bank_api_key

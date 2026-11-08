@@ -19,6 +19,7 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: pytest
+      - run: pip install pip-audit && pip-audit -r services/requirements.txt
 
   stack:
     needs: lint-and-unit
@@ -68,3 +69,28 @@ jobs:
         run: docker compose -f docker-compose.ft.yml logs --no-color
       - if: always()
         run: docker compose -f docker-compose.ft.yml down -v
+
+  endterm-stack:
+    needs: lint-and-unit
+    runs-on: ubuntu-latest
+    name: stack (endterm: security, request ids, alerting)
+    env:
+      UFT_TRACING: "true"
+      UFT_SECURITY: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: python -m lab.init_secrets
+      - run: docker compose -f docker-compose.ft.yml -f docker-compose.endterm.yml --profile monitoring up -d --build
+      - run: pytest -m integration tests/integration/test_endterm_security.py -v
+        env:
+          UFT_BASE_URL: http://localhost:8080
+      - if: failure()
+        run: docker compose -f docker-compose.ft.yml -f docker-compose.endterm.yml --profile monitoring logs --no-color
+      - if: always()
+        run: docker compose -f docker-compose.ft.yml -f docker-compose.endterm.yml --profile monitoring down -v

@@ -15,3 +15,7 @@ def new_request_id() -> str:
 
 def current_request_id() -> str | None:
     return request_id_var.get()
+
+
+# Who is acting in the current request (token subject), for log lines.
+actor_var: ContextVar[str | None] = ContextVar("actor", default=None)

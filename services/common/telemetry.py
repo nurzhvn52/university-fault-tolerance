@@ -32,3 +32,23 @@ RETRIES = Counter("uft_retries_total", "Retried attempts", ["dependency"])
 BUILD_INFO = Gauge(
     "uft_build_info", "Version and feature flags of the instance", ["service", "version", "mode"]
 )
+
+AUTH_DENIED = Counter(
+    "uft_auth_denied_total",
+    "Requests rejected by authentication or authorization",
+    ["service", "reason"],
+)
+RATE_LIMITED = Counter(
+    "uft_rate_limited_total", "Requests rejected by rate limiting", ["service", "scope"]
+)
+REJECTED = Counter(
+    "uft_rejected_requests_total",
+    "Requests rejected before reaching a handler",
+    ["service", "reason"],
+)
+AUDIT_EVENTS = Counter(
+    "uft_audit_events_total", "Audit events recorded", ["service", "action", "outcome"]
+)
+AUDIT_DROPPED = Counter(
+    "uft_audit_dropped_total", "Audit events lost before reaching the database", ["service"]
+)

@@ -29,6 +29,7 @@ x-env: &env
   UFT_FT_MODE: ft
   UFT_CHAOS_ENABLED: "true"
   UFT_TRACING: ${UFT_TRACING:-false}
+  UFT_SECURITY: ${UFT_SECURITY:-false}
   UFT_ACCESS_LOG: ${UFT_ACCESS_LOG:-false}
   UFT_DB_POOL_SIZE: "8"
   UFT_DATABASE_URL: postgresql+asyncpg://uft:${UFT_DB_PASSWORD:-uft_local_only}@gateway:5432/university
@@ -70,6 +71,7 @@ x-patroni-env: &patroni-env
   PATRONI_REPLICATION_PASSWORD: ${PATRONI_REPLICATION_PASSWORD:-uft_local_only}
   PATRONI_REWIND_PASSWORD: ${PATRONI_SUPERUSER_PASSWORD:-uft_local_only}
   UFT_DB_PASSWORD: ${UFT_DB_PASSWORD:-uft_local_only}
+  UFT_SVC_PASSWORD: ${UFT_SVC_PASSWORD:-uft_local_only}
 
 services:
   etcd-1:

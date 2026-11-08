@@ -11,7 +11,7 @@ import socket
 import sys
 from datetime import UTC, datetime
 
-from common.context import request_id_var
+from common.context import actor_var, request_id_var
 
 _RECORD_ATTRS = set(vars(logging.makeLogRecord({}))) | {"message", "asctime"}
 
@@ -32,6 +32,9 @@ class JsonFormatter(logging.Formatter):
         request_id = request_id_var.get()
         if request_id:
             entry["request_id"] = request_id
+        actor = actor_var.get()
+        if actor:
+            entry["actor"] = actor
         for key, value in vars(record).items():
             if key not in _RECORD_ATTRS and not key.startswith("_"):
                 entry[key] = value

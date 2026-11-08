@@ -9,19 +9,32 @@ client that gives up waiting does not know whether it was charged.
 """
 
 import asyncio
+import hmac
 from decimal import Decimal
 
-from fastapi import APIRouter, FastAPI, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 
 from bank_mock.store import ChargeStore
 from common.app import create_service_app
 from common.config import Settings, get_settings
+from common.security import deny, load_bank_api_key
+from common.validation import StrictInput
 
-router = APIRouter(tags=["bank"])
+
+async def require_api_key(request: Request) -> None:
+    """The bank accepts only callers that present its API key."""
+    if not request.app.state.settings.security:
+        return
+    given = request.headers.get("x-api-key", "")
+    if not hmac.compare_digest(given.encode(), request.app.state.bank_key.encode()):
+        raise deny(request, 401, "invalid_api_key")
 
 
-class ChargeIn(BaseModel):
+router = APIRouter(tags=["bank"], dependencies=[Depends(require_api_key)])
+
+
+class ChargeIn(StrictInput):
     account: str = Field(max_length=64)
     amount: Decimal = Field(gt=0, max_digits=12, decimal_places=2)
     reference: str = Field(max_length=128)
@@ -78,6 +91,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     async def open_store(app: FastAPI) -> None:
         app.state.charges = ChargeStore(settings.bank_db_path)
+        app.state.bank_key = load_bank_api_key(settings)
 
     async def close_store(app: FastAPI) -> None:
         app.state.charges.close()

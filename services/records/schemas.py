@@ -8,6 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from common.validation import COURSE_CODE_PATTERN, TERM_PATTERN, StrictInput
 from records.gpa import compute_gpa, voted_gpa
 from records.models import Grade
 
@@ -16,10 +17,10 @@ logger = logging.getLogger("records.schemas")
 Letter = Literal["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"]
 
 
-class GradeIn(BaseModel):
+class GradeIn(StrictInput):
     student_id: int = Field(gt=0)
-    course_code: str = Field(max_length=16)
-    term: str = Field(max_length=16)
+    course_code: str = Field(pattern=COURSE_CODE_PATTERN)
+    term: str = Field(pattern=TERM_PATTERN)
     letter: Letter
     credits: int = Field(gt=0, le=30)
 
@@ -34,7 +35,7 @@ class GradeOut(BaseModel):
     credits: int
 
 
-class GradeBatchIn(BaseModel):
+class GradeBatchIn(StrictInput):
     items: list[GradeIn] = Field(min_length=1, max_length=500)
 
 
